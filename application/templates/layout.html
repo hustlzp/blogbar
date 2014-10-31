@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+<head>
+   <title>{% block page_title %}{% endblock %}</title>
+   <meta name="renderer" content="webkit">
+   <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+   {% block meta %}{% endblock %}
+   <link rel="Shortcut Icon" href="{{ static('image/favicon.ico') }}">
+   {{ link('bower_components/bootstrap/dist/css/bootstrap.min.css') }}
+   {{ link('bower_components/font-awesome/css/font-awesome.min.css') }}
+   {{ link('css/bootstrap.theme.css') }}
+   {{ link('css/common.css') }}
+   {{ link('css/component.css') }}
+   {{ link('css/layout.css') }}
+   {{ page_link(self) }}
+   {{ script('bower_components/respond/dest/respond.min.js') }}
+   {{ script('bower_components/jquery/dist/jquery.min.js') }}
+   {{ script('bower_components/bootstrap/dist/js/bootstrap.min.js') }}
+</head>
+
+<body id="page">
+
+{# Flash message #}
+{% with message = get_flashed_messages()[0] %}
+   {% if message %}
+      <div class="alert alert-info flash-message">{{ message }}</div>
+   {% endif %}
+{% endwith %}
+
+<nav class="navbar navbar-default navbar-static-top">
+   <div class="container">
+      <div class="navbar-header">
+         <a class="navbar-brand" href="{{ url_for('site.index') }}">
+            blogbar
+         </a>
+      </div>
+
+      <div class="collapse navbar-collapse">
+         <ul class="nav navbar-nav">
+            <li id="nav-index">
+               <a href="{{ url_for('site.index') }}">首页</a>
+            </li>
+            <li id="nav-about">
+               <a href="{{ url_for('site.about') }}">关于</a>
+            </li>
+         </ul>
+
+         <form class="navbar-form navbar-left" role="search" method="get" action="#">
+            <div class="input-group">
+               <input type="text" name="keyword" class="form-control input-sm"
+                      placeholder="">
+               <span class="input-group-btn">
+                  <button class="btn btn-default btn-sm" type="submit">
+                     <span class="fa fa-search"></span>
+                  </button>
+               </span>
+            </div>
+         </form>
+
+         <ul class="nav navbar-nav navbar-right">
+            {% if g.user %}
+               <li id="nav-settings">
+                  <a href="#">{{ g.user.name }}</a>
+               </li>
+               <li>
+                  <a href="#">登出</a>
+               </li>
+            {% else %}
+               <li id="nav-signin">
+                  <a href="#">登录</a>
+               </li>
+               <li id="nav-signup">
+                  <a href="#">注册</a>
+               </li>
+            {% endif %}
+         </ul>
+      </div>
+   </div>
+</nav>
+
+<div id="main-wap">
+   {% block page_content %}{% endblock %}
+</div>
+
+<div id="footer">
+   <div class='container'>
+      <div id='copyright' class="pull-left">
+         © 2014 blogbar
+      </div>
+
+      <ul id='links' class="pull-right list-unstyled list-inline">
+         <li><a href="{{ url_for('site.about') }}">关于</a></li>
+      </ul>
+   </div>
+</div>
+
+{# 访问统计 #}
+{# TODO #}
+
+{# 单页JS代码 #}
+{{ page_script(self) }}
+
+{# 全局JS代码 #}
+<script type="text/javascript">
+   var locals = locals || {};
+   locals = $.extend(locals, {
+   });
+</script>
+{{ script('js/layout.js') }}
+
+</body>
+</html>
