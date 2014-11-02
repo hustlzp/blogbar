@@ -1,8 +1,12 @@
 # coding: utf-8
+import feedparser
+from time import mktime
+from datetime import datetime
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 from application import create_app
-from application.models import db
+from application.models import db, Blog, Post
+
 
 # Used by app debug & livereload
 PORT = 5000
@@ -49,6 +53,43 @@ def live():
 def createdb():
     """Create database."""
     db.create_all()
+
+
+@manager.command
+def feed():
+    """获取最新feed数据"""
+    with app.app_context():
+        for blog in Blog.query:
+            result = feedparser.parse(blog.feed)
+            blog.updated_at = _get_time(result.feed.updated_parsed)
+            blog.unique_id = result.feed.id
+            if 'subtitle' in result.feed:
+                blog.subtitle = result.feed.subtitle
+
+            db.session.add(blog)
+            print(blog.title)
+
+            # 最新博文
+            for entry in result.entries:
+                post = Post.query.filter(Post.unique_id == entry.id).first()
+                if not post:
+                    post = Post(title=entry.title, url=entry.link, unique_id=entry.id,
+                                updated_at=_get_time(entry.updated_parsed))
+                    if 'content' in entry:
+                        if isinstance(entry.content, list):
+                            post.content = entry.content[0].value
+                        else:
+                            post.content = entry.content
+                    elif 'summary' in entry:
+                        post.content = entry.summary
+
+                    db.session.add(post)
+                    print(post.title)
+        db.session.commit()
+
+
+def _get_time(time_struct):
+    return datetime.fromtimestamp(mktime(time_struct))
 
 
 if __name__ == "__main__":

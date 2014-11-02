@@ -151,11 +151,12 @@ def register_admin(app):
     """注册Flask-Admin"""
     from flask.ext.admin import Admin
     from flask.ext.admin.contrib.sqla import ModelView
-    from .models import db, User, Blog
+    from .models import db, User, Blog, Post
 
     admin = Admin(app)
     admin.add_view(ModelView(User, db.session))
     admin.add_view(ModelView(Blog, db.session))
+    admin.add_view(ModelView(Post, db.session))
 
 
 def _get_template_name(template_reference):
