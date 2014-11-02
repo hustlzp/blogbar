@@ -32,49 +32,51 @@
    <div class="container">
       <div class="navbar-header">
          <a class="navbar-brand" href="{{ url_for('site.index') }}">
-            blogbar
+            Blogbar
          </a>
       </div>
 
+      <p class="navbar-text navbar-right">每一个独立博客背后，都有一个独立的灵魂。</p>
+
       <div class="collapse navbar-collapse">
          <ul class="nav navbar-nav">
-            <li id="nav-index">
-               <a href="{{ url_for('site.index') }}">首页</a>
-            </li>
-            <li id="nav-about">
-               <a href="{{ url_for('site.about') }}">关于</a>
-            </li>
+            {#            <li id="nav-index">#}
+            {#               <a href="{{ url_for('site.index') }}">首页</a>#}
+            {#            </li>#}
+            {#            <li id="nav-about">#}
+            {#               <a href="{{ url_for('site.about') }}">关于</a>#}
+            {#            </li>#}
          </ul>
 
-         <form class="navbar-form navbar-left" role="search" method="get" action="#">
-            <div class="input-group">
-               <input type="text" name="keyword" class="form-control input-sm"
-                      placeholder="">
-               <span class="input-group-btn">
-                  <button class="btn btn-default btn-sm" type="submit">
-                     <span class="fa fa-search"></span>
-                  </button>
-               </span>
-            </div>
-         </form>
+         {#         <form class="navbar-form navbar-left" role="search" method="get" action="#">#}
+         {#            <div class="input-group">#}
+         {#               <input type="text" name="keyword" class="form-control input-sm"#}
+         {#                      placeholder="">#}
+         {#               <span class="input-group-btn">#}
+         {#                  <button class="btn btn-default btn-sm" type="submit">#}
+         {#                     <span class="fa fa-search"></span>#}
+         {#                  </button>#}
+         {#               </span>#}
+         {#            </div>#}
+         {#         </form>#}
 
-         <ul class="nav navbar-nav navbar-right">
-            {% if g.user %}
-               <li id="nav-settings">
-                  <a href="#">{{ g.user.name }}</a>
-               </li>
-               <li>
-                  <a href="#">登出</a>
-               </li>
-            {% else %}
-               <li id="nav-signin">
-                  <a href="#">登录</a>
-               </li>
-               <li id="nav-signup">
-                  <a href="#">注册</a>
-               </li>
-            {% endif %}
-         </ul>
+         {#         <ul class="nav navbar-nav navbar-right">#}
+         {#            {% if g.user %}#}
+         {#               <li id="nav-settings">#}
+         {#                  <a href="#">{{ g.user.name }}</a>#}
+         {#               </li>#}
+         {#               <li>#}
+         {#                  <a href="#">登出</a>#}
+         {#               </li>#}
+         {#            {% else %}#}
+         {#               <li id="nav-signin">#}
+         {#                  <a href="#">登录</a>#}
+         {#               </li>#}
+         {#               <li id="nav-signup">#}
+         {#                  <a href="#">注册</a>#}
+         {#               </li>#}
+         {#            {% endif %}#}
+         {#         </ul>#}
       </div>
    </div>
 </nav>
@@ -86,11 +88,11 @@
 <div id="footer">
    <div class='container'>
       <div id='copyright' class="pull-left">
-         © 2014 blogbar
+         © 2014 Blogbar
       </div>
 
       <ul id='links' class="pull-right list-unstyled list-inline">
-         <li><a href="{{ url_for('site.about') }}">关于</a></li>
+         {#         <li><a href="{{ url_for('site.about') }}">关于</a></li>#}
       </ul>
    </div>
 </div>
