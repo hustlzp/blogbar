@@ -31,5 +31,5 @@ class Post(db.Model):
     updated_at = db.Column(db.DateTime)
 
     blog_id = db.Column(db.Integer, db.ForeignKey('blog.id'))
-    blog = db.relationship('Blog', backref=db.backref('quotes', lazy='dynamic',
+    blog = db.relationship('Blog', backref=db.backref('posts', lazy='dynamic',
                                                       order_by='desc(Post.pub_at)'))

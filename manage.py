@@ -61,8 +61,13 @@ def feed():
     with app.app_context():
         for blog in Blog.query:
             result = feedparser.parse(blog.feed)
-            blog.updated_at = _get_time(result.feed.updated_parsed)
-            blog.unique_id = result.feed.id
+            if 'updated_parsed' in result.feed:
+                blog.updated_at = _get_time(result.feed.updated_parsed)
+            if 'id' in result.feed:
+                blog.unique_id = result.feed.id
+            elif 'link' in result.feed:
+                blog.unique_id = result.feed.link
+            blog.feed_version = result.version
             if 'subtitle' in result.feed:
                 blog.subtitle = result.feed.subtitle
 
@@ -71,10 +76,13 @@ def feed():
 
             # 最新博文
             for entry in result.entries:
-                post = Post.query.filter(Post.unique_id == entry.id).first()
+                identity = entry.id if 'id' in entry else entry.link
+                post = Post.query.filter(Post.unique_id == identity).first()
                 if not post:
-                    post = Post(title=entry.title, url=entry.link, unique_id=entry.id,
-                                updated_at=_get_time(entry.updated_parsed))
+                    post = Post(title=entry.title, url=entry.link, unique_id=identity)
+                    if 'updated_parsed' in entry:
+                        post.updated_at = _get_time(entry.updated_parsed)
+
                     if 'content' in entry:
                         if isinstance(entry.content, list):
                             post.content = entry.content[0].value
