@@ -119,10 +119,10 @@ def register_db(app):
 
 def register_routes(app):
     """注册路由"""
-    from .controllers import site
+    from .controllers import site, blog
 
     app.register_blueprint(site.bp, url_prefix='')
-
+    app.register_blueprint(blog.bp, url_prefix='/blog')
 
 def register_error_handle(app):
     """注册HTTP错误页面"""

@@ -28,6 +28,7 @@ class Post(db.Model):
     unique_id = db.Column(db.String(200))
     pub_at = db.Column(db.DateTime)
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
+    published_at = db.Column(db.DateTime)
     updated_at = db.Column(db.DateTime)
 
     blog_id = db.Column(db.Integer, db.ForeignKey('blog.id'))

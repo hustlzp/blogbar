@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% from "macro/form.html" import horizontal_field %}
+
+{% block page_title %}首页{% endblock %}
+{% block page_content %}
+   <div class="container">
+      <div class="col-sm-8">
+         <h1>添加Blog</h1>
+
+         <form class="form-horizontal" role="form" method="post"
+               action="">
+
+            {{ form.csrf_token }}
+
+            {{ horizontal_field(form.url) }}
+
+            {{ horizontal_field(form.title) }}
+
+            {{ horizontal_field(form.author) }}
+
+            {{ horizontal_field(form.feed) }}
+
+            <div class="form-group">
+               <div class="col-md-6 col-md-offset-2">
+                  <input type="submit" value="提交" class="btn btn-sm btn-primary"/>
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+{% endblock %}
