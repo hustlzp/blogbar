@@ -9,6 +9,7 @@ Flask-Admin
 Flask-Migrate
 MySQL-python
 Pillow
+Celery
 
 livereload
 formic==0.9beta8

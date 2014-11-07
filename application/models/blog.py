@@ -13,6 +13,7 @@ class Blog(db.Model):
     unique_id = db.Column(db.String(200))
     url = db.Column(db.String(200))
     avatar = db.Column(db.String(200))
+    last_status = db.Column(db.Boolean, default=True)
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
     updated_at = db.Column(db.DateTime)
 

@@ -61,8 +61,13 @@ def feed():
             try:
                 grab_blog(blog)
             except Exception, e:
+                blog.last_status = False
                 print blog.title
                 print e
+            else:
+                blog.last_status = True
+            db.session.add(blog)
+            db.session.commit()
 
 
 if __name__ == "__main__":
