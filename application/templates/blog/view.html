@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% from "macro/form.html" import horizontal_field %}
+
+{% block page_title %}{{ blog.title }}{% endblock %}
+{% block page_content %}
+   <div class="container">
+      <div class="col-sm-8">
+         <h1>{{ blog.title }}</h1>
+
+         <p>链接：<a href="{{ blog.url }}" target="_blank">{{ blog.url }}</a></p>
+
+         <p>作者：{{ blog.author }}</p>
+
+         <p>订阅地址：<a href="{{ blog.feed }}" target="_blank">{{ blog.feed }}</a></p>
+
+         {% for p in blog.posts %}
+            <div>
+               <a href="{{ p.url }}" target="_blank">{{ p.title }}</a>
+
+               <div class="time">
+                  {% if p.published_at %}
+                     <span>发布于：{{ p.published_at }}</span>
+                  {% endif %}
+
+                  {% if p.updated_at %}
+                     <span>更新于：{{ p.updated_at }}</span>
+                  {% endif %}
+               </div>
+            </div>
+         {% endfor %}
+      </div>
+   </div>
+{% endblock %}
