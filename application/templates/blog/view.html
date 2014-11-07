@@ -11,8 +11,6 @@
 
          <p>作者：{{ blog.author }}</p>
 
-         <p>订阅地址：<a href="{{ blog.feed }}" target="_blank">{{ blog.feed }}</a></p>
-
          {% for p in blog.posts %}
             <div>
                <a href="{{ p.url }}" target="_blank">{{ p.title }}</a>
