@@ -54,7 +54,7 @@ def createdb():
 
 
 @manager.command
-def feed():
+def grab():
     """获取最新feed数据"""
     with app.app_context():
         for blog in Blog.query:

@@ -10,6 +10,7 @@ Flask-Migrate
 MySQL-python
 Pillow
 Celery
+redis
 
 livereload
 formic==0.9beta8
