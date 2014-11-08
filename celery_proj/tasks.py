@@ -1,6 +1,6 @@
 # coding: utf-8
 from __future__ import absolute_import
-from fabric.api import run, env, cd, prefix, shell_env
+from fabric.api import shell_env
 from celery_proj.app import app
 from application import create_app
 from application.models import db, Blog

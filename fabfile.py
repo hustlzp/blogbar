@@ -24,3 +24,9 @@ def restart():
     """重启"""
     env.host_string = config.HOST_STRING
     run('supervisorctl restart blogbar')
+
+
+def restart_celery():
+    env.host_string = config.HOST_STRING
+    run('supervisorctl restart celery')
+    run('supervisorctl restart celerybeat')
