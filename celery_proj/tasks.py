@@ -9,11 +9,12 @@ from application.utils.blog import grab_blog
 @app.task
 def grab():
     """获取最新feed数据"""
+    new_posts_count = 0
     flask_app = create_app()
     with flask_app.app_context():
         for blog in Blog.query:
             try:
-                grab_blog(blog)
+                new_posts_count = grab_blog(blog)
             except Exception, e:
                 blog.last_status = False
                 print ("Failed - %s" % blog.title)
@@ -23,3 +24,4 @@ def grab():
                 print ("Success - %s" % blog.title)
             db.session.add(blog)
             db.session.commit()
+    return new_posts_count
