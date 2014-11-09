@@ -47,4 +47,4 @@ class Config(object):
     SENTRY_DSN = ''
 
     # Host string, used by fabric
-    HOST_STRING = "root@192.241.219.137"
+    HOST_STRING = "root@107.170.238.33"
