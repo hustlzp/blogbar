@@ -20,11 +20,14 @@ def grab_blog(blog):
     db.session.add(blog)
     print(blog.title)
 
+    new_posts_count = 0
+
     for entry in result.entries:
         identity = entry.id if 'id' in entry else entry.link
         post = blog.posts.filter(Post.unique_id == identity).first()
         # 新博文
         if not post:
+            new_posts_count += 1
             post = Post(unique_id=identity)
             _get_info_to_post(post, entry)
             blog.posts.append(post)
@@ -45,6 +48,7 @@ def grab_blog(blog):
                 print(" update - %s" % post.title)
                 db.session.add(post)
     db.session.commit()
+    return new_posts_count
 
 
 def _get_info_to_post(post, entry):
