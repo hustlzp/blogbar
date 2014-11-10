@@ -14,7 +14,7 @@ def grab():
     with flask_app.app_context():
         for blog in Blog.query:
             try:
-                new_posts_count = grab_blog(blog)
+                new_posts_count += grab_blog(blog)
             except Exception, e:
                 blog.last_status = False
                 print ("Failed - %s" % blog.title)
