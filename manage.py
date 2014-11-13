@@ -80,6 +80,7 @@ def remote_grab():
 
 @manager.command
 def grab_wy():
+    """爬取王垠的博文"""
     import HTMLParser
     from lxml import html, etree
     import requests

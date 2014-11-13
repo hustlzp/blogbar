@@ -1,4 +1,4 @@
 blogbar
 =======
 
-Website for Blogbar.
+There is an independent soul behind every personal blog.
