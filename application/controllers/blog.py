@@ -19,15 +19,16 @@ def add():
     form = BlogForm()
     if form.validate_on_submit():
         blog = Blog(**form.data)
-        try:
-            grab_blog(blog)
-        except Exception, e:
-            print(e)
-            blog.last_status = False
-            flash('Feed抓取失败')
-        else:
-            blog.last_status = True
-            flash('Feed抓取成功，共抓取 %d 篇日志' % blog.posts.count())
+        if blog.feed:
+            try:
+                grab_blog(blog)
+            except Exception, e:
+                print(e)
+                blog.last_status = False
+                flash('Feed抓取失败')
+            else:
+                blog.last_status = True
+                flash('Feed抓取成功，共抓取 %d 篇日志' % blog.posts.count())
         db.session.add(blog)
         db.session.commit()
         return redirect(url_for('site.index'))
