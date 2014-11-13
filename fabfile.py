@@ -31,3 +31,10 @@ def restart_celery():
     run('supervisorctl restart celery')
     run('supervisorctl restart celerybeat')
     run('supervisorctl restart celeryflower')
+
+
+def remote_grab():
+    env.host_string = config.HOST_STRING
+    with cd('/var/www/blogbar'):
+        with prefix('source venv/bin/activate'):
+            run('python manage.py remote_grab')
