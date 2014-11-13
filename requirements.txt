@@ -11,6 +11,9 @@ MySQL-python
 Pillow
 Celery
 redis
+requests
+lxml
+cssselect
 
 livereload
 formic==0.9beta8

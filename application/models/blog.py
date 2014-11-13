@@ -27,11 +27,10 @@ class Post(db.Model):
     title = db.Column(db.String(200))
     content = db.Column(db.Text)
     unique_id = db.Column(db.String(200))
-    pub_at = db.Column(db.DateTime)
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
     published_at = db.Column(db.DateTime)
     updated_at = db.Column(db.DateTime)
 
     blog_id = db.Column(db.Integer, db.ForeignKey('blog.id'))
     blog = db.relationship('Blog', backref=db.backref('posts', lazy='dynamic',
-                                                      order_by='desc(Post.pub_at)'))
+                                                      order_by='desc(Post.published_at)'))

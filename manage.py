@@ -1,8 +1,9 @@
 # coding: utf-8
+import datetime
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 from application import create_app
-from application.models import db, Blog
+from application.models import db, Blog, Post
 from application.utils.blog import grab_blog
 
 
@@ -75,6 +76,59 @@ def remote_grab():
     from celery_proj.tasks import grab
 
     grab.delay()
+
+
+@manager.command
+def grab_wy():
+    import HTMLParser
+    from lxml import html, etree
+    import requests
+
+    new_posts_count = 0
+
+    url = 'http://www.yinwang.org'
+    page = requests.get(url)
+    tree = html.fromstring(page.text)
+
+    with app.app_context():
+        blog = Blog.query.filter(Blog.url == url).first_or_404()
+
+        for item in tree.cssselect('.list-group-item a'):
+            title = item.text_content()
+            url = item.get('href')
+
+            post = Post.query.filter(Post.unique_id == url).first()
+
+            # 新文章
+            if not post:
+                post_page = requests.get(url)
+                post_tree = html.fromstring(post_page.text)
+                content_element = post_tree.cssselect('body')[0]
+
+                # 去除h2标题
+                content_element.remove(content_element.cssselect('h2')[0])
+
+                # 获取内容
+                content_list = [content_element.text or ''] \
+                               + [etree.tostring(child) for child in content_element]
+                content = ''.join(content_list)
+                html_parser = HTMLParser.HTMLParser()
+                content = html_parser.unescape(content)
+
+                # 获取发表日期
+                date_list = filter(None, url.split('/'))
+                day = int(date_list[-2])
+                month = int(date_list[-3])
+                year = int(date_list[-4])
+                published_at = datetime.datetime(year=year, month=month, day=day)
+
+                post = Post(url=url, unique_id=url, title=title, content=content,
+                            published_at=published_at)
+                blog.posts.append(post)
+                new_posts_count += 1
+            db.session.add(blog)
+        db.session.commit()
+    return new_posts_count
 
 
 if __name__ == "__main__":

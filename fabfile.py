@@ -36,6 +36,7 @@ def restart():
 
 
 def restart_celery():
+    """重启celery相关进程"""
     env.host_string = config.HOST_STRING
     run('supervisorctl restart celery')
     run('supervisorctl restart celerybeat')
@@ -43,6 +44,7 @@ def restart_celery():
 
 
 def remote_grab():
+    """启动feed抓取"""
     env.host_string = config.HOST_STRING
     with cd('/var/www/blogbar'):
         with prefix('source venv/bin/activate'):
