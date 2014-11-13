@@ -30,3 +30,4 @@ def restart_celery():
     env.host_string = config.HOST_STRING
     run('supervisorctl restart celery')
     run('supervisorctl restart celerybeat')
+    run('supervisorctl restart celeryflower')
