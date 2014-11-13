@@ -1,6 +1,6 @@
 # coding: utf-8
 from flask import render_template, Blueprint, flash, redirect, url_for
-from ..models import db, Blog
+from ..models import db, Blog, Post
 from ..forms import BlogForm
 from ..utils.blog import grab_blog
 
@@ -33,3 +33,9 @@ def add():
         db.session.commit()
         return redirect(url_for('site.index'))
     return render_template('blog/add.html', form=form)
+
+
+@bp.route('/post/<int:uid>')
+def post(uid):
+    post = Post.query.get_or_404(uid)
+    return render_template('blog/post.html', post=post)

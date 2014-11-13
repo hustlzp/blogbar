@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% from "macro/form.html" import horizontal_field %}
+
+{% block page_title %}{{ post.title }}{% endblock %}
+{% block page_content %}
+   <div class="container">
+      <div class="col-sm-8">
+         <h1>{{ post.title }}</h1>
+
+         <p>原文链接：<a href="{{ post.url }}" target="_blank">{{ post.url }}</a></p>
+
+         <p>作者：{{ post.blog.author }}</p>
+
+         <p>博客：<a href="{{ post.blog.url }}">{{ post.blog.title }}</a></p>
+
+         <hr/>
+
+         <div>
+            {{ post.content|safe }}
+         </div>
+      </div>
+   </div>
+{% endblock %}

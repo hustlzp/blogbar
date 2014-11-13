@@ -154,9 +154,9 @@ def register_admin(app):
     from .models import db, User, Blog, Post
 
     admin = Admin(app)
-    admin.add_view(ModelView(User, db.session))
-    admin.add_view(ModelView(Blog, db.session))
-    admin.add_view(ModelView(Post, db.session))
+    # admin.add_view(ModelView(User, db.session))
+    # admin.add_view(ModelView(Blog, db.session))
+    # admin.add_view(ModelView(Post, db.session))
 
 
 def _get_template_name(template_reference):

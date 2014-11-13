@@ -13,7 +13,13 @@
 
          {% for p in blog.posts %}
             <div>
-               <a href="{{ p.url }}" target="_blank">{{ p.title }}</a>
+               <a href="{{ url_for('blog.post', uid=p.id) }}">{{ p.title }}</a>
+
+               &nbsp;&nbsp;
+
+               <a href="{{ p.url }}" target="_blank">
+                  <span class="fa fa-external-link"></span>
+               </a>
 
                <div class="time">
                   {% if p.published_at %}
