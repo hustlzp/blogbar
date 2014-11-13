@@ -20,6 +20,15 @@ def deploy():
             run('supervisorctl restart blogbar')
 
 
+def pull():
+    """更新代码"""
+    env.host_string = config.HOST_STRING
+    with cd('/var/www/blogbar'):
+        with shell_env(MODE='PRODUCTION'):
+            run('git reset --hard HEAD')
+            run('git pull')
+
+
 def restart():
     """重启"""
     env.host_string = config.HOST_STRING
