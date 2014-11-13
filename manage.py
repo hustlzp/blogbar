@@ -70,5 +70,12 @@ def grab():
             db.session.commit()
 
 
+@manager.command
+def remote_grab():
+    from celery_proj.tasks import grab
+
+    grab.delay()
+
+
 if __name__ == "__main__":
     manager.run()
