@@ -16,7 +16,11 @@ class BaseSpider(object):
         """获取post列表
 
         返回格式
-            [{'url':'', 'title': ''}]
+            [
+                {'url':'', 'title': ''},
+                {'url':'', 'title': ''},
+                {'url':'', 'title': ''}
+            ]
         """
         tree = cls.get_tree(cls.url)
         host = cls.get_host(cls.url)
@@ -28,7 +32,11 @@ class BaseSpider(object):
         """根据tree，获取post列表
 
         返回格式
-            [{'url':'', 'title': ''}]
+            [
+                {'url':'', 'title': ''},
+                {'url':'', 'title': ''},
+                {'url':'', 'title': ''}
+            ]
         """
         raise NotImplementedError()
 
