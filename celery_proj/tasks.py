@@ -27,10 +27,12 @@ def grab():
             db.session.commit()
 
     # 爬取日志
-    try:
-        new_posts_count += grab_wy()
-        new_posts_count += grab_lifesinger()
-    except Exception, e:
-        print e
+    from spiders import grab, subclasses
+
+    for subclasse in subclasses:
+        try:
+            new_posts_count += grab(subclasse)
+        except Exception, e:
+            print e
 
     return new_posts_count
