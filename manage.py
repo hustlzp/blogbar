@@ -7,7 +7,7 @@ from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 from application import create_app
 from application.models import db, Blog, Post
-from application.utils.blog import grab_blog
+from application.utils.blog import grab_by_feed
 
 
 # Used by app debug & livereload
@@ -63,7 +63,7 @@ def grab():
     with app.app_context():
         for blog in Blog.query:
             try:
-                grab_blog(blog)
+                grab_by_feed(blog)
             except Exception, e:
                 blog.last_status = False
                 print blog.title
@@ -84,19 +84,19 @@ def remote_grab():
 @manager.command
 def grab_wy():
     """爬取王垠的博文"""
-    from spiders import grab
+    from spiders import grab_by_spider
     from spiders.wangyin import WangYinSpider
 
-    return grab(WangYinSpider)
+    return grab_by_spider(WangYinSpider)
 
 
 @manager.command
 def grab_lifesinger():
     """爬取lifesinger的博文"""
-    from spiders import grab
+    from spiders import grab_by_spider
     from spiders.lifesinger import LifeSingerSpider
 
-    return grab(LifeSingerSpider)
+    return grab_by_spider(LifeSingerSpider)
 
 
 if __name__ == "__main__":

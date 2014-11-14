@@ -2,7 +2,7 @@
 from flask import render_template, Blueprint, flash, redirect, url_for
 from ..models import db, Blog, Post
 from ..forms import BlogForm
-from ..utils.blog import grab_blog
+from ..utils.blog import grab_by_feed
 
 bp = Blueprint('blog', __name__)
 
@@ -22,7 +22,7 @@ def add():
         blog.url = blog.url.rstrip('/')
         if blog.feed:
             try:
-                grab_blog(blog)
+                grab_by_feed(blog)
             except Exception, e:
                 print(e)
                 blog.last_status = False

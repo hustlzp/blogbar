@@ -1,3 +1,4 @@
+# coding: utf-8
 from .lifesinger import LifeSingerSpider
 from .wangyin import WangYinSpider
 from .application import create_app
@@ -8,18 +9,19 @@ subclasses = [
     WangYinSpider
 ]
 
-app = create_app()
 
-
-def grab(spider_class):
+def grab_by_spider(spider_class):
     new_posts_count = 0
+    app = create_app()
 
     with app.app_context():
-        blog = Blog.query.filter(Blog.unique_id == spider_class.url).first_or_404()
-        for post in spider_class.get_posts_():
-            url = post['url']
-            title = post['title']
+        blog = Blog.query.filter(Blog.unique_id == spider_class.url).first()
+
+        for p in spider_class.get_posts_():
+            url = p['url']
+            title = p['title']
             print(title)
+
             post = Post.query.filter(Post.unique_id == url).first()
 
             # 新文章
@@ -32,6 +34,21 @@ def grab(spider_class):
                 if 'updated_at' in post_info:
                     post.updated_at = post_info['updated_at']
                 blog.posts.append(post)
+                print(" new - %s" % title)
+            else:  # 更新文章
+                published_at = post_info.get('published_at')
+                updated_at = post_info.get('updated_at')
+
+                if (published_at and published_at != post.published_at) \
+                        or (updated_at and updated_at != post.updated_at):
+                    if published_at:
+                        post.published_at = published_at
+                    if updated_at:
+                        post.updated_at = updated_at
+                    post.title = title
+                    post.content = post_info['content']
+                    db.session.add(post)
+                    print(" update - %s" % title)
         db.session.add(blog)
         db.session.commit()
         return new_posts_count

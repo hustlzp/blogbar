@@ -3,8 +3,7 @@ from __future__ import absolute_import
 from celery_proj.app import app
 from application import create_app
 from application.models import db, Blog
-from application.utils.blog import grab_blog
-from manage import grab_wy, grab_lifesinger
+from application.utils.blog import grab_by_feed
 
 
 @app.task
@@ -14,24 +13,20 @@ def grab():
     flask_app = create_app()
     with flask_app.app_context():
         for blog in Blog.query:
-            try:
-                new_posts_count += grab_blog(blog)
-            except Exception, e:
-                blog.last_status = False
-                print ("Failed - %s" % blog.title)
-                print e
+            if blog.feed:
+                try:
+                    new_posts_count += grab_by_feed(blog)
+                except Exception, e:
+                    print e
             else:
-                blog.last_status = True
-                print ("Success - %s" % blog.title)
-            db.session.add(blog)
-            db.session.commit()
+                pass
 
-    # 爬取日志
-    from spiders import grab, subclasses
+    # 爬取blog
+    from spiders import grab_by_spider, subclasses
 
     for subclasse in subclasses:
         try:
-            new_posts_count += grab(subclasse)
+            new_posts_count += grab_by_spider(subclasse)
         except Exception, e:
             print e
 
