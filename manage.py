@@ -62,16 +62,7 @@ def grab():
     """获取最新feed数据"""
     with app.app_context():
         for blog in Blog.query:
-            try:
-                grab_by_feed(blog)
-            except Exception, e:
-                blog.last_status = False
-                print blog.title
-                print e
-            else:
-                blog.last_status = True
-            db.session.add(blog)
-            db.session.commit()
+            grab_by_feed(blog)
 
 
 @manager.command
