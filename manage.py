@@ -1,5 +1,8 @@
 # coding: utf-8
+import HTMLParser
 import datetime
+from lxml import html, etree
+import requests
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 from application import create_app
@@ -81,10 +84,6 @@ def remote_grab():
 @manager.command
 def grab_wy():
     """爬取王垠的博文"""
-    import HTMLParser
-    from lxml import html, etree
-    import requests
-
     new_posts_count = 0
 
     url = 'http://www.yinwang.org'
@@ -110,11 +109,7 @@ def grab_wy():
                 content_element.remove(content_element.cssselect('h2')[0])
 
                 # 获取内容
-                content_list = [content_element.text or ''] \
-                               + [etree.tostring(child) for child in content_element]
-                content = ''.join(content_list)
-                html_parser = HTMLParser.HTMLParser()
-                content = html_parser.unescape(content)
+                content = _get_inner_html(content_element)
 
                 # 获取发表日期
                 date_list = filter(None, url.split('/'))
@@ -130,6 +125,66 @@ def grab_wy():
             db.session.add(blog)
         db.session.commit()
     return new_posts_count
+
+
+@manager.command
+def grab_lifesinger():
+    """爬取lifesinger的博文"""
+    new_posts_count = 0
+
+    url = 'https://github.com/lifesinger/lifesinger.github.com/issues?q=label:blog'
+    host = _get_host(url)
+    page = requests.get(url)
+    tree = html.fromstring(page.text)
+    tree.make_links_absolute(host)
+
+    with app.app_context():
+        blog = Blog.query.filter(Blog.url == url).first_or_404()
+
+        for item in tree.cssselect('.table-list-item'):
+            title_element = item.cssselect('.issue-title-link')[0]
+            title = title_element.text_content().strip()
+            url = title_element.get('href')
+
+            post = Post.query.filter(Post.unique_id == url).first()
+
+            # 新文章
+            if not post:
+                post_page = requests.get(url)
+                post_tree = html.fromstring(post_page.text)
+
+                # 获取发表日期
+                date_text = post_tree.cssselect('.gh-header-meta time')[0].get('datetime')
+                published_at = datetime.datetime.strptime(date_text, '%Y-%m-%dT%H:%M:%SZ')
+
+                # 获取内容
+                content_element = post_tree.cssselect('.comment-body')[0]
+                content = _get_inner_html(content_element)
+
+                print(title)
+
+                post = Post(url=url, unique_id=url, title=title, content=content,
+                            published_at=published_at)
+                blog.posts.append(post)
+                new_posts_count += 1
+            db.session.add(blog)
+        db.session.commit()
+    return new_posts_count
+
+
+def _get_inner_html(element):
+    content_list = [element.text or ''] \
+                   + [etree.tostring(child) for child in element]
+    html = ''.join(content_list).strip()
+    html_parser = HTMLParser.HTMLParser()
+    return html_parser.unescape(html)
+
+
+def _get_host(url):
+    from urlparse import urlparse
+
+    parsed_uri = urlparse(url)
+    return '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)
 
 
 if __name__ == "__main__":
