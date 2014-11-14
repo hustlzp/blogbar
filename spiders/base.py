@@ -2,6 +2,7 @@
 import HTMLParser
 import requests
 from lxml import html, etree
+from datetime import datetime
 
 
 class BaseSpider(object):
@@ -73,3 +74,22 @@ class BaseSpider(object):
         html = ''.join(content_list).strip()
         html_parser = HTMLParser.HTMLParser()
         return html_parser.unescape(html)
+
+    @classmethod
+    def test(cls):
+        posts = cls.get_posts_()
+        assert isinstance(posts, list)
+
+        for post in posts:
+            assert isinstance(post, dict)
+            assert 'url' in post and post['url']
+            assert 'title' in post and post['title']
+
+            post_info = cls.get_post_(post['url'])
+            assert isinstance(post_info, dict)
+            assert 'content' in post_info and post_info['content']
+            assert ('published_at' in post_info \
+                    and isinstance(post_info['published_at'], datetime)) \
+                   or ('updated_at' in post_info \
+                       and isinstance(post_info['updated_at'], datetime))
+            print("%s - pass" % post['title'])

@@ -1,8 +1,8 @@
 # coding: utf-8
 from .lifesinger import LifeSingerSpider
 from .wangyin import WangYinSpider
-from .application import create_app
-from .application.models import db, Blog, Post
+from application import create_app
+from application.models import db, Blog, Post
 
 subclasses = [
     LifeSingerSpider,
