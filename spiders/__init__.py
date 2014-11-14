@@ -21,6 +21,8 @@ def grab_by_spider(spider_class):
         if not blog:
             blog = Blog(url=spider_class.url, title=spider_class.title,
                         subtitle=spider_class.subtitle, author=spider_class.author)
+            db.session.add(blog)
+            db.session.commit()
 
         for p in spider_class.get_posts_():
             url = p['url']

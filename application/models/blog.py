@@ -33,3 +33,13 @@ class Post(db.Model):
     blog_id = db.Column(db.Integer, db.ForeignKey('blog.id'))
     blog = db.relationship('Blog', backref=db.backref('posts', lazy='dynamic',
                                                       order_by='desc(Post.published_at)'))
+
+
+class GrabLog(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    error = db.Column(db.Text)
+    created_at = db.Column(db.DateTime, default=datetime.datetime.now)
+
+    blog_id = db.Column(db.Integer, db.ForeignKey('blog.id'))
+    blog = db.relationship('Blog', backref=db.backref('logs', lazy='dynamic',
+                                                      order_by='desc(GrabLog.created_at)'))
