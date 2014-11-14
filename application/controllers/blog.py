@@ -19,6 +19,7 @@ def add():
     form = BlogForm()
     if form.validate_on_submit():
         blog = Blog(**form.data)
+        blog.url = blog.url.rstrip('/')
         if blog.feed:
             try:
                 grab_blog(blog)
