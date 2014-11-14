@@ -161,8 +161,6 @@ def grab_lifesinger():
                 content_element = post_tree.cssselect('.comment-body')[0]
                 content = _get_inner_html(content_element)
 
-                print(title)
-
                 post = Post(url=url, unique_id=url, title=title, content=content,
                             published_at=published_at)
                 blog.posts.append(post)

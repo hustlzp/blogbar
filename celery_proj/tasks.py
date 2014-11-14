@@ -4,7 +4,7 @@ from celery_proj.app import app
 from application import create_app
 from application.models import db, Blog
 from application.utils.blog import grab_blog
-from manage import grab_wy
+from manage import grab_wy, grab_lifesinger
 
 
 @app.task
@@ -26,9 +26,10 @@ def grab():
             db.session.add(blog)
             db.session.commit()
 
-    # 抓取王垠的日志
+    # 爬取日志
     try:
         new_posts_count += grab_wy()
+        new_posts_count += grab_lifesinger()
     except Exception, e:
         print e
 
