@@ -17,6 +17,11 @@ def grab_by_spider(spider_class):
     with app.app_context():
         blog = Blog.query.filter(Blog.unique_id == spider_class.url).first()
 
+        # 若不存在，则创建
+        if not blog:
+            blog = Blog(url=spider_class.url, title=spider_class.title,
+                        subtitle=spider_class.subtitle, author=spider_class.author)
+
         for p in spider_class.get_posts_():
             url = p['url']
             title = p['title']
