@@ -1,11 +1,16 @@
 {% extends "layout.html" %}
 {% from "macro/form.html" import horizontal_field %}
+{% from "macro/ui.html" import pagination %}
 
 {% block page_title %}{{ blog.title }}{% endblock %}
 {% block page_content %}
    <div class="container">
       <div class="col-sm-8">
-         <h1>{{ blog.title }}</h1>
+         <h1>
+            {{ blog.title }}
+         </h1>
+
+         <p>{{ posts_count }}篇博客</p>
 
          <p>链接：<a href="{{ blog.url }}" target="_blank">{{ blog.url }}</a></p>
 
@@ -23,7 +28,9 @@
 
          <p>作者：{{ blog.author }}</p>
 
-         {% for p in blog.posts %}
+         <hr/>
+
+         {% for p in posts.items %}
             <div>
                <a href="{{ url_for('blog.post', uid=p.id) }}">{{ p.title }}</a>
 
@@ -44,6 +51,8 @@
                </div>
             </div>
          {% endfor %}
+
+         {{ pagination(posts) }}
       </div>
    </div>
 {% endblock %}

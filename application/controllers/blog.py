@@ -3,17 +3,21 @@ from flask import render_template, Blueprint, flash, redirect, url_for, abort, r
 from werkzeug.contrib.atom import AtomFeed, FeedEntry
 from ..models import db, Blog, Post
 from ..forms import BlogForm
-from ..utils.blog import grab_by_feed
 
 bp = Blueprint('blog', __name__)
 
 
-@bp.route('/<int:uid>')
-def view(uid):
+@bp.route('/<int:uid>', defaults={'page': 1})
+@bp.route('/<int:uid>/page/<int:page>')
+def view(uid, page):
     blog = Blog.query.get_or_404(uid)
     if not blog.is_approved:
         abort(404)
-    return render_template('blog/view.html', blog=blog)
+    posts_count = blog.posts.count()
+    posts = blog.posts.order_by(Post.published_at.desc(),
+                                Post.updated_at.desc()).paginate(page, 20)
+
+    return render_template('blog/view.html', blog=blog, posts=posts, posts_count=posts_count)
 
 
 @bp.route('/add', methods=['GET', 'POST'])
