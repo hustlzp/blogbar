@@ -1,6 +1,6 @@
 # coding: utf-8
 from flask import render_template, Blueprint
-from ..models import Blog
+from ..models import Blog, Post
 
 bp = Blueprint('site', __name__)
 
@@ -9,7 +9,8 @@ bp = Blueprint('site', __name__)
 def index():
     """首页"""
     blogs = Blog.query
-    return render_template('site/index.html', blogs=blogs)
+    latest_posts = Post.query.order_by(Post.created_at.desc()).limit(10)
+    return render_template('site/index.html', blogs=blogs, latest_posts=latest_posts)
 
 
 @bp.route('/about')

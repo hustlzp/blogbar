@@ -3,14 +3,32 @@
 {% block page_title %}首页{% endblock %}
 {% block page_content %}
    <div class="container">
-      {% for blog in blogs %}
-         <div class="blog">
-            <div class="title">
-               <a href="{{ url_for('blog.view', uid=blog.id) }}">
-                  {{ blog.title }}
+      <div class="col-sm-8">
+         {% for blog in blogs %}
+            <div class="blog">
+               <div class="title">
+                  <a href="{{ url_for('blog.view', uid=blog.id) }}">
+                     {{ blog.title }}
+                  </a>
+               </div>
+            </div>
+         {% endfor %}
+      </div>
+
+      <div class="col-sm-4">
+         {% for post in latest_posts %}
+            <div>
+               <a href="{{ url_for('blog.post', uid=post.id) }}">
+                  {{ post.title }}
+               </a>
+
+               {{ post.blog.author }}
+
+               <a href="{{ post.url }}" target="_blank">
+                  <span class="fa fa-external-link"></span>
                </a>
             </div>
-         </div>
-      {% endfor %}
+         {% endfor %}
+      </div>
    </div>
 {% endblock %}
