@@ -1,4 +1,5 @@
 # coding: utf-8
+from .base import get_inner_html
 from .lifesinger import LifeSingerSpider
 from .wangyin import WangYinSpider
 from .livid import LividSpider

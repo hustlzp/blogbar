@@ -1,6 +1,6 @@
 # coding: utf-8
 import datetime
-from .base import BaseSpider
+from .base import BaseSpider, get_inner_html
 
 
 class WangYinSpider(BaseSpider):
@@ -22,7 +22,7 @@ class WangYinSpider(BaseSpider):
     def get_post(tree, url):
         content_element = tree.cssselect('body')[0]
         content_element.remove(content_element.cssselect('h2')[0])  # 去除h2标题
-        content = BaseSpider.get_inner_html(content_element)
+        content = get_inner_html(content_element)
 
         # 获取发表日期
         date_list = filter(None, url.split('/'))

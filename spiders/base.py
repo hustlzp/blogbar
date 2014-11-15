@@ -7,6 +7,8 @@ from datetime import datetime
 
 
 class MyPrettyPrinter(pprint.PrettyPrinter):
+    """支持中文输出的pprint"""
+
     def format(self, obj, context, maxlevels, level):
         if isinstance(obj, unicode):
             return obj.encode('utf8'), True, False
@@ -36,10 +38,12 @@ class BaseSpider(object):
         tree = cls._get_tree(cls.url)
         host = cls._get_host(cls.url)
         tree.make_links_absolute(host)
+
         posts = cls.get_posts(tree)
-        # for p in posts:
-        # html_parser = HTMLParser.HTMLParser()
-        # p['title'] = html_parser.unescape(p['title'])
+
+        html_parser = HTMLParser.HTMLParser()
+        for p in posts:
+            p['title'] = html_parser.unescape(p['title'])
         return posts
 
     @staticmethod
@@ -77,15 +81,6 @@ class BaseSpider(object):
             {content: '', published_at: '', updated_at: ''}
         """
         raise NotImplementedError()
-
-    @staticmethod
-    def get_inner_html(element):
-        """获取element中的HTML内容"""
-        content_list = [element.text or ''] \
-                       + [etree.tostring(child) for child in element]
-        html = ''.join(content_list).strip()
-        html_parser = HTMLParser.HTMLParser()
-        return html_parser.unescape(html)
 
     @classmethod
     def test_get_posts(cls):
@@ -136,3 +131,12 @@ class BaseSpider(object):
 
         parsed_uri = urlparse(url)
         return '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)
+
+
+def get_inner_html(element):
+    """获取element中的HTML内容"""
+    content_list = [element.text or ''] \
+                   + [etree.tostring(child) for child in element]
+    html = ''.join(content_list).strip()
+    html_parser = HTMLParser.HTMLParser()
+    return html_parser.unescape(html)

@@ -4,7 +4,7 @@
 def test_spider():
     """测试Spider
 
-    将下方的LividSpider替换为你写的SPider，
+    将下方的LividSpider替换为你写的Spider，
     然后运行python manage.py test_spider即可。
 
     共有3条测试指令：

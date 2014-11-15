@@ -1,5 +1,5 @@
 # coding: utf-8
-from .base import BaseSpider
+from .base import BaseSpider, get_inner_html
 from datetime import datetime
 
 
@@ -24,7 +24,7 @@ class LividSpider(BaseSpider):
         published_at = datetime.strptime(date_element.text_content(), "%d %B %Y")
 
         content_element = tree.cssselect('div.span10')[0]
-        content = BaseSpider.get_inner_html(content_element)
+        content = get_inner_html(content_element)
 
         return {
             'published_at': published_at,

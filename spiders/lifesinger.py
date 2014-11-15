@@ -1,6 +1,6 @@
 # coding: utf-8
 import datetime
-from .base import BaseSpider
+from .base import BaseSpider, get_inner_html
 
 
 class LifeSingerSpider(BaseSpider):
@@ -29,13 +29,9 @@ class LifeSingerSpider(BaseSpider):
 
         # 获取内容
         content_element = tree.cssselect('.comment-body')[0]
-        content = LifeSingerSpider.get_inner_html(content_element)
+        content = get_inner_html(content_element)
 
         return {
             'published_at': published_at,
             'content': content
         }
-
-
-if __name__ == "__main__":
-    LifeSingerSpider.test_get_posts()
