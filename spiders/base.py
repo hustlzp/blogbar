@@ -48,7 +48,9 @@ class BaseSpider(object):
 
     @staticmethod
     def get_posts(tree):
-        """根据tree，获取post列表
+        """根据tree，获取post列表。
+
+        子类必须重载此方法。
 
         返回格式
             [
@@ -58,7 +60,6 @@ class BaseSpider(object):
             ]
         """
         raise NotImplementedError()
-
 
     @classmethod
     def get_post_(cls, url):
@@ -75,7 +76,9 @@ class BaseSpider(object):
 
     @staticmethod
     def get_post(tree, url):
-        """根据tree，获取post信息
+        """根据tree，获取post信息。
+
+        子类必须重载此方法。
 
         返回格式
             {content: '', published_at: '', updated_at: ''}
