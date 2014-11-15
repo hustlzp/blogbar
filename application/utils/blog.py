@@ -10,12 +10,6 @@ def grab_by_feed(blog):
     new_posts_count = 0
 
     result = feedparser.parse(blog.feed)
-    if 'updated_parsed' in result.feed:
-        blog.updated_at = _get_time(result.feed.updated_parsed)
-    if 'id' in result.feed:
-        blog.unique_id = result.feed.id
-    elif 'link' in result.feed:
-        blog.unique_id = result.feed.link
     blog.feed_version = result.version
     if 'subtitle' in result.feed:
         blog.subtitle = result.feed.subtitle
@@ -24,12 +18,12 @@ def grab_by_feed(blog):
     print(blog.title)
 
     for entry in result.entries:
-        identity = entry.id if 'id' in entry else entry.link
-        post = blog.posts.filter(Post.unique_id == identity).first()
+        url = entry.link
+        post = blog.posts.filter(Post.url == url).first()
         # 新博文
         if not post:
             new_posts_count += 1
-            post = Post(unique_id=identity)
+            post = Post(url=url)
             _get_info_to_post(post, entry)
             blog.posts.append(post)
             print(" new - %s" % post.title)
