@@ -12,6 +12,7 @@ def grab():
     """获取最新feed数据"""
     new_posts_count = 0
     flask_app = create_app()
+
     with flask_app.app_context():
         # 通过feed抓取blog
         for blog in Blog.query:

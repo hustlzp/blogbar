@@ -74,7 +74,8 @@ def grab_spider():
     from spiders import grab_by_spider
     from spiders.livid import LividSpider
 
-    return grab_by_spider(LividSpider)
+    with app.app_context():
+        grab_by_spider(LividSpider)
 
 
 @manager.command
