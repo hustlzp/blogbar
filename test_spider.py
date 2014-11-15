@@ -28,11 +28,11 @@ def test_spider(args):
     建议按顺序依次测试。
     """
     if args['get_posts']:
-        TargetSpider.test_get_posts()  # 测试get_posts
+        TargetSpider.test_get_posts()
     elif args['get_post']:
-        TargetSpider.test_get_post()  # 测试get_post
+        TargetSpider.test_get_post()
     elif args['all']:
-        TargetSpider.test_all()  # 测试全部数据的格式
+        TargetSpider.test_all()
 
 
 if __name__ == "__main__":
