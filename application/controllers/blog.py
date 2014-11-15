@@ -57,7 +57,7 @@ def feed(uid):
     feed = AtomFeed(blog.title, feed_url=request.url, url=blog.url, id=blog.url)
     if blog.subtitle:
         feed.subtitle = blog.subtitle
-    for post in blog.posts.order_by(Post.published_at.desc()).limit(15):
+    for post in blog.posts.order_by(Post.published_at.desc(), Post.updated_at.desc()).limit(15):
         updated = post.updated_at if post.updated_at else post.published_at
         entry = FeedEntry(post.title, post.content, content_type='html', author=blog.author,
                           url=post.url, id=post.url, updated=updated)
