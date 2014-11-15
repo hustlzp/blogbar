@@ -10,8 +10,9 @@ def grab_by_feed(blog):
     new_posts_count = 0
 
     result = feedparser.parse(blog.feed)
-    blog.feed_version = result.version
-    if 'subtitle' in result.feed:
+    if not blog.feed_version:
+        blog.feed_version = result.version
+    if not blog.subtitle and 'subtitle' in result.feed:
         blog.subtitle = result.feed.subtitle
 
     db.session.add(blog)
