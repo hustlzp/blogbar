@@ -4,7 +4,7 @@ from .wangyin import WangYinSpider
 from .livid import LividSpider
 from application.models import db, Blog, Post
 
-subclasses = [
+spiders = [
     LifeSingerSpider,
     WangYinSpider,
     LividSpider
