@@ -4,6 +4,8 @@
 {% block page_content %}
    <div class="container">
       <div class="col-sm-8">
+         <h2>全部博客</h2>
+
          {% for blog in blogs %}
             <div class="blog">
                <div class="title">
@@ -16,6 +18,8 @@
       </div>
 
       <div class="col-sm-4">
+         <h2>最新博文</h2>
+
          {% for post in latest_posts %}
             <div>
                <a href="{{ url_for('blog.post', uid=post.id) }}">
@@ -27,6 +31,14 @@
                <a href="{{ post.url }}" target="_blank">
                   <span class="fa fa-external-link"></span>
                </a>
+            </div>
+         {% endfor %}
+
+         <h2>最新收录博客</h2>
+
+         {% for blog in latest_blogs %}
+            <div>
+               <a href="{{ url_for('blog.view', uid=blog.id) }}">{{ blog.title }}</a>
             </div>
          {% endfor %}
       </div>
