@@ -40,7 +40,7 @@ def grab_by_feed(blog):
 
             if (updated_at and updated_at != post.updated_at) or (
                         published_at and published_at != post.published_at):
-                _get_info_to_post(post)
+                _get_info_to_post(post, entry)
                 print(" update - %s" % post.title)
                 db.session.add(post)
     db.session.commit()
