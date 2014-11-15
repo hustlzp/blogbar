@@ -119,7 +119,7 @@ class BaseSpider(object):
                     and isinstance(post_info['published_at'], datetime)) \
                    or ('updated_at' in post_info
                        and isinstance(post_info['updated_at'], datetime))
-            print("%s - pass" % post['title'])
+            print("%s - ok" % post['title'])
         print('-------------------------------------')
         print('All passed!')
 

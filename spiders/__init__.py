@@ -27,14 +27,13 @@ def grab_by_spider(spider_class):
         for p in spider_class.get_posts_():
             url = p['url']
             title = p['title']
-            print(title)
 
             post = Post.query.filter(Post.unique_id == url).first()
+            post_info = spider_class.get_post_(url)
 
             # 新文章
             if not post:
                 new_posts_count += 1
-                post_info = spider_class.get_post_(url)
                 post = Post(url=url, unique_id=url, title=title, content=post_info['content'])
                 if 'published_at' in post_info:
                     post.published_at = post_info['published_at']

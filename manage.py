@@ -1,8 +1,4 @@
 # coding: utf-8
-import HTMLParser
-import datetime
-from lxml import html, etree
-import requests
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 from application import create_app
@@ -73,6 +69,15 @@ def remote_grab():
 
 
 @manager.command
+def grab_spider():
+    """通过spider爬取博文"""
+    from spiders import grab_by_spider
+    from spiders.livid import LividSpider
+
+    return grab_by_spider(LividSpider)
+
+
+@manager.command
 def test_spider():
     """测试Spider
 
@@ -89,20 +94,11 @@ def test_spider():
         运行2（注释1、3），看输入是否正常
         运行3（注释1、2），看是否通过格式测试
     """
-    from spiders.wangyin import WangYinSpider
+    from spiders.livid import LividSpider
 
-    # WangYinSpider.test_get_posts()  # 测试get_posts
-    # WangYinSpider.test_get_post()  # 测试get_post
-    WangYinSpider.test_format()  # 测试全部数据的格式
-
-
-@manager.command
-def grab_spider():
-    """通过spider爬取博文"""
-    from spiders import grab_by_spider
-    from spiders.wangyin import WangYinSpider
-
-    return grab_by_spider(WangYinSpider)
+    # LividSpider.test_get_posts()  # 测试get_posts
+    #LividSpider.test_get_post()  # 测试get_post
+    #LividSpider.test_format()  # 测试全部数据的格式
 
 
 if __name__ == "__main__":
