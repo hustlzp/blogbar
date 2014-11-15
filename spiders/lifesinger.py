@@ -35,3 +35,7 @@ class LifeSingerSpider(BaseSpider):
             'published_at': published_at,
             'content': content
         }
+
+
+if __name__ == "__main__":
+    LifeSingerSpider.test_get_posts()

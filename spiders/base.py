@@ -1,8 +1,19 @@
 # coding: utf-8
+import pprint
 import HTMLParser
 import requests
 from lxml import html, etree
 from datetime import datetime
+
+
+class MyPrettyPrinter(pprint.PrettyPrinter):
+    def format(self, obj, context, maxlevels, level):
+        if isinstance(obj, unicode):
+            return obj.encode('utf8'), True, False
+        return pprint.PrettyPrinter.format(self, obj, context, maxlevels, level)
+
+
+pp = MyPrettyPrinter(indent=2)
 
 
 class BaseSpider(object):
@@ -25,7 +36,11 @@ class BaseSpider(object):
         tree = cls._get_tree(cls.url)
         host = cls._get_host(cls.url)
         tree.make_links_absolute(host)
-        return cls.get_posts(tree)
+        posts = cls.get_posts(tree)
+        # for p in posts:
+        # html_parser = HTMLParser.HTMLParser()
+        # p['title'] = html_parser.unescape(p['title'])
+        return posts
 
     @staticmethod
     def get_posts(tree):
@@ -39,6 +54,7 @@ class BaseSpider(object):
             ]
         """
         raise NotImplementedError()
+
 
     @classmethod
     def get_post_(cls, url):
@@ -72,7 +88,21 @@ class BaseSpider(object):
         return html_parser.unescape(html)
 
     @classmethod
-    def test(cls):
+    def test_get_posts(cls):
+        """测试get_posts"""
+        posts = cls.get_posts_()
+        pp.pprint(posts)
+
+    @classmethod
+    def test_get_post(cls):
+        """测试get_post"""
+        posts = cls.get_posts_()
+        url = posts[0]['url']
+        post_info = cls.get_post_(url)
+        pp.pprint(post_info)
+
+    @classmethod
+    def test_format(cls):
         """测试返回格式"""
         posts = cls.get_posts_()
         assert isinstance(posts, list)

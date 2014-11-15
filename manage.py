@@ -58,7 +58,7 @@ def createdb():
 
 
 @manager.command
-def grab():
+def grab_feed():
     """获取最新feed数据"""
     with app.app_context():
         for blog in Blog.query:
@@ -73,21 +73,25 @@ def remote_grab():
 
 
 @manager.command
-def grab_wy():
-    """爬取王垠的博文"""
+def test_spider():
+    """测试Spider
+
+    将下方的WangYinSpider替换为你写的SPider，
+    然后运行python manage.py test_spider即可
+    """
+    from spiders.wangyin import WangYinSpider
+
+    WangYinSpider.test_get_posts()  # 测试get_posts
+    WangYinSpider.test_get_post()  # 测试get_post
+
+
+@manager.command
+def grab_spider():
+    """通过spider爬取博文"""
     from spiders import grab_by_spider
     from spiders.wangyin import WangYinSpider
 
     return grab_by_spider(WangYinSpider)
-
-
-@manager.command
-def grab_lifesinger():
-    """爬取lifesinger的博文"""
-    from spiders import grab_by_spider
-    from spiders.lifesinger import LifeSingerSpider
-
-    return grab_by_spider(LifeSingerSpider)
 
 
 if __name__ == "__main__":
