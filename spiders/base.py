@@ -20,6 +20,7 @@ pp = MyPrettyPrinter(indent=2)
 
 class BaseSpider(object):
     url = ""  # 网址
+    posts_url = ""  # 包含博文列表的网址
     title = ""  # 博客标题
     subtitle = ""  # 博客副标题
     author = ""  # 博主
@@ -35,7 +36,7 @@ class BaseSpider(object):
                 {'url': '', 'title': ''}
             ]
         """
-        tree = cls._get_tree(cls.url)
+        tree = cls._get_tree(cls.posts_url or cls.url)
         host = cls._get_host(cls.url)
         tree.make_links_absolute(host)
 
