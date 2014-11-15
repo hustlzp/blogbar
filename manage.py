@@ -71,18 +71,17 @@ def remote_grab():
 @manager.command
 def grab_spider():
     """通过spider爬取博文"""
-    from spiders import grab_by_spider
-    from spiders.livid import LividSpider
+    from spiders import grab_by_spider, LividSpider as TargetSpider
 
     with app.app_context():
-        grab_by_spider(LividSpider)
+        grab_by_spider(TargetSpider)
 
 
 @manager.command
 def test_spider():
     """测试Spider
 
-    将下方的WangYinSpider替换为你写的SPider，
+    将下方的LividSpider替换为你写的SPider，
     然后运行python manage.py test_spider即可。
 
     共有3条测试指令：
@@ -91,15 +90,15 @@ def test_spider():
         3. test_format: 测试全部数据的格式
 
     建议按顺序依次测试：
-        运行1（注释2、3），看输出是否正常
-        运行2（注释1、3），看输入是否正常
-        运行3（注释1、2），看是否通过格式测试
+        运行1（注释2、3），观察输出是否正常
+        运行2（注释1、3），观察输出是否正常
+        运行3（注释1、2），观察是否通过格式测试
     """
-    from spiders.livid import LividSpider
+    from spiders import LividSpider as TargetSpider
 
-    # LividSpider.test_get_posts()  # 测试get_posts
-    #LividSpider.test_get_post()  # 测试get_post
-    #LividSpider.test_format()  # 测试全部数据的格式
+    TargetSpider.test_get_posts()  # 测试get_posts
+    TargetSpider.test_get_post()  # 测试get_post
+    TargetSpider.test_format()  # 测试全部数据的格式
 
 
 if __name__ == "__main__":

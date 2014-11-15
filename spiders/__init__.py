@@ -2,7 +2,6 @@
 from .lifesinger import LifeSingerSpider
 from .wangyin import WangYinSpider
 from .livid import LividSpider
-from application import create_app
 from application.models import db, Blog, Post
 
 subclasses = [
