@@ -97,8 +97,8 @@ class BaseSpider(object):
         pp.pprint(post_info)
 
     @classmethod
-    def test_format(cls):
-        """测试返回格式"""
+    def test_all(cls):
+        """测试所有返回数据的格式"""
         posts = cls.get_posts_()
         assert isinstance(posts, list)
 
