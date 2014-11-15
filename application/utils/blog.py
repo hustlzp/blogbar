@@ -3,7 +3,6 @@ import feedparser
 from time import mktime
 from datetime import datetime
 from ..models import db, Post
-from application import create_app
 
 
 def grab_by_feed(blog):
