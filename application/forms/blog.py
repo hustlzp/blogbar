@@ -11,5 +11,6 @@ class BlogForm(Form):
         URL('格式错误')
     ])
     title = StringField('标题', [DataRequired('不能为空')])
+    subtitle = StringField('副标题', description='选填')
     author = StringField('作者', [DataRequired('不能为空')])
-    feed = StringField('RSS')
+    feed = StringField('RSS', [DataRequired('不能为空')])
