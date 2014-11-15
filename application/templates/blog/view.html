@@ -9,6 +9,18 @@
 
          <p>链接：<a href="{{ blog.url }}" target="_blank">{{ blog.url }}</a></p>
 
+         {% if blog.feed %}
+            {% set feed = blog.feed %}
+         {% else %}
+            {% set feed = url_for('blog.feed', uid=blog.id) %}
+         {% endif %}
+
+         <p>
+            <a href="{{ feed }}" target="_blank">
+               <span class="fa fa-rss"></span>
+            </a>
+         </p>
+
          <p>作者：{{ blog.author }}</p>
 
          {% for p in blog.posts %}

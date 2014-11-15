@@ -47,7 +47,8 @@ def post(uid):
 def feed(uid):
     blog = Blog.query.get_or_404(uid)
     if blog.feed:
-        abort(404)
+        abort(403)
+
     feed = AtomFeed(blog.title, feed_url=request.url, url=blog.url, id=blog.url)
     if blog.subtitle:
         feed.subtitle = blog.subtitle
