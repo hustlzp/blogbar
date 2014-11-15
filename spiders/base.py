@@ -120,6 +120,8 @@ class BaseSpider(object):
                    or ('updated_at' in post_info
                        and isinstance(post_info['updated_at'], datetime))
             print("%s - pass" % post['title'])
+        print('-------------------------------------')
+        print('All passed!')
 
     @staticmethod
     def _get_tree(url):

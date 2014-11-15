@@ -77,12 +77,23 @@ def test_spider():
     """测试Spider
 
     将下方的WangYinSpider替换为你写的SPider，
-    然后运行python manage.py test_spider即可
+    然后运行python manage.py test_spider即可。
+
+    共有3条测试指令：
+        1. test_get_posts: 测试get_posts
+        2. test_get_post: 测试get_post
+        3. test_format: 测试全部数据的格式
+
+    建议按顺序依次测试：
+        运行1（注释2、3），看输出是否正常
+        运行2（注释1、3），看输入是否正常
+        运行3（注释1、2），看是否通过格式测试
     """
     from spiders.wangyin import WangYinSpider
 
-    WangYinSpider.test_get_posts()  # 测试get_posts
-    WangYinSpider.test_get_post()  # 测试get_post
+    # WangYinSpider.test_get_posts()  # 测试get_posts
+    # WangYinSpider.test_get_post()  # 测试get_post
+    WangYinSpider.test_format()  # 测试全部数据的格式
 
 
 @manager.command
