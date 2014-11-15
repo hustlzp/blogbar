@@ -23,16 +23,6 @@ def add():
     if form.validate_on_submit():
         blog = Blog(**form.data)
         blog.url = blog.url.rstrip('/')
-        if blog.feed:
-            try:
-                grab_by_feed(blog)
-            except Exception, e:
-                print(e)
-                blog.last_status = False
-                flash('Feed抓取失败')
-            else:
-                blog.last_status = True
-                flash('Feed抓取成功，共抓取 %d 篇日志' % blog.posts.count())
         db.session.add(blog)
         db.session.commit()
         flash('谢谢你的推荐！我们会在第一时间审核。')
