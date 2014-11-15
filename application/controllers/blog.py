@@ -35,6 +35,7 @@ def add():
                 flash('Feed抓取成功，共抓取 %d 篇日志' % blog.posts.count())
         db.session.add(blog)
         db.session.commit()
+        flash('谢谢你的推荐！我们会在第一时间审核。')
         return redirect(url_for('site.index'))
     return render_template('blog/add.html', form=form)
 
