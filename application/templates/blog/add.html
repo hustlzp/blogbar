@@ -5,11 +5,10 @@
 {% block page_content %}
    <div class="container">
       <div class="col-sm-8">
-         <h1>添加Blog</h1>
+         <h1>推荐博客</h1>
 
          <form class="form-horizontal" role="form" method="post"
                action="">
-
             {{ form.csrf_token }}
 
             {{ horizontal_field(form.url) }}

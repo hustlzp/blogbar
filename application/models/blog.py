@@ -12,6 +12,7 @@ class Blog(db.Model):
     feed_version = db.Column(db.String(20))
     url = db.Column(db.String(200))
     avatar = db.Column(db.String(200))
+    is_approved = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
     updated_at = db.Column(db.DateTime)
 

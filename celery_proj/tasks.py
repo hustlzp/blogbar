@@ -16,7 +16,7 @@ def grab():
     with flask_app.app_context():
         # 通过feed抓取blog
         for blog in Blog.query:
-            if blog.feed:
+            if blog.feed and blog.is_approved:
                 try:
                     new_posts_count += grab_by_feed(blog)
                 except Exception, e:

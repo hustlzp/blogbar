@@ -11,12 +11,14 @@ bp = Blueprint('blog', __name__)
 @bp.route('/<int:uid>')
 def view(uid):
     blog = Blog.query.get_or_404(uid)
+    if not blog.is_approved:
+        abort(404)
     return render_template('blog/view.html', blog=blog)
 
 
 @bp.route('/add', methods=['GET', 'POST'])
 def add():
-    """添加博客"""
+    """t博客"""
     form = BlogForm()
     if form.validate_on_submit():
         blog = Blog(**form.data)
@@ -46,8 +48,10 @@ def post(uid):
 @bp.route('/<int:uid>/feed')
 def feed(uid):
     blog = Blog.query.get_or_404(uid)
+    if not blog.is_approved:
+        abort(404)
     if blog.feed:
-        abort(403)
+        abort(404)
 
     feed = AtomFeed(blog.title, feed_url=request.url, url=blog.url, id=blog.url)
     if blog.subtitle:
