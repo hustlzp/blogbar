@@ -1,4 +1,5 @@
 # coding: utf-8
+import functools
 import pprint
 import HTMLParser
 import requests
@@ -37,11 +38,7 @@ class BaseSpider(object):
             ]
         """
         tree = cls._get_tree(cls.posts_url or cls.url)
-        host = cls._get_host(cls.url)
-        tree.make_links_absolute(host)
-
         posts = cls.get_posts(tree)
-
         html_parser = HTMLParser.HTMLParser()
         for p in posts:
             p['title'] = html_parser.unescape(p['title'])
@@ -71,7 +68,12 @@ class BaseSpider(object):
         """
         html_parser = HTMLParser.HTMLParser()
         tree = cls._get_tree(url)
+        # 去除script, style元素
+        scripts = tree.cssselect('script')
+        styles = tree.cssselect('style')
+        map(tree.remove, scripts, styles)
         post_info = cls.get_post(tree, url)
+        # HTML解码
         post_info['content'] = html_parser.unescape(post_info['content'])
         return post_info
 
@@ -122,11 +124,14 @@ class BaseSpider(object):
         print('-------------------------------------')
         print('All passed!')
 
-    @staticmethod
-    def _get_tree(url):
+    @classmethod
+    def _get_tree(cls, url):
         """根据url获取ElementTree"""
         page = requests.get(url)
-        return html.fromstring(page.text)
+        tree = html.fromstring(page.text)
+        host = cls._get_host(url)
+        tree.make_links_absolute(host)
+        return tree
 
     @staticmethod
     def _get_host(url):
