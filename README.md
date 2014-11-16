@@ -3,4 +3,4 @@ Blogbar
 
 http://www.blogbar.cc
 
-Website for Blogbar.
+当你和世界不一样，那就让你不一样。
