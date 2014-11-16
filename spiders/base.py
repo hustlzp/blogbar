@@ -1,5 +1,4 @@
 # coding: utf-8
-import functools
 import pprint
 import HTMLParser
 import requests
@@ -37,7 +36,7 @@ class BaseSpider(object):
                 {'url': '', 'title': ''}
             ]
         """
-        tree = cls._get_tree(cls.posts_url or cls.url)
+        tree = _get_tree(cls.posts_url or cls.url)
         posts = cls.get_posts(tree)
         html_parser = HTMLParser.HTMLParser()
         for p in posts:
@@ -67,7 +66,7 @@ class BaseSpider(object):
             {content: '', published_at: '', updated_at: ''}
         """
         html_parser = HTMLParser.HTMLParser()
-        tree = cls._get_tree(url)
+        tree = _get_tree(url)
         # 去除script, style元素
         scripts = tree.cssselect('script')
         styles = tree.cssselect('style')
@@ -124,23 +123,6 @@ class BaseSpider(object):
         print('-------------------------------------')
         print('All passed!')
 
-    @classmethod
-    def _get_tree(cls, url):
-        """根据url获取ElementTree"""
-        page = requests.get(url)
-        tree = html.fromstring(page.text)
-        host = cls._get_host(url)
-        tree.make_links_absolute(host)
-        return tree
-
-    @staticmethod
-    def _get_host(url):
-        """获取url中的host"""
-        from urlparse import urlparse
-
-        parsed_uri = urlparse(url)
-        return '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)
-
 
 def get_inner_html(element):
     """获取element中的HTML内容"""
@@ -149,3 +131,20 @@ def get_inner_html(element):
     html = ''.join(content_list).strip()
     html_parser = HTMLParser.HTMLParser()
     return html_parser.unescape(html)
+
+
+def _get_tree(cls, url):
+    """根据url获取ElementTree"""
+    page = requests.get(url)
+    tree = html.fromstring(page.text)
+    host = _get_host(url)
+    tree.make_links_absolute(host)
+    return tree
+
+
+def _get_host(url):
+    """获取url中的host"""
+    from urlparse import urlparse
+
+    parsed_uri = urlparse(url)
+    return '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)
