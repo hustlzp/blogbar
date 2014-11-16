@@ -39,7 +39,11 @@ def add():
 @bp.route('/post/<int:uid>')
 def post(uid):
     post = Post.query.get_or_404(uid)
-    content = html.fromstring(post.content).text_content()
+    content_tree = html.fromstring(post.content)
+    scripts = content_tree.cssselect('script')  # 去除script标签
+    for script in scripts:
+        content_tree.remove(script)
+    content = content_tree.text_content()
     content = content.replace('.', '')
     tags = analyse.extract_tags(content, topK=20, withWeight=True)
     tags_ = [{'text': tag, 'weight': weight} for tag, weight in tags]
