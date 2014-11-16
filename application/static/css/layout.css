@@ -36,3 +36,6 @@ body {
   border-top: 1px solid #e2e2e2;
   padding-top: 20px;
 }
+#footer #links {
+  margin-left: 20px;
+}
