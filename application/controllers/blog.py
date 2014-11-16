@@ -24,7 +24,7 @@ def view(uid, page):
 
 @bp.route('/add', methods=['GET', 'POST'])
 def add():
-    """t博客"""
+    """推荐博客"""
     form = BlogForm()
     if form.validate_on_submit():
         blog = Blog(**form.data)
