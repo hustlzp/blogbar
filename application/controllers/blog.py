@@ -1,4 +1,7 @@
 # coding: utf-8
+import json
+from jieba import analyse
+from lxml import html
 from flask import render_template, Blueprint, flash, redirect, url_for, abort, request
 from werkzeug.contrib.atom import AtomFeed, FeedEntry
 from ..models import db, Blog, Post
@@ -16,7 +19,6 @@ def view(uid, page):
     posts_count = blog.posts.count()
     posts = blog.posts.order_by(Post.published_at.desc(),
                                 Post.updated_at.desc()).paginate(page, 20)
-
     return render_template('blog/view.html', blog=blog, posts=posts, posts_count=posts_count)
 
 
@@ -37,7 +39,11 @@ def add():
 @bp.route('/post/<int:uid>')
 def post(uid):
     post = Post.query.get_or_404(uid)
-    return render_template('blog/post.html', post=post)
+    content = html.fromstring(post.content).text_content()
+    content = content.replace('.', '')
+    tags = analyse.extract_tags(content, topK=20, withWeight=True)
+    tags_ = [{'text': tag, 'weight': weight} for tag, weight in tags]
+    return render_template('blog/post.html', post=post, tags=json.dumps(tags_))
 
 
 @bp.route('/<int:uid>/feed')
