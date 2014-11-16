@@ -2,6 +2,7 @@
 import pprint
 import HTMLParser
 import requests
+from urlparse import urlparse
 from lxml import html, etree
 from datetime import datetime
 
@@ -144,7 +145,5 @@ def _get_tree(cls, url):
 
 def _get_host(url):
     """获取url中的host"""
-    from urlparse import urlparse
-
     parsed_uri = urlparse(url)
     return '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)

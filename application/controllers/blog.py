@@ -63,9 +63,8 @@ def feed(uid):
         feed.subtitle = blog.subtitle
     for post in blog.posts.order_by(Post.published_at.desc(), Post.updated_at.desc()).limit(15):
         updated = post.updated_at if post.updated_at else post.published_at
-        entry = FeedEntry(post.title, post.content, content_type='html', author=blog.author,
-                          url=post.url, id=post.url, updated=updated)
-        feed.add(entry)
+        feed.add(post.title, post.content, content_type='html', author=blog.author,
+                 url=post.url, id=post.url, updated=updated)
     response = feed.get_response()
     response.headers['Content-Type'] = 'application/xml'
     return response
