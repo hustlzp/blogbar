@@ -1,5 +1,6 @@
 # coding: utf-8
 from __future__ import absolute_import
+import traceback
 from celery_proj.app import app
 from application import create_app
 from application.models import db, Blog, GrabLog
@@ -20,7 +21,7 @@ def grab():
                 try:
                     new_posts_count += grab_by_feed(blog)
                 except Exception, e:
-                    log = GrabLog(error=e, blog_id=blog.id)
+                    log = GrabLog(message=e, details=traceback.format_exc(), blog_id=blog.id)
                     db.session.add(log)
 
         # 通过spider抓取blog
@@ -29,7 +30,7 @@ def grab():
                 new_posts_count += grab_by_spider(spider)
             except Exception, e:
                 blog = Blog.query.filter(Blog.url == spider.url).first_or_404()
-                log = GrabLog(error=e, blog_id=blog.id)
+                log = GrabLog(message=e, details=traceback.format_exc(), blog_id=blog.id)
                 db.session.add(log)
 
         db.session.commit()

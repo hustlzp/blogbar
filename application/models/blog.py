@@ -36,7 +36,8 @@ class Post(db.Model):
 
 class GrabLog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    error = db.Column(db.Text)
+    message = db.Column(db.Text)
+    details = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
 
     blog_id = db.Column(db.Integer, db.ForeignKey('blog.id'))
