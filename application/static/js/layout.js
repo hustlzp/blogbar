@@ -7,10 +7,18 @@ $(function () {
 
     // 转换成UTC时间
     $('.utc-time').each(function () {
-        var time = $(this).text();
+        var time = moment($(this).text(), "YYYY-MM-DD HH:mm:ss");
+
+        // 不包含具体的时刻
+        if (time.hour() === 0 && time.minute() === 0 && time.second() === 0) {
+            $(this).text(time.format("YYYY-MM-DD"));
+            return true;
+        }
+
+        // Convert to local time
         var date = new Date();
         var offset = date.getTimezoneOffset();
-        time = moment(time, "YYYY-MM-DD HH:mm:ss").subtract(offset, 'minutes');
+        time = time.subtract(offset, 'minutes');
         $(this).text(time.format("YYYY-MM-DD HH:mm:ss"));
     });
 });
