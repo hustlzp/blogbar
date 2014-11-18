@@ -40,13 +40,17 @@
                   <span class="fa fa-external-link"></span>
                </a>
 
-               <div class="time">
+               <div>
                   {% if p.published_at %}
-                     <span>发布于：{{ p.published_at }}</span>
+                     发布于：
+                     <span class="utc-time">
+                        {{ p.published_at }}</span>
                   {% endif %}
 
                   {% if p.updated_at %}
-                     <span>更新于：{{ p.updated_at }}</span>
+                     更新于：
+                     <span class="utc-time">
+                        {{ p.updated_at }}</span>
                   {% endif %}
                </div>
             </div>

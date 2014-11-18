@@ -9,6 +9,7 @@
   "dependencies": {
     "bootstrap": "~3.3.0",
     "font-awesome": "~4.2.0",
-    "respond": "~1.4.2"
+    "respond": "~1.4.2",
+    "moment": "~2.8.3"
   }
 }

@@ -17,6 +17,18 @@
             <a href="{{ post.blog.url }}" target="_blank"><span class="fa fa-external-link"></span></a>
          </p>
 
+         <div class="time">
+            {% if post.published_at %}
+               发布于：
+               <span class="utc-time">{{ post.published_at }}</span>
+            {% endif %}
+
+            {% if post.updated_at %}
+               更新于：
+               <span class="utc-time">{{ post.updated_at }}</span>
+            {% endif %}
+         </div>
+
          <hr/>
 
          <div>
