@@ -25,6 +25,7 @@ class Post(db.Model):
     url = db.Column(db.String(500))
     title = db.Column(db.String(200))
     content = db.Column(db.Text)
+    is_duplicate = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
     published_at = db.Column(db.DateTime)
     updated_at = db.Column(db.DateTime)

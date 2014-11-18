@@ -16,9 +16,9 @@ def view(uid, page):
     blog = Blog.query.get_or_404(uid)
     if not blog.is_approved:
         abort(404)
-    posts_count = blog.posts.count()
-    posts = blog.posts.order_by(Post.published_at.desc(),
-                                Post.updated_at.desc()).paginate(page, 20)
+    posts_count = blog.posts.filter(~Post.is_duplicate).count()
+    posts = blog.posts.filter(~Post.is_duplicate). \
+        order_by(Post.published_at.desc(), Post.updated_at.desc()).paginate(page, 20)
     return render_template('blog/view.html', blog=blog, posts=posts, posts_count=posts_count)
 
 
@@ -39,6 +39,8 @@ def add():
 @bp.route('/post/<int:uid>')
 def post(uid):
     post = Post.query.get_or_404(uid)
+    if post.is_duplicate:
+        abort(404)
     if post.content:
         content_tree = html.fromstring(post.content)
         scripts = content_tree.cssselect('script')  # 去除script标签
@@ -64,7 +66,8 @@ def feed(uid):
     feed = AtomFeed(blog.title, feed_url=request.url, url=blog.url, id=blog.url)
     if blog.subtitle:
         feed.subtitle = blog.subtitle
-    for post in blog.posts.order_by(Post.published_at.desc(), Post.updated_at.desc()).limit(15):
+    for post in blog.posts.filter(~Post.is_duplicate). \
+            order_by(Post.published_at.desc(), Post.updated_at.desc()).limit(15):
         updated = post.updated_at if post.updated_at else post.published_at
         feed.add(post.title, post.content, content_type='html', author=blog.author,
                  url=post.url, id=post.url, updated=updated)
