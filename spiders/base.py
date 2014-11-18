@@ -70,8 +70,9 @@ class BaseSpider(object):
         tree = _get_tree(url)
         # 去除script, style元素
         scripts = tree.cssselect('script')
+        map(tree.remove, scripts)
         styles = tree.cssselect('style')
-        map(tree.remove, scripts, styles)
+        map(tree.remove, styles)
         post_info = cls.get_post(tree, url)
         # HTML解码
         post_info['content'] = html_parser.unescape(post_info['content'])
