@@ -134,7 +134,7 @@ def get_inner_html(element):
     return html_parser.unescape(html)
 
 
-def _get_tree(cls, url):
+def _get_tree(url):
     """根据url获取ElementTree"""
     page = requests.get(url)
     tree = html.fromstring(page.text)
