@@ -1,6 +1,6 @@
 # coding: utf-8
 import datetime
-from .base import BaseSpider, get_inner_html
+from .base import BaseSpider, get_inner_html, remove_element
 
 
 class YourSpider(BaseSpider):
@@ -15,5 +15,5 @@ class YourSpider(BaseSpider):
         pass
 
     @staticmethod
-    def get_post(tree, url):
+    def get_post(tree):
         pass

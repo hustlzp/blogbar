@@ -32,9 +32,9 @@ class BaseSpider(object):
 
         返回格式
             [
-                {'url': '', 'title': ''},
-                {'url': '', 'title': ''},
-                {'url': '', 'title': ''}
+                {'url': '', 'title': '', 'published_at': ''},
+                {'url': '', 'title': '', 'published_at': ''},
+                {'url': '', 'title': '', 'published_at': ''}
             ]
         """
         tree = _get_tree(cls.posts_url or cls.url)
@@ -52,40 +52,42 @@ class BaseSpider(object):
 
         返回格式
             [
-                {'url': '', 'title': ''},
-                {'url': '', 'title': ''},
-                {'url': '', 'title': ''}
+                {'url': '', 'title': '', 'published_at': ''},
+                {'url': '', 'title': '', 'published_at': ''},
+                {'url': '', 'title': '', 'published_at': ''}
             ]
         """
         raise NotImplementedError()
 
     @classmethod
     def get_post_(cls, url):
-        """根据url，获取post信息
+        """根据url，获取post内容
 
         返回格式
-            {content: '', published_at: '', updated_at: ''}
+            content
         """
         html_parser = HTMLParser.HTMLParser()
         tree = _get_tree(url)
-        # 去除script, style元素
-        # scripts = tree.cssselect('script')
-        # map(tree.remove, scripts)
-        # styles = tree.cssselect('style')
-        # map(tree.remove, styles)
-        post_info = cls.get_post(tree, url)
-        # HTML解码
-        post_info['content'] = html_parser.unescape(post_info['content'])
-        return post_info
+
+        # 去除script
+        scripts = tree.cssselect('script')
+        map(remove_element, scripts)
+
+        # 去除style
+        styles = tree.cssselect('style')
+        map(remove_element, styles)
+
+        content = cls.get_post(tree)
+        return html_parser.unescape(content)  # HTML解码
 
     @staticmethod
-    def get_post(tree, url):
-        """根据tree，获取post信息。
+    def get_post(tree):
+        """根据tree，获取post内容。
 
         子类必须重载此方法。
 
         返回格式
-            {content: '', published_at: '', updated_at: ''}
+            content
         """
         raise NotImplementedError()
 
@@ -100,8 +102,8 @@ class BaseSpider(object):
         """测试get_post"""
         posts = cls.get_posts_()
         url = posts[0]['url']
-        post_info = cls.get_post_(url)
-        pp.pprint(post_info)
+        content = cls.get_post_(url)
+        pp.pprint(content)
 
     @classmethod
     def test_all(cls):
@@ -113,14 +115,10 @@ class BaseSpider(object):
             assert isinstance(post, dict)
             assert 'url' in post and post['url']
             assert 'title' in post and post['title']
-
-            post_info = cls.get_post_(post['url'])
-            assert isinstance(post_info, dict)
-            assert 'content' in post_info and post_info['content']
-            assert ('published_at' in post_info
-                    and isinstance(post_info['published_at'], datetime)) \
-                   or ('updated_at' in post_info
-                       and isinstance(post_info['updated_at'], datetime))
+            assert 'published_at' in post \
+                   and isinstance(post['published_at'], datetime)
+            content = cls.get_post_(post['url'])
+            assert content
             print("%s - ok" % post['title'])
         print('-------------------------------------')
         print('All passed!')
@@ -133,6 +131,12 @@ def get_inner_html(element):
     html = ''.join(content_list).strip()
     html_parser = HTMLParser.HTMLParser()
     return html_parser.unescape(html)
+
+
+def remove_element(element):
+    """去除此元素"""
+    parent = element.getparent()
+    parent.remove(element)
 
 
 def _get_tree(url):
