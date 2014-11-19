@@ -11,6 +11,7 @@ class Blog(db.Model):
     feed = db.Column(db.String(500))
     feed_version = db.Column(db.String(20))
     url = db.Column(db.String(200))
+    since = db.Column(db.Integer)
     avatar = db.Column(db.String(200))
     is_approved = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
