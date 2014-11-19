@@ -36,6 +36,8 @@ class BaseSpider(object):
                 {'url': '', 'title': '', 'published_at': ''},
                 {'url': '', 'title': '', 'published_at': ''}
             ]
+
+        其中，published_at需为UTC时间。
         """
         tree = _get_tree(cls.posts_url or cls.url)
         posts = cls.get_posts(tree)
@@ -56,6 +58,8 @@ class BaseSpider(object):
                 {'url': '', 'title': '', 'published_at': ''},
                 {'url': '', 'title': '', 'published_at': ''}
             ]
+
+        其中，published_at需为UTC时间。
         """
         raise NotImplementedError()
 
