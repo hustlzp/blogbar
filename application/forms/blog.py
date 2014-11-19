@@ -13,4 +13,4 @@ class BlogForm(Form):
     title = StringField('标题', [DataRequired('不能为空')])
     subtitle = StringField('副标题', description='选填')
     author = StringField('作者', [DataRequired('不能为空')])
-    feed = StringField('RSS', [DataRequired('不能为空')])
+    feed = StringField('RSS', description='选填')
