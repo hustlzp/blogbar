@@ -12,7 +12,8 @@ from spiders.wangyin import WangYinSpider as TargetSpider
 def test_spider(args):
     """Spider测试程序
 
-    需要将上方的LividSpider替换为你写的Spider。
+    需要将上方的spiders.wangyin替换为你写的模块名，
+    将WangYinSpider替换为你写的Spider类。
 
     共有3条测试指令：
 
