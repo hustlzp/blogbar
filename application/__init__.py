@@ -48,7 +48,6 @@ def create_app():
     register_jinja(app)
     register_error_handle(app)
     register_uploadsets(app)
-    register_admin(app)
 
     # before every request
     @app.before_request
@@ -119,10 +118,13 @@ def register_db(app):
 
 def register_routes(app):
     """注册路由"""
-    from .controllers import site, blog
+    from .controllers import site, blog, admin, account
 
     app.register_blueprint(site.bp, url_prefix='')
     app.register_blueprint(blog.bp, url_prefix='/blog')
+    app.register_blueprint(account.bp, url_prefix='/account')
+    app.register_blueprint(admin.bp, url_prefix='/admin')
+
 
 def register_error_handle(app):
     """注册HTTP错误页面"""
@@ -145,18 +147,6 @@ def register_uploadsets(app):
     from .utils.uploadsets import avatars
 
     configure_uploads(app, (avatars))
-
-
-def register_admin(app):
-    """注册Flask-Admin"""
-    from flask.ext.admin import Admin
-    from flask.ext.admin.contrib.sqla import ModelView
-    from .models import db, User, Blog, Post
-
-    admin = Admin(app)
-    # admin.add_view(ModelView(User, db.session))
-    # admin.add_view(ModelView(Blog, db.session))
-    # admin.add_view(ModelView(Post, db.session))
 
 
 def _get_template_name(template_reference):

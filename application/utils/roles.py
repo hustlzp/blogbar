@@ -4,12 +4,20 @@ from permission import Role
 from ..models import User
 
 
+class VisitorRole(Role):
+    def check(self):
+        return 'user_id' not in session
+
+    def deny(self):
+        return redirect(url_for('site.index'))
+
+
 class UserRole(Role):
     def check(self):
         return 'user_id' in session
 
     def deny(self):
-        flash('This action need the login')
+        flash('Login first.')
         return redirect(url_for('account.signin'))
 
 
