@@ -34,7 +34,7 @@ def add():
         db.session.add(log)
         db.session.commit()
         flash('非常感谢你的推荐！我们会在第一时间审核。')
-        return redirect(url_for('site.index'))
+        return redirect(url_for('site.approve_results'))
     return render_template('blog/add.html', form=form)
 
 
