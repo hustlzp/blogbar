@@ -6,7 +6,15 @@
 {% block page_content %}
    <div class="container">
       <div class="col-sm-8">
-         <h1>{{ blog.title }}</h1>
+         <h1>
+            {{ blog.title }}
+
+            {% if blog.is_protected %}
+               <sup title="作者禁止转载">
+                  <span class="fa fa-lock" style="color: #FAAD07;"></span>
+               </sup>
+            {% endif %}
+         </h1>
 
          {% if blog.since %}
             <p>Since {{ blog.since }}</p>
