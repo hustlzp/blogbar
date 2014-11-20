@@ -21,7 +21,8 @@ def index():
 
 @bp.route('/approve_results')
 def approve_results():
-    logs = ApprovementLog.query.order_by(ApprovementLog.status.desc())
+    logs = ApprovementLog.query.order_by(ApprovementLog.status.asc(),
+                                         ApprovementLog.created_at.desc())
     return render_template('site/approve_results.html', logs=logs)
 
 
