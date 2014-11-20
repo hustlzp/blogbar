@@ -12,8 +12,8 @@ def index():
     blogs_count = blogs.count()
     posts_count = Post.query.filter(~Post.is_duplicate).count()
     latest_posts = Post.query.filter(~Post.is_duplicate). \
-        order_by(Post.published_at.desc(), Post.updated_at.desc()).limit(10)
-    latest_blogs = Blog.query.filter(Blog.is_approved).order_by(Blog.created_at.desc()).limit(10)
+        order_by(Post.published_at.desc(), Post.updated_at.desc()).limit(20)
+    latest_blogs = Blog.query.filter(Blog.is_approved).order_by(Blog.created_at.desc()).limit(20)
     return render_template('site/index.html', blogs=blogs, latest_posts=latest_posts,
                            latest_blogs=latest_blogs, blogs_count=blogs_count,
                            posts_count=posts_count)
