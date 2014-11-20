@@ -45,3 +45,14 @@ class GrabLog(db.Model):
     blog_id = db.Column(db.Integer, db.ForeignKey('blog.id'))
     blog = db.relationship('Blog', backref=db.backref('logs', lazy='dynamic',
                                                       order_by='desc(GrabLog.created_at)'))
+
+
+class ApprovementLog(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    created_at = db.Column(db.DateTime, default=datetime.datetime.now)
+    approved_at = db.Column(db.DateTime)
+    message = db.Column(db.Text)
+
+    blog_id = db.Column(db.Integer, db.ForeignKey('blog.id'))
+    blog = db.relationship('Blog', backref=db.backref('approvement_logs', lazy='dynamic',
+                                                      order_by='desc(ApprovementLog.created_at)'))
