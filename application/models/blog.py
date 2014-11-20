@@ -51,6 +51,7 @@ class ApprovementLog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
     approved_at = db.Column(db.DateTime)
+    is_approved = db.Column(db.Boolean, default=False)
     message = db.Column(db.Text)
 
     blog_id = db.Column(db.Integer, db.ForeignKey('blog.id'))

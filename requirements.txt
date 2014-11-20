@@ -15,19 +15,14 @@ requests
 lxml
 cssselect
 jieba
+feedparser
 
 livereload
 formic==0.9beta8
-
 gunicorn
 fabric
-
 raven
 blinker
-
 nose
 coverage
-
 pylint
-
-feedparser
