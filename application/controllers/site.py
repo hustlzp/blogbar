@@ -19,17 +19,17 @@ def index():
                            posts_count=posts_count)
 
 
-@bp.route('/approve_results')
-def approve_results():
+@bp.route('/approve_results', defaults={'page': 1})
+@bp.route('/approve_results/page/<int:page>')
+def approve_results(page):
     logs = ApprovementLog.query
     unprocessed_logs = logs.filter(ApprovementLog.status == -1).order_by(
         ApprovementLog.updated_at.desc())
-    approved_logs = logs.filter(ApprovementLog.status == 1).order_by(
-        ApprovementLog.updated_at.desc())
-    unapproved_logs = logs.filter(ApprovementLog.status == 0).order_by(
-        ApprovementLog.updated_at.desc())
+    processed_logs = logs.filter(ApprovementLog.status != 1).order_by(
+        ApprovementLog.status.desc(),
+        ApprovementLog.updated_at.desc()).paginate(page, 20)
     return render_template('site/approve_results.html', unprocessed_logs=unprocessed_logs,
-                           approved_logs=approved_logs, unapproved_logs=unapproved_logs)
+                           processed_logs=processed_logs)
 
 
 @bp.route('/about')

@@ -1,66 +1,70 @@
 {% extends "layout.html" %}
+{% from 'macro/ui.html' import pagination %}
 
 {% block page_title %}审核结果{% endblock %}
 {% block page_content %}
    <div class="container">
-      <h2>审核结果</h2>
+      <h2>待审查博客</h2>
 
-      <p>若对审核结果有异议，请联系 support@blogbar.cc</p>
+
 
       {% macro render_logs(logs) %}
-         {% for log in logs %}
-            {% set blog = log.blog %}
-
+         <table class="table table-bordered">
             <tr>
-               <td>
-                  <strong>{{ blog.title }}</strong>
-                  {% if blog.subtitle %}
-                     <br/>
-                     <small class="text-light">{{ blog.subtitle }}</small>
-                  {% endif %}
-               </td>
-               <td>{{ blog.author }}</td>
-               <td>
-                  <a href="{{ blog.url }}" target="_blank">
-                     {{ blog.url }}
-                  </a>
-
-                  {% if blog.feed %}
-                     &nbsp;/&nbsp;
-
-                     <a href="{{ blog.feed }}" target="_blank">
-                        <span class="fa fa-rss-square "></span>
-                     </a>
-                  {% endif %}
-               </td>
-               <td>{{ log.created_at }}</td>
-               <td>
-                  {% if log.status == -1 %}
-                     <span class="label label-info">待审核</span>
-                  {% elif log.status == 0 %}
-                     <span class="label label-danger">不通过</span>
-                  {% elif log.status == 1 %}
-                     <span class="label label-success">通过</span>
-                  {% endif %}
-               </td>
-               <td>{{ log.message or "" }}</td>
+               <th>博客</th>
+               <th>作者</th>
+               <th>URL / Feed</th>
+               <th>推荐时间</th>
+               <th>审核状态</th>
+               <th>审核消息</th>
             </tr>
-         {% endfor %}
+            {% for log in logs %}
+               {% set blog = log.blog %}
+
+               <tr>
+                  <td>
+                     <strong>{{ blog.title }}</strong>
+                     {% if blog.subtitle %}
+                        <br/>
+                        <small class="text-light">{{ blog.subtitle }}</small>
+                     {% endif %}
+                  </td>
+                  <td>{{ blog.author }}</td>
+                  <td>
+                     <a href="{{ blog.url }}" target="_blank">
+                        {{ blog.url }}
+                     </a>
+
+                     {% if blog.feed %}
+                        &nbsp;/&nbsp;
+
+                        <a href="{{ blog.feed }}" target="_blank">
+                           <span class="fa fa-rss-square "></span>
+                        </a>
+                     {% endif %}
+                  </td>
+                  <td>{{ log.created_at }}</td>
+                  <td>
+                     {% if log.status == -1 %}
+                        <span class="label label-info">待审核</span>
+                     {% elif log.status == 0 %}
+                        <span class="label label-danger">不通过</span>
+                     {% elif log.status == 1 %}
+                        <span class="label label-success">通过</span>
+                     {% endif %}
+                  </td>
+                  <td>{{ log.message or "" }}</td>
+               </tr>
+            {% endfor %}
+         </table>
       {% endmacro %}
 
-      <table class="table table-bordered">
-         <tr>
-            <th>博客</th>
-            <th>作者</th>
-            <th>URL / Feed</th>
-            <th>推荐时间</th>
-            <th>审核状态</th>
-            <th>审核消息</th>
-         </tr>
+      {{ render_logs(unprocessed_logs) }}
 
-         {{ render_logs(unprocessed_logs) }}
-         {{ render_logs(approved_logs) }}
-         {{ render_logs(unapproved_logs) }}
-      </table>
+      <h2>已审查博客 <small>注：若对审核结果有异议，请联系 support@blogbar.cc</small></h2>
+
+      {{ render_logs(processed_logs.items) }}
+
+      {{ pagination(processed_logs) }}
    </div>
 {% endblock %}
