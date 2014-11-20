@@ -10,7 +10,8 @@ bp = Blueprint('admin', __name__)
 @bp.route('/approve')
 @AdminPermission()
 def approve():
-    logs = ApprovementLog.query.order_by(ApprovementLog.status.desc())
+    logs = ApprovementLog.query.order_by(ApprovementLog.status.asc(),
+                                         ApprovementLog.created_at.desc())
     return render_template('admin/approve.html', logs=logs)
 
 

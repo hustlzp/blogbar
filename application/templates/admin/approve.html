@@ -20,10 +20,10 @@
 
             <tr>
                <td>
-                  {{ blog.title }}
+                  <strong>{{ blog.title }}</strong>
                   {% if blog.subtitle %}
                      <br/>
-                     <small>{{ blog.subtitle }}</small>
+                     <small class="text-light">{{ blog.subtitle }}</small>
                   {% endif %}
                </td>
                <td>{{ blog.author }}</td>
@@ -31,8 +31,9 @@
                   <a href="{{ blog.url }}" target="_blank">
                      {{ blog.url }}
                   </a>
-                  &nbsp;/&nbsp;
+
                   {% if blog.feed %}
+                     &nbsp;/&nbsp;
                      <a href="{{ blog.feed }}" target="_blank">
                         <span class="fa fa-rss-square "></span>
                      </a>
@@ -45,13 +46,9 @@
                   {% elif log.status == 0 %}
                      <span class="label label-danger">不通过</span>
                      <br/>
-                     {{ log.updated_at }}
-                     <br/>
                      {{ log.message }}
                   {% elif log.status == 1 %}
                      <span class="label label-success">通过</span>
-                     <br/>
-                     {{ log.updated_at }}
                      <br/>
                      {{ log.message }}
                   {% else %}
