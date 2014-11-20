@@ -12,7 +12,7 @@ bp = Blueprint('admin', __name__)
 @AdminPermission()
 def approve():
     logs = ApprovementLog.query.order_by(ApprovementLog.status.asc(),
-                                         ApprovementLog.created_at.desc())
+                                         ApprovementLog.updated_at.desc())
     return render_template('admin/approve.html', logs=logs)
 
 
