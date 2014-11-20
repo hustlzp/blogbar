@@ -14,6 +14,8 @@ bp = Blueprint('blog', __name__)
 @bp.route('/<int:uid>/page/<int:page>')
 def view(uid, page):
     blog = Blog.query.get_or_404(uid)
+    if blog.is_protected:
+        abort(404)
     if not blog.is_approved:
         abort(404)
     posts_count = blog.posts.filter(~Post.is_duplicate).count()

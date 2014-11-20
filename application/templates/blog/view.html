@@ -38,7 +38,11 @@
 
          {% for p in posts.items %}
             <div>
-               <a href="{{ url_for('blog.post', uid=p.id) }}">{{ p.title }}</a>
+               {% if blog.is_protected %}
+                  <a href="{{ p.url }}" target="_blank">{{ p.title }}</a>
+               {% else %}
+                  <a href="{{ url_for('blog.post', uid=p.id) }}">{{ p.title }}</a>
+               {% endif %}
 
                &nbsp;&nbsp;
 
