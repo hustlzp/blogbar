@@ -19,7 +19,7 @@ def test_spider(args):
         $ python test_spider.py get_posts
             测试get_posts
 
-        $ python test_spider.py get_posts
+        $ python test_spider.py get_post
             测试get_post
 
         $ python test_spider.py all
