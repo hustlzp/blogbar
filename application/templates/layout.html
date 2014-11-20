@@ -39,9 +39,18 @@
          </a>
       </div>
 
+
       <p class="navbar-text navbar-right">
          当你和世界不一样，那就让你不一样。
       </p>
+
+      {% if permissions.AdminPermission().check() %}
+         <p class="navbar-right navbar-text">
+            {% if new_blogs_count %}
+               <span class="label label-info">{{ new_blogs_count }}</span>
+            {% endif %}
+         </p>
+      {% endif %}
 
       <div class="collapse navbar-collapse">
          <a href="{{ url_for('blog.add') }}" class="btn btn-primary navbar-btn navbar-left">
@@ -56,7 +65,7 @@
             {#               <a href="{{ url_for('site.about') }}">关于</a>#}
             {#            </li>#}
             <li id="nav-approve-results">
-               <a href="{{ url_for('site.approve_results') }}">审核结果公示</a>
+               <a href="{{ url_for('site.approve_results') }}">审核结果</a>
             </li>
          </ul>
 

@@ -67,8 +67,17 @@ def register_jinja(app):
     # inject vars into template context
     @app.context_processor
     def inject_vars():
+        from .utils import permissions
+        from .utils.permissions import AdminPermission
+        from .models import ApprovementLog
+
+        new_blogs_count = 0
+        if AdminPermission().check():
+            new_blogs_count = ApprovementLog.query.filter(ApprovementLog.status == -1).count()
+
         return dict(
-            g_var=0
+            permissions=permissions,
+            new_blogs_count=new_blogs_count
         )
 
     def url_for_other_page(page):
