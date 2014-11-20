@@ -49,9 +49,10 @@ class GrabLog(db.Model):
 
 class ApprovementLog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    # 审核状态：1 通过，0 不通过，-1 未审核
+    status = db.Column(db.Integer, default=-1)
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
-    approved_at = db.Column(db.DateTime)
-    is_approved = db.Column(db.Boolean, default=False)
+    updated_at = db.Column(db.DateTime, default=datetime.datetime.now)
     message = db.Column(db.Text)
 
     blog_id = db.Column(db.Integer, db.ForeignKey('blog.id'))

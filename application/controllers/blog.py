@@ -4,7 +4,7 @@ from jieba import analyse
 from lxml import html
 from flask import render_template, Blueprint, flash, redirect, url_for, abort, request
 from werkzeug.contrib.atom import AtomFeed
-from ..models import db, Blog, Post
+from ..models import db, Blog, Post, ApprovementLog
 from ..forms import BlogForm
 
 bp = Blueprint('blog', __name__)
@@ -30,8 +30,10 @@ def add():
         blog = Blog(**form.data)
         blog.url = blog.url.rstrip('/')
         db.session.add(blog)
+        log = ApprovementLog(blog=blog)  # 添加log
+        db.session.add(log)
         db.session.commit()
-        flash('谢谢你的推荐！我们会在第一时间审核。')
+        flash('非常感谢你的推荐！我们会在第一时间审核。')
         return redirect(url_for('site.index'))
     return render_template('blog/add.html', form=form)
 

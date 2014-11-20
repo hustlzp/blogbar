@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+
+{% block page_title %}管理博客推荐{% endblock %}
+{% block page_content %}
+   <div class="container">
+      <h2>管理博客推荐</h2>
+
+      <table class="table table-bordered">
+         <tr>
+            <th>博客</th>
+            <th>作者</th>
+            <th>URL</th>
+            <th>Time</th>
+            <th>当前状态</th>
+            <th>操作</th>
+         </tr>
+
+         {% for log in logs %}
+            {% set blog = log.blog %}
+
+            <tr>
+               <td>
+                  {{ blog.title }}
+                  {% if blog.subtitle %}
+                     <br/>
+                     <small>{{ blog.subtitle }}</small>
+                  {% endif %}
+               </td>
+               <td>{{ blog.author }}</td>
+               <td>
+                  <a href="{{ blog.url }}" target="_blank">
+                     {{ blog.url }}
+                  </a>
+                  &nbsp;/&nbsp;
+                  {% if blog.feed %}
+                     <a href="{{ blog.feed }}" target="_blank">
+                        <span class="fa fa-rss-square "></span>
+                     </a>
+                  {% endif %}
+               </td>
+               <td>{{ log.created_at }}</td>
+               <td>
+                  {% if log.status == -1 %}
+                     <span class="label label-info">待审核</span>
+                  {% elif log.status == 0 %}
+                     <span class="label label-danger">不通过</span>
+                     <br/>
+                     {{ log.updated_at }}
+                     <br/>
+                     {{ log.message }}
+                  {% elif log.status == 1 %}
+                     <span class="label label-success">通过</span>
+                     <br/>
+                     {{ log.updated_at }}
+                     <br/>
+                     {{ log.message }}
+                  {% else %}
+                     <span class="label label-warning">非法值</span>
+                  {% endif %}
+               </td>
+               <td>
+                  <form method="post" action="{{ url_for('admin.approve_blog', uid=blog.id) }}">
+                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
+                     <div class="input-group" style="width: 300px;">
+                        <input type="text" name="message" class="form-control">
+                        <span class="input-group-btn">
+                           <input class="btn btn-default" type="submit" name="yes" value="通过">
+                           <input class="btn btn-default" type="submit" name="no" value="不通过">
+                        </span>
+                     </div>
+                  </form>
+               </td>
+            </tr>
+         {% endfor %}
+      </table>
+   </div>
+{% endblock %}
