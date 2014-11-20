@@ -29,7 +29,7 @@
          <p>
             {% if blog.feed %}
                {% set feed = blog.feed %}
-            {% elif blog.has_spider %}
+            {% elif blog.has_spider and not blog.is_protected %}
                {% set feed = url_for('blog.feed', uid=blog.id) %}
             {% else %}
                {% set feed = None %}
