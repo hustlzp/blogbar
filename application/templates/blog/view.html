@@ -21,11 +21,15 @@
          <p>
             {% if blog.feed %}
                {% set feed = blog.feed %}
-            {% else %}
+            {% elif blog.has_spider %}
                {% set feed = url_for('blog.feed', uid=blog.id) %}
+            {% else %}
+               {% set feed = None %}
             {% endif %}
 
-            订阅：<a href="{{ feed }}" target="_blank"><span class="fa fa-rss"></span></a>
+            {% if feed %}
+               订阅：<a href="{{ feed }}" target="_blank"><span class="fa fa-rss"></span></a>
+            {% endif %}
          </p>
 
          <p>作者：{{ blog.author }}</p>

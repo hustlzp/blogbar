@@ -14,6 +14,7 @@ class Blog(db.Model):
     since = db.Column(db.Integer)
     avatar = db.Column(db.String(200))
     is_approved = db.Column(db.Boolean, default=False)
+    has_spider = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
     updated_at = db.Column(db.DateTime)
 

@@ -21,7 +21,7 @@ def grab_by_spider(spider_class):
     # 若blog不存在，则创建
     if not blog:
         blog = Blog(url=spider_class.url, title=spider_class.title, is_approved=True,
-                    subtitle=spider_class.subtitle, author=spider_class.author)
+                    subtitle=spider_class.subtitle, author=spider_class.author, has_spider=True)
         db.session.add(blog)
         db.session.commit()
 
