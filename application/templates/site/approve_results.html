@@ -6,8 +6,6 @@
    <div class="container">
       <h2>待审查博客</h2>
 
-
-
       {% macro render_logs(logs) %}
          <table class="table table-bordered">
             <tr>
@@ -61,7 +59,10 @@
 
       {{ render_logs(unprocessed_logs) }}
 
-      <h2>已审查博客 <small>注：若对审核结果有异议，请联系 support@blogbar.cc</small></h2>
+      <h2>
+         已审查博客
+         <small>注：若对审核结果有异议，请联系 support@blogbar.cc</small>
+      </h2>
 
       {{ render_logs(processed_logs.items) }}
 
