@@ -87,8 +87,8 @@
 
       <h2>已审查博客</h2>
 
-      {{ render_logs(unprocessed_logs.items) }}
+      {{ render_logs(processed_logs.items) }}
 
-      {{ pagination(unprocessed_logs) }}
+      {{ pagination(processed_logs) }}
    </div>
 {% endblock %}
