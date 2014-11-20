@@ -5,16 +5,7 @@
    <div class="container">
       <h2>审核结果</h2>
 
-      <table class="table table-bordered">
-         <tr>
-            <th>博客</th>
-            <th>作者</th>
-            <th>URL / Feed</th>
-            <th>推荐时间</th>
-            <th>审核状态</th>
-            <th>审核消息</th>
-         </tr>
-
+      {% macro log_results(logs) %}
          {% for log in logs %}
             {% set blog = log.blog %}
 
@@ -53,6 +44,21 @@
                <td>{{ log.message or "" }}</td>
             </tr>
          {% endfor %}
+      {% endmacro %}
+
+      <table class="table table-bordered">
+         <tr>
+            <th>博客</th>
+            <th>作者</th>
+            <th>URL / Feed</th>
+            <th>推荐时间</th>
+            <th>审核状态</th>
+            <th>审核消息</th>
+         </tr>
+
+         {{ log_results(unprocessed_logs) }}
+         {{ log_results(approved_logs) }}
+         {{ log_results(unapproved_logs) }}
       </table>
    </div>
 {% endblock %}
