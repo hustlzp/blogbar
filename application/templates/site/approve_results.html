@@ -5,7 +5,9 @@
    <div class="container">
       <h2>审核结果</h2>
 
-      {% macro log_results(logs) %}
+      <p>若对审核结果有异议，请联系 support@blogbar.cc</p>
+
+      {% macro render_logs(logs) %}
          {% for log in logs %}
             {% set blog = log.blog %}
 
@@ -56,9 +58,9 @@
             <th>审核消息</th>
          </tr>
 
-         {{ log_results(unprocessed_logs) }}
-         {{ log_results(approved_logs) }}
-         {{ log_results(unapproved_logs) }}
+         {{ render_logs(unprocessed_logs) }}
+         {{ render_logs(approved_logs) }}
+         {{ render_logs(unapproved_logs) }}
       </table>
    </div>
 {% endblock %}

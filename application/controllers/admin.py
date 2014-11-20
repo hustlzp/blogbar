@@ -11,9 +11,15 @@ bp = Blueprint('admin', __name__)
 @bp.route('/approve')
 @AdminPermission()
 def approve():
-    logs = ApprovementLog.query.order_by(ApprovementLog.status.asc(),
-                                         ApprovementLog.updated_at.desc())
-    return render_template('admin/approve.html', logs=logs)
+    logs = ApprovementLog.query
+    unprocessed_logs = logs.filter(ApprovementLog.status == -1).order_by(
+        ApprovementLog.updated_at.desc())
+    approved_logs = logs.filter(ApprovementLog.status == 1).order_by(
+        ApprovementLog.updated_at.desc())
+    unapproved_logs = logs.filter(ApprovementLog.status == 0).order_by(
+        ApprovementLog.updated_at.desc())
+    return render_template('admin/approve.html', unprocessed_logs=unprocessed_logs,
+                           approved_logs=approved_logs, unapproved_logs=unapproved_logs)
 
 
 @bp.route('/approve_blog/<int:uid>', methods=['POST'])
