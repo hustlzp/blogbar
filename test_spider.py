@@ -6,14 +6,13 @@ Usage:
     test_spider.py all
 """
 from docopt import docopt
-from spiders.wangyin import WangYinSpider as TargetSpider
+from spiders.fouber import FouberSpider as TargetSpider
 
 
 def test_spider(args):
     """Spider测试程序
 
-    需要将上方的spiders.wangyin替换为你写的模块名，
-    将WangYinSpider替换为你写的Spider类。
+    修改上方的import语句，导入你写的Spider类作为待测试的TargetSpider。
 
     共有3条测试指令：
 

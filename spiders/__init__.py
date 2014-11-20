@@ -1,14 +1,16 @@
 # coding: utf-8
-from .base import get_inner_html
+from application.models import db, Blog, Post
 from .lifesinger import LifeSingerSpider
 from .wangyin import WangYinSpider
 from .livid import LividSpider
-from application.models import db, Blog, Post
+from .fouber import FouberSpider
+
 
 spiders = [
     LifeSingerSpider,
     WangYinSpider,
-    LividSpider
+    LividSpider,
+    FouberSpider
 ]
 
 
