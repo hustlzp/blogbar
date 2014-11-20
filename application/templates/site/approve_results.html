@@ -48,7 +48,7 @@
                      <span class="label label-success">通过</span>
                   {% endif %}
                </td>
-               <td>{{ log.message }}</td>
+               <td>{{ log.message or "" }}</td>
             </tr>
          {% endfor %}
       </table>
