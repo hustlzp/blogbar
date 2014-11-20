@@ -78,3 +78,12 @@ def feed(uid):
     response = feed.get_response()
     response.headers['Content-Type'] = 'application/xml'
     return response
+
+
+@bp.route('/posts', defaults={'page': 1})
+@bp.route('/posts/page/<int:page>')
+def posts(page):
+    posts = Post.query.filter(~Post.is_duplicate).order_by(
+        Post.published_at.desc(),
+        Post.updated_at.desc()).paginate(page, 20)
+    return render_template('blog/posts.html', posts=posts)

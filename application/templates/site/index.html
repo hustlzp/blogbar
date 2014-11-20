@@ -22,7 +22,14 @@
          <p>{{ blogs_count }} 博客，{{ posts_count }} 博文</p>
          <hr/>
 
-         <h2>最新博文</h2>
+         <h2>
+            最新博文
+            <a href="{{ url_for('blog.posts') }}" class="btn btn-primary btn-xs">
+               全部博文 <span class="fa fa-angle-right"></span>
+            </a>
+         </h2>
+
+
 
          {% for post in latest_posts %}
             <div>
