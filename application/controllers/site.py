@@ -25,7 +25,7 @@ def approve_results(page):
     logs = ApprovementLog.query
     unprocessed_logs = logs.filter(ApprovementLog.status == -1).order_by(
         ApprovementLog.updated_at.desc())
-    processed_logs = logs.filter(ApprovementLog.status != 1).order_by(
+    processed_logs = logs.filter(ApprovementLog.status != -1).order_by(
         ApprovementLog.status.desc(),
         ApprovementLog.updated_at.desc()).paginate(page, 20)
     return render_template('site/approve_results.html', unprocessed_logs=unprocessed_logs,

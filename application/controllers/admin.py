@@ -8,18 +8,18 @@ from ..forms import BlogForm
 bp = Blueprint('admin', __name__)
 
 
-@bp.route('/approve')
+@bp.route('/approve', defaults={'page': 1})
+@bp.route('/approve/page/<int:page>')
 @AdminPermission()
-def approve():
+def approve(page):
     logs = ApprovementLog.query
     unprocessed_logs = logs.filter(ApprovementLog.status == -1).order_by(
         ApprovementLog.updated_at.desc())
-    approved_logs = logs.filter(ApprovementLog.status == 1).order_by(
-        ApprovementLog.updated_at.desc())
-    unapproved_logs = logs.filter(ApprovementLog.status == 0).order_by(
-        ApprovementLog.updated_at.desc())
+    processed_logs = logs.filter(ApprovementLog.status != -1).order_by(
+        ApprovementLog.status.desc(),
+        ApprovementLog.updated_at.desc()).paginate(page, 20)
     return render_template('admin/approve.html', unprocessed_logs=unprocessed_logs,
-                           approved_logs=approved_logs, unapproved_logs=unapproved_logs)
+                           processed_logs=processed_logs)
 
 
 @bp.route('/approve_blog/<int:uid>', methods=['POST'])
