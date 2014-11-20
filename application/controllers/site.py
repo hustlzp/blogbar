@@ -9,8 +9,8 @@ bp = Blueprint('site', __name__)
 def index():
     """首页"""
     blogs = Blog.query.filter(Blog.is_approved)
-    blogs_count = blogs.count()
-    posts_count = Post.query.count()
+    blogs_count = blogs.query.filter(Blog.is_approved).count()
+    posts_count = Post.query.filter(~Post.is_duplicate).count()
     latest_posts = Post.query.filter(~Post.is_duplicate). \
         order_by(Post.published_at.desc(), Post.updated_at.desc()).limit(10)
     latest_blogs = Blog.query.filter(Blog.is_approved).order_by(Blog.created_at.desc()).limit(10)
