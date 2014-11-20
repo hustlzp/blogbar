@@ -1,6 +1,6 @@
 # coding: utf-8
 from flask import render_template, Blueprint
-from ..models import Blog, Post
+from ..models import Blog, Post, ApprovementLog
 
 bp = Blueprint('site', __name__)
 
@@ -17,6 +17,12 @@ def index():
     return render_template('site/index.html', blogs=blogs, latest_posts=latest_posts,
                            latest_blogs=latest_blogs, blogs_count=blogs_count,
                            posts_count=posts_count)
+
+
+@bp.route('/approve_results')
+def approve_results():
+    logs = ApprovementLog.query.order_by(ApprovementLog.status.desc())
+    return render_template('site/approve_results.html', logs=logs)
 
 
 @bp.route('/about')

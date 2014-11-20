@@ -1,9 +1,9 @@
 {% extends "layout.html" %}
 
-{% block page_title %}管理博客推荐{% endblock %}
+{% block page_title %}审核结果{% endblock %}
 {% block page_content %}
    <div class="container">
-      <h2>管理博客推荐</h2>
+      <h2>审核结果</h2>
 
       <table class="table table-bordered">
          <tr>
@@ -11,8 +11,8 @@
             <th>作者</th>
             <th>URL / Feed</th>
             <th>推荐时间</th>
-            <th>当前状态</th>
-            <th>操作</th>
+            <th>审核状态</th>
+            <th>备注</th>
          </tr>
 
          {% for log in logs %}
@@ -44,33 +44,11 @@
                      <span class="label label-info">待审核</span>
                   {% elif log.status == 0 %}
                      <span class="label label-danger">不通过</span>
-                     <br/>
-                     {{ log.updated_at }}
-                     <br/>
-                     {{ log.message }}
                   {% elif log.status == 1 %}
                      <span class="label label-success">通过</span>
-                     <br/>
-                     {{ log.updated_at }}
-                     <br/>
-                     {{ log.message }}
-                  {% else %}
-                     <span class="label label-warning">非法值</span>
                   {% endif %}
                </td>
-               <td>
-                  <form method="post" action="{{ url_for('admin.approve_blog', uid=blog.id) }}">
-                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-
-                     <div class="input-group" style="width: 300px;">
-                        <input type="text" name="message" class="form-control">
-                        <span class="input-group-btn">
-                           <input class="btn btn-default" type="submit" name="yes" value="通过">
-                           <input class="btn btn-default" type="submit" name="no" value="不通过">
-                        </span>
-                     </div>
-                  </form>
-               </td>
+               <td>{{ log.message }}</td>
             </tr>
          {% endfor %}
       </table>
