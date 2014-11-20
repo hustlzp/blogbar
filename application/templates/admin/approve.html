@@ -10,9 +10,11 @@
             <th>博客</th>
             <th>作者</th>
             <th>URL / Feed</th>
+            <th>Since</th>
             <th>推荐时间</th>
             <th>当前状态</th>
-            <th>操作</th>
+            <th>编辑</th>
+            <th>审核</th>
          </tr>
 
          {% for log in logs %}
@@ -39,6 +41,7 @@
                      </a>
                   {% endif %}
                </td>
+               <td>{{ blog.since or "" }}</td>
                <td>{{ log.created_at }}</td>
                <td>
                   {% if log.status == -1 %}
@@ -56,10 +59,16 @@
                   {% endif %}
                </td>
                <td>
+                  <a href="{{ url_for('admin.edit_blog', uid=blog.id) }}"
+                     class="btn btn-default btn-sm">
+                     <span class="fa fa-edit"></span>
+                  </a>
+               </td>
+               <td>
                   <form method="post" action="{{ url_for('admin.approve_blog', uid=blog.id) }}">
                      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 
-                     <div class="input-group" style="width: 300px;">
+                     <div class="input-group input-group-sm" style="width: 300px;">
                         <input type="text" name="message" class="form-control">
                         <span class="input-group-btn">
                            <input class="btn btn-default" type="submit" name="yes" value="通过">

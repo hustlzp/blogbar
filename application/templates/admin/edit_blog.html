@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% from "macro/form.html" import horizontal_field %}
+
+{% block page_title %}编辑博客{% endblock %}
+{% block page_content %}
+   <div class="container">
+      <div class="col-sm-8">
+         <h1>编辑博客</h1>
+
+         <form class="form-horizontal" role="form" method="post"
+               action="">
+            {{ form.csrf_token }}
+
+            <input type="hidden" name="referer" value="{{ request.referrer }}"/>
+
+            {{ horizontal_field(form.url) }}
+
+            {{ horizontal_field(form.title) }}
+
+            {{ horizontal_field(form.subtitle) }}
+
+            {{ horizontal_field(form.author) }}
+
+            {{ horizontal_field(form.feed) }}
+
+            {{ horizontal_field(form.since) }}
+
+            <div class="form-group">
+               <div class="col-md-6 col-md-offset-2">
+                  <input type="submit" value="保存" class="btn btn-sm btn-primary"/>
+               </div>
+            </div>
+         </form>
+      </div>
+
+      <div class="col-sm-4">
+         <h2>博客推荐建议</h2>
+
+         <ul>
+            <li>必须是个人博客。</li>
+            <li>博客的原创文章必须占所有文章的60%以上。</li>
+            <li>不要求是独立博客，在博客平台（如新浪博客、简书）写博客的都行。</li>
+         </ul>
+      </div>
+   </div>
+{% endblock %}

@@ -1,6 +1,6 @@
 # coding: utf-8
 from flask_wtf import Form
-from wtforms import StringField, TextAreaField
+from wtforms import StringField, TextAreaField, IntegerField
 from wtforms.validators import DataRequired, Email, URL
 
 
@@ -14,3 +14,4 @@ class BlogForm(Form):
     subtitle = StringField('副标题', description='选填')
     author = StringField('作者', [DataRequired('不能为空')])
     feed = StringField('RSS', description='选填')
+    since = StringField('Since', description='博客从哪一年开始写的。')

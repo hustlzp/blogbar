@@ -3,6 +3,7 @@ import datetime
 from flask import render_template, Blueprint, flash, redirect, url_for, abort, request
 from ..models import db, Blog, Post, ApprovementLog
 from ..utils.permissions import AdminPermission
+from ..forms import BlogForm
 
 bp = Blueprint('admin', __name__)
 
@@ -32,3 +33,17 @@ def approve_blog(uid):
     db.session.commit()
     flash('操作成功')
     return redirect(request.referrer)
+
+
+@bp.route('/edit_blog/<int:uid>', methods=['GET', 'POST'])
+@AdminPermission()
+def edit_blog(uid):
+    blog = Blog.query.get_or_404(uid)
+    form = BlogForm(obj=blog)
+    if form.validate_on_submit():
+        form.populate_obj(blog)
+        db.session.add(blog)
+        db.session.commit()
+        flash('操作成功')
+        return redirect(request.form.get('referer') or request.referrer)
+    return render_template('admin/edit_blog.html', form=form)
