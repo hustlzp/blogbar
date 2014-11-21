@@ -8,7 +8,7 @@ from ..models import Blog
 
 def check_url(form, field):
     url = field.data
-    url = url.strip().strip('/')
+    url = url.strip()
     if not url:
         return
     result = urlparse(url)
