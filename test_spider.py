@@ -6,7 +6,7 @@ Usage:
     test_spider.py all
 """
 from docopt import docopt
-from spiders.fouber import FouberSpider as TargetSpider
+from spiders.meizhi import MeiZhiSpider as TargetSpider
 
 
 def test_spider(args):

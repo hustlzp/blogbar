@@ -25,6 +25,7 @@ class BaseSpider(object):
     title = ""  # 博客标题
     subtitle = ""  # 博客副标题
     author = ""  # 博主
+    for_special_purpose = False  # 特殊用途
 
     @classmethod
     def get_posts_(cls):
