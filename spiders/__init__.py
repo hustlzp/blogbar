@@ -4,13 +4,15 @@ from .lifesinger import LifeSingerSpider
 from .wangyin import WangYinSpider
 from .livid import LividSpider
 from .fouber import FouberSpider
+from .meizhi import MeiZhiSpider
 
 
 spiders = [
     LifeSingerSpider,
     WangYinSpider,
     LividSpider,
-    FouberSpider
+    FouberSpider,
+    MeiZhiSpider
 ]
 
 
@@ -20,10 +22,11 @@ def grab_by_spider(spider_class):
 
     # 若blog不存在，则创建
     if not blog:
-        # 特殊用途的blog，标记is_approved为False
-        is_approved = True if not spider_class.for_special_purpose else False
-        blog = Blog(url=spider_class.url, title=spider_class.title, is_approved=is_approved,
+        blog = Blog(url=spider_class.url, title=spider_class.title, is_approved=True,
                     subtitle=spider_class.subtitle, author=spider_class.author, has_spider=True)
+        if spider_class.for_special_purpose:  # 特殊用途
+            blog.is_approved = False
+            blog.for_special_purpose = True
         db.session.add(blog)
         db.session.commit()
 

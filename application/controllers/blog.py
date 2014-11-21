@@ -55,7 +55,7 @@ def post(uid):
 @bp.route('/<int:uid>/feed')
 def feed(uid):
     blog = Blog.query.get_or_404(uid)
-    if not blog.is_approved:
+    if not blog.is_approved and not blog.for_special_purpose:
         abort(404)
     if blog.feed:
         abort(404)
