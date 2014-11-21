@@ -4,7 +4,7 @@
 {% block page_title %}审核结果{% endblock %}
 {% block page_content %}
    <div class="container">
-      <h2>待审查博客</h2>
+      <h2>待审核博客</h2>
 
       {% macro render_logs(logs) %}
          <table class="table table-bordered">
@@ -60,7 +60,7 @@
       {{ render_logs(unprocessed_logs) }}
 
       <h2>
-         已审查博客
+         已审核博客
       </h2>
 
       <p style="font-size: 16px; color: #428bca;"><strong>说明：</strong></p>

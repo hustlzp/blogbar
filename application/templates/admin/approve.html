@@ -4,7 +4,7 @@
 {% block page_title %}管理博客推荐{% endblock %}
 {% block page_content %}
    <div class="container">
-      <h2>待审查博客</h2>
+      <h2>待审核博客</h2>
 
       {% macro render_logs(logs) %}
          <table class="table table-bordered">
@@ -85,7 +85,7 @@
 
       {{ render_logs(unprocessed_logs) }}
 
-      <h2>已审查博客</h2>
+      <h2>已审核博客</h2>
 
       {{ render_logs(processed_logs.items) }}
 
