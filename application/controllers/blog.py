@@ -45,17 +45,11 @@ def post(uid):
     if post.blog.is_protected:
         abort(404)
     if post.content:
-        content_tree = html.fromstring(post.content)
-        scripts = content_tree.cssselect('script')  # 去除script标签
-        for script in scripts:
-            content_tree.remove(script)
-        content = content_tree.text_content()
-        content = content.replace('.', '')
-        tags = analyse.extract_tags(content, topK=20, withWeight=True)
-        tags_ = [{'text': tag, 'weight': weight} for tag, weight in tags]
+        keywords = analyse.extract_tags(post.content, topK=20, withWeight=True)
+        tags = [{'text': tag, 'weight': weight} for tag, weight in keywords]
     else:
-        tags_ = []
-    return render_template('blog/post.html', post=post, tags=json.dumps(tags_))
+        tags = []
+    return render_template('blog/post.html', post=post, tags=json.dumps(tags))
 
 
 @bp.route('/<int:uid>/feed')
