@@ -9,6 +9,8 @@ from ..models import Blog
 def check_url(form, field):
     url = field.data
     url = url.strip().strip('/')
+    if not url:
+        return
     result = urlparse(url)
     if result.scheme == "":
         url = "http://%s" % url
