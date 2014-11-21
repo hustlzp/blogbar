@@ -5,7 +5,7 @@ from lxml import html
 from flask import render_template, Blueprint, flash, redirect, url_for, abort, request
 from werkzeug.contrib.atom import AtomFeed
 from ..models import db, Blog, Post, ApprovementLog
-from ..forms import BlogForm
+from ..forms import AddBlogForm
 
 bp = Blueprint('blog', __name__)
 
@@ -25,10 +25,9 @@ def view(uid, page):
 @bp.route('/add', methods=['GET', 'POST'])
 def add():
     """推荐博客"""
-    form = BlogForm()
+    form = AddBlogForm()
     if form.validate_on_submit():
         blog = Blog(**form.data)
-        blog.url = blog.url.rstrip('/')
         db.session.add(blog)
         log = ApprovementLog(blog=blog)  # 添加log
         db.session.add(log)
