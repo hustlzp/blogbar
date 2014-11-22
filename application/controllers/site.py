@@ -1,6 +1,6 @@
 # coding: utf-8
 from flask import render_template, Blueprint
-from ..models import Blog, Post, ApprovementLog
+from ..models import db, Blog, Post, ApprovementLog
 
 bp = Blueprint('site', __name__)
 
@@ -8,7 +8,7 @@ bp = Blueprint('site', __name__)
 @bp.route('/')
 def index():
     """首页"""
-    blogs = Blog.query.filter(Blog.is_approved)
+    blogs = Blog.query.filter(Blog.is_approved).order_by(db.func.random())
     blogs_count = blogs.count()
     posts_count = Post.query.filter(~Post.is_duplicate).count()
     latest_posts = Post.query.filter(~Post.is_duplicate). \
