@@ -28,6 +28,7 @@ class MeiZhiSpider(BaseSpider):
 
     @staticmethod
     def get_post(tree):
+        remove_element(tree.cssselect('.box')[0])
         box_btns = tree.cssselect('.box-btns')
         map(remove_element, box_btns)
         return get_inner_html(tree.cssselect('.row')[0])
