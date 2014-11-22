@@ -1,7 +1,6 @@
 .idea/
 *.pyc
 venv/
-bower_components/
 config/production.py
 config/development.py
 celerybeat*
