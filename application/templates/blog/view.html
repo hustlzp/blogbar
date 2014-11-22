@@ -44,17 +44,18 @@
 
          {% for p in posts.items %}
             <div>
-               {% if blog.is_protected %}
-                  <a href="{{ p.url }}" target="_blank">{{ p.title }}</a>
-               {% else %}
-                  <a href="{{ url_for('blog.post', uid=p.id) }}">{{ p.title }}</a>
-
-                  &nbsp;&nbsp;
-
-                  <a href="{{ p.url }}" target="_blank">
-                     <span class="fa fa-external-link"></span>
-                  </a>
-               {% endif %}
+               <a href="{{ p.url }}" target="_blank">{{ p.title }}</a>
+               {#               {% if blog.is_protected %}#}
+               {#                  <a href="{{ p.url }}" target="_blank">{{ p.title }}</a>#}
+               {#               {% else %}#}
+               {#                  <a href="{{ url_for('blog.post', uid=p.id) }}">{{ p.title }}</a>#}
+               {##}
+               {#                  &nbsp;&nbsp;#}
+               {##}
+               {#                  <a href="{{ p.url }}" target="_blank">#}
+               {#                     <span class="fa fa-external-link"></span>#}
+               {#                  </a>#}
+               {#               {% endif %}#}
 
                <div>
                   {% if p.published_at %}
