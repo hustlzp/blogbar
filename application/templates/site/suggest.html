@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block page_title %}提建议{% endblock %}
+{% block page_content %}
+   <div class="container">
+      <div class="col-sm-8">
+         <h1>提建议</h1>
+
+         <p>欢迎大家提建议。</p>
+
+         <!-- 多说评论框 start -->
+         <div class="ds-thread" data-thread-key="suggest" data-title="提建议"
+              data-url="http://www.blogbar.cc/suggest"></div>
+         <!-- 多说评论框 end -->
+         <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+         <script type="text/javascript">
+            var duoshuoQuery = {short_name: "blogbar"};
+            (function () {
+               var ds = document.createElement('script');
+               ds.type = 'text/javascript';
+               ds.async = true;
+               ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+               ds.charset = 'UTF-8';
+               (document.getElementsByTagName('head')[0]
+                     || document.getElementsByTagName('body')[0]).appendChild(ds);
+            })();
+         </script>
+         <!-- 多说公共JS代码 end -->
+      </div>
+   </div>
+{% endblock %}

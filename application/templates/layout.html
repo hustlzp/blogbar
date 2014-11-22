@@ -59,12 +59,11 @@
          </a>
 
          <ul class="nav navbar-nav">
-            {#            <li id="nav-index">#}
-            {#               <a href="{{ url_for('site.index') }}">首页</a>#}
-            {#            </li>#}
-
             <li id="nav-approve-results">
                <a href="{{ url_for('site.approve_results') }}">审核结果</a>
+            </li>
+            <li id="nav-suggest">
+               <a href="{{ url_for('site.suggest') }}">提建议</a>
             </li>
             <li id="nav-about">
                <a href="{{ url_for('site.about') }}">关于</a>

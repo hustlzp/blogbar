@@ -32,6 +32,11 @@ def approve_results(page):
                            processed_logs=processed_logs)
 
 
+@bp.route('/suggest')
+def suggest():
+    return render_template('site/suggest.html')
+
+
 @bp.route('/about')
 def about():
     """关于页"""
