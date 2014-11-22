@@ -9,11 +9,12 @@
 
          {% for p in posts.items %}
             <div>
-               {% if p.blog.is_protected %}
-                  <a href="{{ p.url }}" target="_blank">{{ p.title }}</a>
-               {% else %}
-                  <a href="{{ url_for('blog.post', uid=p.id) }}">{{ p.title }}</a>
-               {% endif %}
+               <a href="{{ p.url }}" target="_blank">{{ p.title }}</a>
+               {#               {% if p.blog.is_protected %}#}
+               {#                  <a href="{{ p.url }}" target="_blank">{{ p.title }}</a>#}
+               {#               {% else %}#}
+               {#                  <a href="{{ url_for('blog.post', uid=p.id) }}">{{ p.title }}</a>#}
+               {#               {% endif %}#}
 
                &nbsp;
 
