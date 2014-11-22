@@ -14,7 +14,7 @@ bp = Blueprint('blog', __name__)
 @bp.route('/<int:uid>/page/<int:page>')
 def view(uid, page):
     blog = Blog.query.get_or_404(uid)
-    if not blog.is_approved or blog.for_special_purpose:
+    if not blog.is_approved:
         abort(404)
     posts_count = blog.posts.filter(~Post.is_duplicate).count()
     posts = blog.posts.filter(~Post.is_duplicate). \
@@ -40,9 +40,9 @@ def add():
 @bp.route('/post/<int:uid>')
 def post(uid):
     post = Post.query.get_or_404(uid)
-    if post.is_duplicate:
+    if post.blog.is_protected or not post.blog.is_approved:
         abort(404)
-    if post.blog.is_protected or post.blog.for_special_purpose:
+    if post.is_duplicate:
         abort(404)
     if post.content:
         keywords = analyse.extract_tags(post.content, topK=20, withWeight=True)

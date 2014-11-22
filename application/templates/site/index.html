@@ -16,7 +16,7 @@
 
          <h2>全部博客</h2>
 
-         {% for blog in blogs %}
+         {% for blog in all_blogs %}
             <div class="blog">
                <div class="title">
                   <a href="{{ url_for('blog.view', uid=blog.id) }}">
