@@ -10,9 +10,10 @@ def index():
     """首页"""
     blogs = Blog.query.filter(Blog.is_approved).order_by(db.func.random())
     blogs_count = blogs.count()
-    posts_count = Post.query.filter(~Post.is_duplicate).count()
-    latest_posts = Post.query.filter(~Post.is_duplicate). \
-        order_by(Post.published_at.desc(), Post.updated_at.desc()).limit(20)
+    posts = Post.query.filter(~Post.is_duplicate). \
+        filter(~Post.blog.has(Blog.for_special_purpose))  # 去重，并去除用于特殊用途的blog
+    posts_count = posts.count()
+    latest_posts = posts.order_by(Post.published_at.desc(), Post.updated_at.desc()).limit(20)
     latest_blogs = Blog.query.filter(Blog.is_approved).order_by(Blog.created_at.desc()).limit(20)
     return render_template('site/index.html', blogs=blogs, latest_posts=latest_posts,
                            latest_blogs=latest_blogs, blogs_count=blogs_count,
