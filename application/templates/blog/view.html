@@ -14,6 +14,11 @@
                   <span class="fa fa-lock" style="color: #FAAD07;"></span>
                </sup>
             {% endif %}
+
+            {% if permissions.AdminPermission().check() %}
+               <a href="{{ url_for('admin.edit_blog', uid=blog.id) }}" class="btn btn-default">
+                  <span class="fa fa-edit"></span> 编辑</a>
+            {% endif %}
          </h1>
 
          {% if blog.since %}
