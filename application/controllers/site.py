@@ -9,7 +9,8 @@ bp = Blueprint('site', __name__)
 def index():
     """首页"""
     blogs = Blog.query.filter(Blog.is_approved)
-    all_blogs = blogs.order_by(db.func.random())
+    # all_blogs = blogs.order_by(db.func.random())
+    all_blogs = blogs
     blogs_count = blogs.count()
     posts = Post.query.filter(~Post.is_duplicate). \
         filter(Post.blog.has(Blog.is_approved))
