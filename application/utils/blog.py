@@ -1,5 +1,6 @@
 # coding: utf-8
 import feedparser
+import HTMLParser
 from time import mktime
 from datetime import datetime
 from ..models import db, Post
@@ -48,7 +49,8 @@ def grab_by_feed(blog):
 
 def _get_info_to_post(post, entry):
     """将entry中的信息转存到post中"""
-    post.title = entry.title
+    html_parser = HTMLParser.HTMLParser()
+    post.title = html_parser.unescape(entry.title)  # 对title进行反转义
     post.url = entry.link
     if 'updated_parsed' in entry:
         post.updated_at = _get_time(entry.updated_parsed)
