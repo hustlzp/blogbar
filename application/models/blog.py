@@ -29,6 +29,7 @@ class Post(db.Model):
     url = db.Column(db.String(500))
     title = db.Column(db.String(200))
     content = db.Column(db.Text)
+    keywords = db.Column(db.Text)
     is_duplicate = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
     published_at = db.Column(db.DateTime)
@@ -37,6 +38,15 @@ class Post(db.Model):
     blog_id = db.Column(db.Integer, db.ForeignKey('blog.id'))
     blog = db.relationship('Blog', backref=db.backref('posts', lazy='dynamic',
                                                       order_by='desc(Post.published_at)'))
+
+
+class RecommendPost(db.Model):
+    """编辑推荐的文章"""
+    id = db.Column(db.Integer, primary_key=True)
+    created_at = db.Column(db.DateTime, default=datetime.datetime.now)
+
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+    post = db.relationship('Post')
 
 
 class GrabLog(db.Model):
