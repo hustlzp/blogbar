@@ -41,10 +41,10 @@ def restart_celery():
     # 在Celery启动时，似乎需要更多内存，启动后才降下来
     # 所以这里首先关闭了其他2个进程
     run('supervisorctl stop celerybeat')
-    # run('supervisorctl stop celeryflower')
+    run('supervisorctl stop celeryflower')
     run('supervisorctl restart celery')
     run('supervisorctl start celerybeat')
-    # run('supervisorctl start celeryflower')
+    run('supervisorctl start celeryflower')
 
 
 def remote_grab():
