@@ -1,6 +1,5 @@
 # coding: utf-8
 import json
-from jieba import analyse
 from flask import render_template, Blueprint, flash, redirect, url_for, abort, request
 from werkzeug.contrib.atom import AtomFeed
 from ..models import db, Blog, Post, ApprovementLog
@@ -60,8 +59,8 @@ def post(uid):
         abort(404)
     if post.hide:
         abort(404)
-    if post.content:
-        keywords = analyse.extract_tags(post.content, topK=20, withWeight=True)
+    if post.keywords:
+        keywords = json.load(post.keywords)
         tags = [{'text': tag, 'weight': weight} for tag, weight in keywords]
     else:
         tags = []
