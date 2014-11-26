@@ -14,7 +14,7 @@ def grab_by_feed(blog):
     if not blog.feed_version:
         blog.feed_version = result.version
     if not blog.subtitle and 'subtitle' in result.feed:
-        blog.subtitle = result.feed.subtitle
+        blog.subtitle = get_text_from_html(result.feed.subtitle)
 
     db.session.add(blog)
     print(blog.title)
