@@ -23,13 +23,13 @@
                      href="{{ url_for('blog.view', uid=post.blog.id) }}">
                      {{ post.blog.title }}
                   </a>
-                  /
+                  &nbsp;/&nbsp;
                   {{ post.blog.author }}
-                  &nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;
                   {% if post.published_at or post.updated_at %}
                      {{ post.published_at|timesince or post.updated_at|timesince }}
                   {% endif %}
-                  &nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;
                   {{ post.clicks if post.clicks else 0 }} 次点击
                </div>
             </div>

@@ -16,7 +16,7 @@ def index(page):
     blogs_count = blogs_query.count()
     latest_blogs = blogs_query.order_by(Blog.created_at.desc()).limit(20)
 
-    posts_query = Post.query.filter(~Post.is_duplicate). \
+    posts_query = Post.query.filter(~Post.hide). \
         filter(Post.blog.has(Blog.is_approved))
     posts_count = posts_query.count()
     latest_posts = posts_query.order_by(Post.published_at.desc(), Post.updated_at.desc()).limit(20)

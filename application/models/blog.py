@@ -32,7 +32,7 @@ class Post(db.Model):
     keywords = db.Column(db.Text)
     clicks = db.Column(db.Integer, default=0)
 
-    is_duplicate = db.Column(db.Boolean, default=False)
+    hide = db.Column(db.Boolean, default=False)
     recommend = db.Column(db.Boolean, default=False)
 
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)

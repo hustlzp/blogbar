@@ -35,8 +35,8 @@
                         <span class="label label-success">推荐</span>
                      {% endif %}
 
-                     {% if post.is_duplicate %}
-                        <span class="label label-warning">重复</span>
+                     {% if post.hide %}
+                        <span class="label label-warning">隐藏</span>
                      {% endif %}
 
                      {% if blog.for_special_purpose %}
@@ -44,7 +44,7 @@
                      {% endif %}
                   </td>
                   <td>
-                     {% if post.is_duplicate %}
+                     {% if post.hide %}
                         <a href="{{ url_for('admin.show_post', uid=post.id) }}"
                            class="btn btn-sm btn-default">
                            <span class="fa fa-eye"></span> 显示

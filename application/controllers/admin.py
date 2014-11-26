@@ -95,7 +95,7 @@ def unrecommend_post(uid):
 def hide_post(uid):
     """隐藏文章"""
     post = Post.query.get_or_404(uid)
-    post.is_duplicate = True
+    post.hide = True
     db.session.add(post)
     db.session.commit()
     return redirect(request.referrer)
@@ -106,7 +106,7 @@ def hide_post(uid):
 def show_post(uid):
     """显示文章"""
     post = Post.query.get_or_404(uid)
-    post.is_duplicate = False
+    post.hide = False
     db.session.add(post)
     db.session.commit()
     return redirect(request.referrer)

@@ -16,8 +16,8 @@ def view(uid, page):
     blog = Blog.query.get_or_404(uid)
     if not blog.is_approved:
         abort(404)
-    posts_count = blog.posts.filter(~Post.is_duplicate).count()
-    posts = blog.posts.filter(~Post.is_duplicate). \
+    posts_count = blog.posts.filter(~Post.hide).count()
+    posts = blog.posts.filter(~Post.hide). \
         order_by(Post.published_at.desc(), Post.updated_at.desc()).paginate(page, 20)
     return render_template('blog/view.html', blog=blog, posts=posts, posts_count=posts_count)
 
@@ -59,7 +59,7 @@ def post(uid):
     post = Post.query.get_or_404(uid)
     if post.blog.is_protected or not post.blog.is_approved:
         abort(404)
-    if post.is_duplicate:
+    if post.hide:
         abort(404)
     if post.content:
         keywords = analyse.extract_tags(post.content, topK=20, withWeight=True)
@@ -80,7 +80,7 @@ def feed(uid):
     feed = AtomFeed(blog.title, feed_url=request.url, url=blog.url, id=blog.url)
     if blog.subtitle:
         feed.subtitle = blog.subtitle
-    for post in blog.posts.filter(~Post.is_duplicate). \
+    for post in blog.posts.filter(~Post.hide). \
             order_by(Post.published_at.desc(), Post.updated_at.desc()).limit(15):
         updated = post.updated_at if post.updated_at else post.published_at
         feed.add(post.title, post.content, content_type='html', author=blog.author,
@@ -94,7 +94,7 @@ def feed(uid):
 @bp.route('/posts/page/<int:page>')
 def posts(page):
     posts = Post.query. \
-        filter(~Post.is_duplicate).filter(Post.blog.has(Blog.is_approved)). \
+        filter(~Post.hide).filter(Post.blog.has(Blog.is_approved)). \
         order_by(Post.published_at.desc(), Post.updated_at.desc()). \
         paginate(page, 20)
     return render_template('blog/posts.html', posts=posts)
