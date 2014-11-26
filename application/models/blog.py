@@ -2,13 +2,13 @@
 from os.path import dirname, abspath, join
 import datetime
 import json
-import jieba
-from jieba import analyse
+# import jieba
+# from jieba import analyse
 from lxml import html
 from ._base import db
 
-project_path = abspath(dirname(dirname(dirname(__file__))))
-jieba.set_dictionary(join(project_path, 'dict.txt.small'))
+# project_path = abspath(dirname(dirname(dirname(__file__))))
+# jieba.set_dictionary(join(project_path, 'dict.txt.small'))
 
 
 class Blog(db.Model):
@@ -60,8 +60,8 @@ class Post(db.Model):
         doc = html.fromstring(self.content)  # parse html string
         self.pure_content = doc.text_content().strip(' ').strip('　')
         # 更新keywords
-        keywords = analyse.extract_tags(self.pure_content, topK=20, withWeight=True)
-        self.keywords = json.dumps(keywords)
+        # keywords = analyse.extract_tags(self.pure_content, topK=20, withWeight=True)
+        # self.keywords = json.dumps(keywords)
 
 
 class GrabLog(db.Model):
