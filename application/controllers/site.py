@@ -5,7 +5,7 @@ from ..models import db, Blog, Post, ApprovementLog
 bp = Blueprint('site', __name__)
 
 
-@bp.route('/page', defaults={'page': 1})
+@bp.route('/', defaults={'page': 1})
 @bp.route('/page/<int:page>')
 def index(page):
     """首页"""
