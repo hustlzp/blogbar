@@ -79,6 +79,6 @@ def _get_time(time_struct):
     return datetime.fromtimestamp(mktime(time_struct))
 
 
-def get_text_from_html(html):
-    doc = html.fromstring(html)  # parse html string
+def get_text_from_html(html_string):
+    doc = html.fromstring(html_string)  # parse html string
     return doc.text_content()
