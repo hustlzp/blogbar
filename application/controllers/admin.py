@@ -1,7 +1,7 @@
 # coding: utf-8
 import datetime
 from flask import render_template, Blueprint, flash, redirect, url_for, abort, request
-from ..models import db, Blog, Post, ApprovementLog
+from ..models import db, Blog, Post, ApprovementLog, RecommendPost
 from ..utils.permissions import AdminPermission
 from ..forms import EditBlogForm
 
@@ -53,3 +53,33 @@ def edit_blog(uid):
         flash('操作成功')
         return redirect(request.form.get('referer') or request.referrer)
     return render_template('admin/edit_blog.html', form=form)
+
+
+@bp.route('/recommend_blog/<int:uid>')
+@AdminPermission()
+def recommend_post(uid):
+    post = Post.query.get_or_404(uid)
+    repost = RecommendPost.query.filter(RecommendPost.post_id == uid).first()
+    if not repost:
+        repost = RecommendPost(post_id=uid)
+        db.session.add(repost)
+        db.session.commit()
+    return redirect(request.referrer)
+
+
+@bp.route('/posts', defaults={'page': 1})
+@bp.route('/posts/page/<int:page>')
+@AdminPermission()
+def posts(page):
+    posts = Post.query.paginate(page, 20)
+    return render_template('admin/posts.html', posts=posts)
+
+
+@bp.route('/unrecommend_blog/<int:uid>')
+@AdminPermission()
+def unrecommend_post(uid):
+    post = Post.query.get_or_404(uid)
+    repost = RecommendPost.query.filter(RecommendPost.post_id == uid)
+    map(db.session.delete, repost)
+    db.session.commit()
+    return redirect(request.referrer)

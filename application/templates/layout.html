@@ -68,6 +68,18 @@
             <li id="nav-about">
                <a href="{{ url_for('site.about') }}">关于</a>
             </li>
+            {% if permissions.AdminPermission().check() %}
+               <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                     aria-expanded="false">
+                     Admin <span class="fa fa-angle-down"></span>
+                  </a>
+                  <ul class="dropdown-menu" role="menu">
+                     <li><a href="{{ url_for('admin.approve') }}">博客审核</a></li>
+                     <li><a href="{{ url_for('admin.posts') }}">文章管理</a></li>
+                  </ul>
+               </li>
+            {% endif %}
          </ul>
 
          {#         <form class="navbar-form navbar-left" role="search" method="get" action="#">#}

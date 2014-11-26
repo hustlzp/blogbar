@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+{% from 'macro/ui.html' import pagination %}
+
+{% block page_title %}管理文章{% endblock %}
+{% block page_content %}
+   <div class="container">
+      {% macro render_posts(posts) %}
+         <table class="table table-bordered">
+            <tr>
+               <th>标题</th>
+               <th>作者</th>
+               <th>字数</th>
+               <th>关键词</th>
+               <th>发表时间</th>
+               <th>更新时间</th>
+               <th>备注</th>
+               <th>标记重复</th>
+               <th>推荐</th>
+            </tr>
+
+            {% for post in posts %}
+               {% set blog = post.blog %}
+
+               <tr>
+                  <td>
+                     <a href="{{ post.url }}" target="_blank">{{ post.title }}</a>
+                  </td>
+                  <td>{{ blog.author }}</td>
+                  <td>{{ post.content|length }}字</td>
+                  <td>{{ post.keywords if post.keywords else "" }}</td>
+                  <td>{{ post.published_at if post.published_at else "" }}</td>
+                  <td>{{ post.updated_at if post.updated_at else "" }}</td>
+                  <td>
+                     {% if post.is_duplicate %}
+                        <span class="label label-inverse">重复</span>
+                     {% endif %}
+
+                     {% if blog.for_special_purpose %}
+                        <span class="label label-info">特殊用途</span>
+                     {% endif %}
+                  </td>
+                  <td>
+                     <a href="#" class="btn btn-sm btn-default">
+                        <span class="fa fa-eye-slash"></span> 隐藏
+                     </a>
+                  </td>
+                  <td>
+                     <a href="#" class="btn btn-sm btn-default">
+                        <span class="fa fa-thumbs-o-up"></span> 推荐
+                     </a>
+                  </td>
+               </tr>
+            {% endfor %}
+         </table>
+      {% endmacro %}
+
+      <h2>全部博文</h2>
+
+      {{ render_posts(posts.items) }}
+
+      {{ pagination(posts) }}
+   </div>
+{% endblock %}
