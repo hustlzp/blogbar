@@ -89,5 +89,17 @@ def process_posts():
         db.session.commit()
 
 
+@manager.command
+def process_published():
+    """不存在published_at的post，使用updated_at替代"""
+    with app.app_context():
+        for post in Post.query:
+            print(post.title)
+            if not post.published_at:
+                post.published_at = post.updated_at
+                db.session.add(post)
+        db.session.commit()
+
+
 if __name__ == "__main__":
     manager.run()

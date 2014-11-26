@@ -10,16 +10,16 @@ bp = Blueprint('site', __name__)
 def index(page):
     """首页"""
     recommend_posts = Post.query.filter(Post.recommend). \
-        order_by(Post.published_at.desc(), Post.updated_at.desc()).paginate(page, 10)
+        order_by(Post.published_at.desc()).paginate(page, 10)
 
     blogs_query = Blog.query.filter(Blog.is_approved)
     blogs_count = blogs_query.count()
     latest_blogs = blogs_query.order_by(Blog.created_at.desc()).limit(20)
 
-    posts_query = Post.query.filter(~Post.hide). \
+    posts_query = Post.query.filter(~Post.hide).\
         filter(Post.blog.has(Blog.is_approved))
     posts_count = posts_query.count()
-    latest_posts = posts_query.order_by(Post.published_at.desc(), Post.updated_at.desc()).limit(20)
+    latest_posts = posts_query.order_by(Post.published_at.desc()).limit(20)
     return render_template('site/index.html', latest_posts=latest_posts,
                            latest_blogs=latest_blogs, blogs_count=blogs_count,
                            posts_count=posts_count, recommend_posts=recommend_posts)

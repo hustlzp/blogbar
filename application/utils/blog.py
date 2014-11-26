@@ -52,10 +52,15 @@ def _get_info_to_post(post, entry):
     html_parser = HTMLParser.HTMLParser()
     post.title = html_parser.unescape(entry.title)  # 对title进行反转义
     post.url = entry.link
-    if 'updated_parsed' in entry:
-        post.updated_at = _get_time(entry.updated_parsed)
+
     if 'published_parsed' in entry:
         post.published_at = _get_time(entry.published_parsed)
+    if 'updated_parsed' in entry:
+        post.updated_at = _get_time(entry.updated_parsed)
+
+    # 若published_at不存在，则使用updated_at
+    if not post.published_at:
+        post.published_at = post.updated_at
 
     if 'content' in entry:
         if isinstance(entry.content, list):

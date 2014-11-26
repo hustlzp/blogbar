@@ -16,7 +16,7 @@ def view(uid, page):
         abort(404)
     posts_count = blog.posts.filter(~Post.hide).count()
     posts = blog.posts.filter(~Post.hide). \
-        order_by(Post.published_at.desc(), Post.updated_at.desc()).paginate(page, 20)
+        order_by(Post.published_at.desc()).paginate(page, 20)
     return render_template('blog/view.html', blog=blog, posts=posts, posts_count=posts_count)
 
 
@@ -80,7 +80,7 @@ def feed(uid):
         feed.subtitle = blog.subtitle
     for post in blog.posts.filter(~Post.hide). \
             order_by(Post.published_at.desc(), Post.updated_at.desc()).limit(15):
-        updated = post.updated_at if post.updated_at else post.published_at
+        updated = post.published_at if post.published_at else post.updated_at
         feed.add(post.title, post.content, content_type='html', author=blog.author,
                  url=post.url, id=post.url, updated=updated)
     response = feed.get_response()
@@ -93,6 +93,6 @@ def feed(uid):
 def posts(page):
     posts = Post.query. \
         filter(~Post.hide).filter(Post.blog.has(Blog.is_approved)). \
-        order_by(Post.published_at.desc(), Post.updated_at.desc()). \
+        order_by(Post.published_at.desc()). \
         paginate(page, 20)
     return render_template('blog/posts.html', posts=posts)

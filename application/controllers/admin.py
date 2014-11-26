@@ -63,8 +63,7 @@ def edit_blog(uid):
 @AdminPermission()
 def posts(page):
     """管理文章"""
-    posts = Post.query.order_by(Post.published_at.desc(),
-                                Post.updated_at.desc()).paginate(page, 20)
+    posts = Post.query.order_by(Post.published_at.desc()).paginate(page, 20)
     return render_template('admin/posts.html', posts=posts)
 
 
