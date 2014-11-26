@@ -1,4 +1,5 @@
 # coding: utf-8
+from lxml import html
 import feedparser
 import HTMLParser
 from time import mktime
@@ -49,8 +50,10 @@ def grab_by_feed(blog):
 
 def _get_info_to_post(post, entry):
     """将entry中的信息转存到post中"""
+    title = get_text_from_html(entry.title)  # 去除HTML标签
+    title = title.replace('\r', '').replace('\n', '')  # 去除换行符
     html_parser = HTMLParser.HTMLParser()
-    post.title = html_parser.unescape(entry.title)  # 对title进行反转义
+    post.title = html_parser.unescape(title)  # HTML反转义
     post.url = entry.link
 
     if 'published_parsed' in entry:
@@ -74,3 +77,8 @@ def _get_info_to_post(post, entry):
 
 def _get_time(time_struct):
     return datetime.fromtimestamp(mktime(time_struct))
+
+
+def get_text_from_html(html):
+    doc = html.fromstring(html)  # parse html string
+    return doc.text_content()
