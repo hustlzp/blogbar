@@ -1,7 +1,6 @@
 # coding: utf-8
 import json
 from jieba import analyse
-from lxml import html
 from flask import render_template, Blueprint, flash, redirect, url_for, abort, request
 from werkzeug.contrib.atom import AtomFeed
 from ..models import db, Blog, Post, ApprovementLog

@@ -1,5 +1,8 @@
 # coding: utf-8
 import datetime
+import json
+from jieba import analyse
+from lxml import html
 from ._base import db
 
 
@@ -29,6 +32,7 @@ class Post(db.Model):
     url = db.Column(db.String(500))
     title = db.Column(db.String(200))
     content = db.Column(db.Text)
+    pure_content = db.Column(db.Text)
     keywords = db.Column(db.Text)
     clicks = db.Column(db.Integer, default=0)
 
@@ -43,15 +47,14 @@ class Post(db.Model):
     blog = db.relationship('Blog', backref=db.backref('posts', lazy='dynamic',
                                                       order_by='desc(Post.published_at)'))
 
-
-# class RecommendPost(db.Model):
-# """编辑推荐的文章"""
-#     id = db.Column(db.Integer, primary_key=True)
-#     clicks = db.Column(db.Integer, default=0)
-#     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
-#
-#     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
-#     post = db.relationship('Post', backref=db.backref("recommend", uselist=False))
+    def update(self):
+        """更新pure_content, keywords."""
+        # 更新pure_content
+        doc = html.fromstring(self.content)  # parse html string
+        self.pure_content = doc.text_content().replace(' ', '').replace('　', '')
+        # 更新keywords
+        keywords = analyse.extract_tags(self.pure_content, topK=20, withWeight=True)
+        self.keywords = json.dumps(keywords)
 
 
 class GrabLog(db.Model):

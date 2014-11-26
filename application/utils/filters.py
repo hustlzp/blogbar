@@ -18,9 +18,3 @@ def timesince(value):
     if delta.seconds > 60:
         return '%d 分钟前' % (delta.seconds / 60)
     return '刚刚'
-
-
-def puretext(text):
-    """去除文本中的HTML标签、空格、缩进"""
-    doc = lxml.html.fromstring(text)  # parse html string
-    return doc.text_content().replace(' ', '').replace('　', '')

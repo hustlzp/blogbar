@@ -64,6 +64,7 @@ def _get_info_to_post(post, entry):
             post.content = entry.content
     elif 'summary' in entry:
         post.content = entry.summary
+    post.update()
 
 
 def _get_time(time_struct):
