@@ -11,12 +11,13 @@ def deploy():
     env.host_string = config.HOST_STRING
     with cd('/var/www/blogbar'):
         with shell_env(MODE='PRODUCTION'):
+            run('supervisorctl stop blogbar')
             run('git reset --hard HEAD')
             run('git pull')
             with prefix('source venv/bin/activate'):
                 run('pip install -r requirements.txt')
                 run('python manage.py db upgrade')
-            run('supervisorctl restart blogbar')
+            run('supervisorctl start blogbar')
 
 
 def pull():
@@ -40,10 +41,10 @@ def restart_celery():
     # 在Celery启动时，似乎需要更多内存，启动后才降下来
     # 所以这里首先关闭了其他2个进程
     run('supervisorctl stop celerybeat')
-    run('supervisorctl stop celeryflower')
+    # run('supervisorctl stop celeryflower')
     run('supervisorctl restart celery')
     run('supervisorctl start celerybeat')
-    run('supervisorctl start celeryflower')
+    # run('supervisorctl start celeryflower')
 
 
 def remote_grab():
