@@ -14,9 +14,7 @@
             不过依然敬请期待，Blogbar的下一次蜕变。
          </div>
 
-         <h2>全部博客
-            <small>排名不分先后</small>
-         </h2>
+         <h2>全部博客</h2>
 
          {% for blog in all_blogs %}
             <div class="blog">
@@ -58,7 +56,12 @@
             </div>
          {% endfor %}
 
-         <h2>最新收录博客</h2>
+         <h2>
+            最新收录博客
+            <a href="{{ url_for('blog.all_blogs') }}" class="btn btn-primary btn-xs">
+               全部博客 <span class="fa fa-angle-right"></span>
+            </a>
+         </h2>
 
          {% for blog in latest_blogs %}
             <div>

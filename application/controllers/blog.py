@@ -22,6 +22,12 @@ def view(uid, page):
     return render_template('blog/view.html', blog=blog, posts=posts, posts_count=posts_count)
 
 
+@bp.route('/all')
+def all_blogs():
+    blogs = Blog.query.filter(Blog.is_approved)
+    return render_template('blog/all_blogs.html', blogs=blogs)
+
+
 @bp.route('/add', methods=['GET', 'POST'])
 def add():
     """推荐博客"""
