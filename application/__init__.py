@@ -63,7 +63,6 @@ def register_jinja(app):
     from .utils import filters
 
     app.jinja_env.filters['timesince'] = filters.timesince
-    app.jinja_env.filters['puretext'] = filters.puretext
 
     # inject vars into template context
     @app.context_processor

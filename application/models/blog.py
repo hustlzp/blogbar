@@ -49,9 +49,12 @@ class Post(db.Model):
 
     def update(self):
         """更新pure_content, keywords."""
+        if not self.content:
+            return
         # 更新pure_content
         doc = html.fromstring(self.content)  # parse html string
-        self.pure_content = doc.text_content().replace(' ', '').replace('　', '')
+        self.pure_content = doc.text_content().replace(' ', '').replace('　', ''). \
+            replace('\r', '').replace('\n', '')
         # 更新keywords
         keywords = analyse.extract_tags(self.pure_content, topK=20, withWeight=True)
         self.keywords = json.dumps(keywords)

@@ -78,5 +78,16 @@ def remote_grab():
     grab.delay()
 
 
+@manager.command
+def process_posts():
+    """生成pure_content, keywords"""
+    with app.app_context():
+        for post in Post.query:
+            print(post.title)
+            post.update()
+            db.session.add(post)
+        db.session.commit()
+
+
 if __name__ == "__main__":
     manager.run()
