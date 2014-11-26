@@ -14,7 +14,7 @@ def grab_by_feed(blog):
     if not blog.feed_version:
         blog.feed_version = result.version
     if not blog.subtitle and 'subtitle' in result.feed:
-        blog.subtitle = get_text_from_html(result.feed.subtitle)
+        blog.subtitle = remove_html_tag(result.feed.subtitle)
 
     db.session.add(blog)
     print(blog.title)
@@ -50,7 +50,7 @@ def grab_by_feed(blog):
 
 def _get_info_to_post(post, entry):
     """将entry中的信息转存到post中"""
-    title = get_text_from_html(entry.title)  # 去除HTML标签
+    title = remove_html_tag(entry.title)  # 去除HTML标签
     title = title.replace('\r', '').replace('\n', '')  # 去除换行符
     html_parser = HTMLParser.HTMLParser()
     post.title = html_parser.unescape(title)  # HTML反转义
@@ -79,6 +79,6 @@ def _get_time(time_struct):
     return datetime.fromtimestamp(mktime(time_struct))
 
 
-def get_text_from_html(html_string):
-    doc = html.fromstring(html_string)  # parse html string
+def remove_html_tag(content):
+    doc = html.fromstring(content)  # parse html string
     return doc.text_content()
