@@ -16,7 +16,12 @@
                <p class="abstract">{{ post.content|puretext|truncate(100, true) }}</p>
 
                <div class="text-light">
-                  By {{ post.blog.author }}
+                  <a style="color: #666; font-weight: bold;"
+                     href="{{ url_for('blog.view', uid=post.blog.id) }}">
+                     {{ post.blog.title }}
+                  </a>
+                  &nbsp;/&nbsp;
+                  {{ post.blog.author }}
                   &nbsp;&nbsp;&nbsp;
                   {% if post.published_at or post.updated_at %}
                      {{ post.published_at|timesince or post.updated_at|timesince }}
