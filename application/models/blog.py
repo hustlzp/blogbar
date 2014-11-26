@@ -46,7 +46,7 @@ class RecommendPost(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
 
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
-    post = db.relationship('Post')
+    post = db.relationship('Post', backref=db.backref("recommend", uselist=False))
 
 
 class GrabLog(db.Model):
