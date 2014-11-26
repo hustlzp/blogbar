@@ -22,7 +22,7 @@
                {% set blog = post.blog %}
 
                <tr>
-                  <td>
+                  <td style="width: 300px;">
                      <a href="{{ post.url }}" target="_blank">{{ post.title }}</a>
                   </td>
                   <td>{{ blog.author }}</td>
@@ -33,10 +33,12 @@
                   <td>
                      {% if post.recommend %}
                         <span class="label label-success">推荐</span>
+                        <br/>
                      {% endif %}
 
                      {% if post.hide %}
                         <span class="label label-warning">隐藏</span>
+                        <br/>
                      {% endif %}
 
                      {% if blog.for_special_purpose %}
