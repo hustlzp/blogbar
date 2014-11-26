@@ -30,7 +30,11 @@ class Post(db.Model):
     title = db.Column(db.String(200))
     content = db.Column(db.Text)
     keywords = db.Column(db.Text)
+    clicks = db.Column(db.Integer, default=0)
+
     is_duplicate = db.Column(db.Boolean, default=False)
+    recommend = db.Column(db.Boolean, default=False)
+
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
     published_at = db.Column(db.DateTime)
     updated_at = db.Column(db.DateTime)
@@ -40,13 +44,14 @@ class Post(db.Model):
                                                       order_by='desc(Post.published_at)'))
 
 
-class RecommendPost(db.Model):
-    """编辑推荐的文章"""
-    id = db.Column(db.Integer, primary_key=True)
-    created_at = db.Column(db.DateTime, default=datetime.datetime.now)
-
-    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
-    post = db.relationship('Post', backref=db.backref("recommend", uselist=False))
+# class RecommendPost(db.Model):
+# """编辑推荐的文章"""
+#     id = db.Column(db.Integer, primary_key=True)
+#     clicks = db.Column(db.Integer, default=0)
+#     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
+#
+#     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+#     post = db.relationship('Post', backref=db.backref("recommend", uselist=False))
 
 
 class GrabLog(db.Model):

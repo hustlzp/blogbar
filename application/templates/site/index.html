@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+{% from 'macro/ui.html' import pagination %}
 
 {% block page_title %}首页{% endblock %}
 {% block page_content %}
@@ -6,11 +7,13 @@
       <div class="col-sm-8">
          <h2>编辑推荐</h2>
 
-         {% for recommend in recommend_posts %}
-            {% set post = recommend.post %}
+         {% for post in recommend_posts.items %}
             <div style="margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #ddd;">
                <div class="title" style="font-size: 20px;padding: 5px 0">
-                  <a href="{{ post.url }}" target="_blank">{{ post.title }}</a>
+                  <a href="{{ url_for('blog.redirect_post', uid=post.id) }}"
+                     target="_blank">
+                     {{ post.title }}
+                  </a>
                </div>
 
                <p class="abstract">{{ post.content|puretext|truncate(100, true) }}</p>
@@ -20,15 +23,19 @@
                      href="{{ url_for('blog.view', uid=post.blog.id) }}">
                      {{ post.blog.title }}
                   </a>
-                  &nbsp;/&nbsp;
+                  /
                   {{ post.blog.author }}
                   &nbsp;&nbsp;&nbsp;
                   {% if post.published_at or post.updated_at %}
                      {{ post.published_at|timesince or post.updated_at|timesince }}
                   {% endif %}
+                  &nbsp;&nbsp;&nbsp;
+                  {{ post.clicks if post.clicks else 0 }} 次点击
                </div>
             </div>
          {% endfor %}
+
+         {{ pagination(recommend_posts) }}
       </div>
 
       <div class="col-sm-4">
@@ -48,7 +55,7 @@
                {#               <a href="{{ url_for('blog.post', uid=post.id) }}">#}
                {#                  {{ post.title }}#}
                {#               </a>#}
-               <a href="{{ post.url }}" target="_blank">
+               <a href="{{ url_for('blog.redirect_post', uid=post.id) }}" target="_blank">
                   {{ post.title }}
                </a>
 

@@ -1,14 +1,16 @@
 # coding: utf-8
 from flask import render_template, Blueprint
-from ..models import db, Blog, Post, ApprovementLog, RecommendPost
+from ..models import db, Blog, Post, ApprovementLog
 
 bp = Blueprint('site', __name__)
 
 
-@bp.route('/')
-def index():
+@bp.route('/page', defaults={'page': 1})
+@bp.route('/page/<int:page>')
+def index(page):
     """首页"""
-    recommend_posts = RecommendPost.query.order_by(RecommendPost.created_at.desc())
+    recommend_posts = Post.query.filter(Post.recommend). \
+        order_by(Post.published_at.desc(), Post.updated_at.desc()).paginate(page, 10)
 
     blogs_query = Blog.query.filter(Blog.is_approved)
     blogs_count = blogs_query.count()

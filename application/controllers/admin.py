@@ -1,7 +1,7 @@
 # coding: utf-8
 import datetime
 from flask import render_template, Blueprint, flash, redirect, url_for, abort, request
-from ..models import db, Blog, Post, ApprovementLog, RecommendPost
+from ..models import db, Blog, Post, ApprovementLog
 from ..utils.permissions import AdminPermission
 from ..forms import EditBlogForm
 
@@ -73,11 +73,9 @@ def posts(page):
 def recommend_post(uid):
     """推荐文章"""
     post = Post.query.get_or_404(uid)
-    repost = RecommendPost.query.filter(RecommendPost.post_id == uid).first()
-    if not repost:
-        repost = RecommendPost(post_id=uid)
-        db.session.add(repost)
-        db.session.commit()
+    post.recommend = True
+    db.session.add(post)
+    db.session.commit()
     return redirect(request.referrer)
 
 
@@ -86,8 +84,8 @@ def recommend_post(uid):
 def unrecommend_post(uid):
     """取消推荐文章"""
     post = Post.query.get_or_404(uid)
-    repost = RecommendPost.query.filter(RecommendPost.post_id == uid)
-    map(db.session.delete, repost)
+    post.recommend = False
+    db.session.add(post)
     db.session.commit()
     return redirect(request.referrer)
 

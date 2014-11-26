@@ -43,6 +43,17 @@ def add():
     return render_template('blog/add.html', form=form)
 
 
+@bp.route('/post/<int:uid>/redirect')
+def redirect_post(uid):
+    post = Post.query.get_or_404(uid)
+    if not post.clicks:
+        post.clicks = 0
+    post.clicks += 1
+    db.session.add(post)
+    db.session.commit()
+    return redirect(post.url)
+
+
 @bp.route('/post/<int:uid>')
 def post(uid):
     post = Post.query.get_or_404(uid)

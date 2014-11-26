@@ -51,7 +51,8 @@
 
          {% for p in posts.items %}
             <div>
-               <a href="{{ p.url }}" target="_blank">{{ p.title }}</a>
+               <a href="{{ url_for('blog.redirect_post', uid=p.id) }}"
+                  target="_blank">{{ p.title }}</a>
                {#               {% if blog.is_protected %}#}
                {#                  <a href="{{ p.url }}" target="_blank">{{ p.title }}</a>#}
                {#               {% else %}#}
