@@ -1,4 +1,5 @@
 # coding: utf-8
+import re
 from os.path import dirname, abspath, join
 import datetime
 import json
@@ -58,7 +59,9 @@ class Post(db.Model):
             return
         # 更新pure_content
         doc = html.fromstring(self.content)  # parse html string
-        self.pure_content = doc.text_content().strip(' ').strip('　')
+        pure_content = doc.text_content().strip().strip('　')  # 去除首位的空格、缩进
+        pure_content = re.sub('[\s　]+', ' ', pure_content)  # 将文中的多个空格/多个缩进替换为单个空格
+        self.pure_content = pure_content
         # 更新keywords
         # keywords = analyse.extract_tags(self.pure_content, topK=20, withWeight=True)
         # self.keywords = json.dumps(keywords)
