@@ -1,4 +1,5 @@
 # coding: utf-8
+import HTMLParser
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 from application import create_app
@@ -98,6 +99,17 @@ def process_published():
             if not post.published_at:
                 post.published_at = post.updated_at
                 db.session.add(post)
+        db.session.commit()
+
+
+@manager.command
+def unescape_title():
+    html_parser = HTMLParser.HTMLParser()
+    with app.app_context():
+        for post in Post.query:
+            print(post.title)
+            post.title = html_parser.unescape(post.title)
+            db.session.add(post)
         db.session.commit()
 
 

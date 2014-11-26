@@ -37,6 +37,8 @@ def restart():
 def restart_celery():
     """重启celery相关进程"""
     env.host_string = config.HOST_STRING
+    # 在Celery启动时，似乎需要更多内存，启动后才降下来
+    # 所以这里首先关闭了其他2个进程
     run('supervisorctl stop celerybeat')
     run('supervisorctl stop celeryflower')
     run('supervisorctl restart celery')
