@@ -1,6 +1,6 @@
 # coding: utf-8
 from flask import render_template, Blueprint
-from ..models import db, Blog, Post, ApprovementLog
+from ..models import db, Blog, Post, ApprovementLog, RecommendPost
 
 bp = Blueprint('site', __name__)
 
@@ -8,18 +8,19 @@ bp = Blueprint('site', __name__)
 @bp.route('/')
 def index():
     """首页"""
-    blogs = Blog.query.filter(Blog.is_approved)
-    # all_blogs = blogs.order_by(db.func.random())
-    all_blogs = blogs
-    blogs_count = blogs.count()
-    posts = Post.query.filter(~Post.is_duplicate). \
+    recommend_posts = RecommendPost.query.order_by(RecommendPost.created_at.desc())
+
+    blogs_query = Blog.query.filter(Blog.is_approved)
+    blogs_count = blogs_query.count()
+    latest_blogs = blogs_query.order_by(Blog.created_at.desc()).limit(20)
+
+    posts_query = Post.query.filter(~Post.is_duplicate). \
         filter(Post.blog.has(Blog.is_approved))
-    posts_count = posts.count()
-    latest_posts = posts.order_by(Post.published_at.desc(), Post.updated_at.desc()).limit(20)
-    latest_blogs = blogs.order_by(Blog.created_at.desc()).limit(20)
-    return render_template('site/index.html', all_blogs=all_blogs, latest_posts=latest_posts,
+    posts_count = posts_query.count()
+    latest_posts = posts_query.order_by(Post.published_at.desc(), Post.updated_at.desc()).limit(20)
+    return render_template('site/index.html', latest_posts=latest_posts,
                            latest_blogs=latest_blogs, blogs_count=blogs_count,
-                           posts_count=posts_count)
+                           posts_count=posts_count, recommend_posts=recommend_posts)
 
 
 @bp.route('/approve_results', defaults={'page': 1})

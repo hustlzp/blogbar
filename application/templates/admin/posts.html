@@ -26,7 +26,7 @@
                      <a href="{{ post.url }}" target="_blank">{{ post.title }}</a>
                   </td>
                   <td>{{ blog.author }}</td>
-                  <td>{{ post.content|length if post.content else 0 }}字</td>
+                  <td>{{ post.content|puretext|length if post.content else 0 }}字</td>
                   <td>{{ post.keywords if post.keywords else "" }}</td>
                   <td>{{ post.published_at if post.published_at else "" }}</td>
                   <td>{{ post.updated_at if post.updated_at else "" }}</td>

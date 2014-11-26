@@ -4,24 +4,23 @@
 {% block page_content %}
    <div class="container">
       <div class="col-sm-8">
-         <div class="well well-lg">
-            <p>Blogbar目前仍处于Alpha版，没有界面设计，功能也近乎简陋，仅限于聚合个人博客。</p>
+         <h2>编辑推荐</h2>
 
-            <p>未来的Beta版将对UI进行优化，同时在聚合的基础上提供更加个性化的服务。</p>
+         {% for recommend in recommend_posts %}
+            {% set post = recommend.post %}
+            <div style="margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #ddd;">
+               <div class="title" style="font-size: 20px;padding: 5px 0">
+                  <a href="{{ post.url }}" target="_blank">{{ post.title }}</a>
+               </div>
 
-            <p>Blogbar的维护者最近琐事缠身，无法抽出太多时间投入到Blogbar的开发之中。</p>
+               <p class="abstract">{{ post.content|puretext|truncate(100, true) }}</p>
 
-            不过依然敬请期待，Blogbar的下一次蜕变。
-         </div>
-
-         <h2>全部博客</h2>
-
-         {% for blog in all_blogs %}
-            <div class="blog">
-               <div class="title">
-                  <a href="{{ url_for('blog.view', uid=blog.id) }}">
-                     {{ blog.title }}
-                  </a>
+               <div class="text-light">
+                  By {{ post.blog.author }}
+                  &nbsp;&nbsp;&nbsp;
+                  {% if post.published_at or post.updated_at %}
+                     {{ post.published_at|timesince or post.updated_at|timesince }}
+                  {% endif %}
                </div>
             </div>
          {% endfor %}
