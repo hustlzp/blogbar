@@ -37,9 +37,11 @@ def restart():
 def restart_celery():
     """重启celery相关进程"""
     env.host_string = config.HOST_STRING
+    run('supervisorctl stop celerybeat')
+    run('supervisorctl stop celeryflower')
     run('supervisorctl restart celery')
-    run('supervisorctl restart celerybeat')
-    run('supervisorctl restart celeryflower')
+    run('supervisorctl start celerybeat')
+    run('supervisorctl start celeryflower')
 
 
 def remote_grab():
