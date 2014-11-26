@@ -60,7 +60,7 @@ def post(uid):
     if post.hide:
         abort(404)
     if post.keywords:
-        keywords = json.load(post.keywords)
+        keywords = json.loads(post.keywords)
         tags = [{'text': tag, 'weight': weight} for tag, weight in keywords]
     else:
         tags = []

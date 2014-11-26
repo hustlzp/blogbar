@@ -27,7 +27,7 @@
                   </td>
                   <td>{{ blog.author }}</td>
                   <td>{{ post.pure_content|length if post.pure_content else 0 }}字</td>
-                  <td>{{ post.keywords if post.keywords else "" }}</td>
+                  <td>{{ post.keywords|get_keywords if post.keywords else "" }}</td>
                   <td>{{ post.published_at if post.published_at else "" }}</td>
                   <td>{{ post.updated_at if post.updated_at else "" }}</td>
                   <td>
@@ -59,12 +59,12 @@
                      {% if post.recommend %}
                         <a href="{{ url_for('admin.unrecommend_post', uid=post.id) }}"
                            class="btn btn-sm btn-default">
-                           <span class="fa fa-thumbs-o-down"></span> 取消推荐
+                           <span class="fa fa-thumbs-down"></span> 取消推荐
                         </a>
                      {% else %}
                         <a href="{{ url_for('admin.recommend_post', uid=post.id) }}"
                            class="btn btn-sm btn-default">
-                           <span class="fa fa-thumbs-o-up"></span> 推荐
+                           <span class="fa fa-thumbs-up"></span> 推荐
                         </a>
                      {% endif %}
                   </td>

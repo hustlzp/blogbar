@@ -1,6 +1,6 @@
 # coding: utf-8
 import datetime
-import lxml.html
+import json
 
 
 def timesince(value):
@@ -18,3 +18,8 @@ def timesince(value):
     if delta.seconds > 60:
         return '%d 分钟前' % (delta.seconds / 60)
     return '刚刚'
+
+
+def get_keywords(keywords):
+    keywords = json.loads(keywords)[:5]
+    return ', '.join([keyword for keyword, weight in keywords])
