@@ -60,7 +60,9 @@ class Post(db.Model):
         # 更新pure_content
         doc = html.fromstring(self.content)  # parse html string
         pure_content = doc.text_content().strip().strip('　')  # 去除首位的空格、缩进
-        pure_content = re.sub('[\s　]+', ' ', pure_content)  # 将文中的多个空格/多个缩进替换为单个空格
+        pure_content = pure_content.replace('　', ' ')  # 将缩进替换为空格
+        pure_content = re.sub('\s+', ' ', pure_content)  # 将多个空格替换为单个空格
+
         self.pure_content = pure_content
         # 更新keywords
         # keywords = analyse.extract_tags(self.pure_content, topK=20, withWeight=True)
