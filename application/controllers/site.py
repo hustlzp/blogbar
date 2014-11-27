@@ -14,12 +14,12 @@ def index(page):
 
     blogs_query = Blog.query.filter(Blog.is_approved)
     blogs_count = blogs_query.count()
-    latest_blogs = blogs_query.order_by(Blog.created_at.desc()).limit(20)
+    latest_blogs = blogs_query.order_by(Blog.created_at.desc()).limit(15)
 
     posts_query = Post.query.filter(~Post.hide).\
         filter(Post.blog.has(Blog.is_approved))
     posts_count = posts_query.count()
-    latest_posts = posts_query.order_by(Post.published_at.desc()).limit(20)
+    latest_posts = posts_query.order_by(Post.published_at.desc()).limit(10)
     return render_template('site/index.html', latest_posts=latest_posts,
                            latest_blogs=latest_blogs, blogs_count=blogs_count,
                            posts_count=posts_count, recommend_posts=recommend_posts)

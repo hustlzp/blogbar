@@ -23,3 +23,9 @@ def timesince(value):
 def get_keywords(keywords):
     keywords = json.loads(keywords)[:5]
     return ', '.join([keyword for keyword, weight in keywords])
+
+
+def readtime(content):
+    words = len(content)
+    time = words / 600
+    return time if time else 1

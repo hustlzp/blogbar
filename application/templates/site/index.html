@@ -4,77 +4,93 @@
 {% block page_title %}首页{% endblock %}
 {% block page_content %}
    <div class="container">
-      <div class="col-sm-8">
-         <h2>编辑推荐</h2>
+      <div class="row">
+         <div class="col-sm-8">
+            <h2 class="no-margin-top">编辑推荐</h2>
 
-         {% for post in recommend_posts.items %}
-            <div style="margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #ddd;">
-               <div class="title" style="font-size: 20px;padding: 5px 0">
-                  <a href="{{ url_for('blog.redirect_post', uid=post.id) }}"
-                     target="_blank">
-                     {{ post.title }}
-                  </a>
-               </div>
+            <div class="recommends">
+               {% for post in recommend_posts.items %}
+                  <div class="recommend">
+                     <div class="title">
+                        <a href="{{ url_for('blog.redirect_post', uid=post.id) }}"
+                           target="_blank">
+                           {{ post.title }}
+                        </a>
+                     </div>
 
-               <p class="abstract">{{ post.pure_content|truncate(120, true) }}</p>
+                     <p class="abstract">{{ post.pure_content|truncate(25, true) }}</p>
 
-               <div class="text-light">
-                  <a style="color: #666; font-weight: bold;"
-                     href="{{ url_for('blog.view', uid=post.blog.id) }}">
-                     {{ post.blog.title }}
-                  </a>
-                  &nbsp;/&nbsp;
-                  {{ post.blog.author }}
-                  &nbsp;&nbsp;&nbsp;&nbsp;
-                  {% if post.published_at or post.updated_at %}
-                     {{ post.published_at|timesince or post.updated_at|timesince }}
-                  {% endif %}
-                  &nbsp;&nbsp;&nbsp;&nbsp;
-                  {{ post.clicks if post.clicks else 0 }} 次点击
-               </div>
+                     <div class="meta">
+                        from <a class="blog"
+                                href="{{ url_for('blog.view', uid=post.blog.id) }}">
+                        {{ post.blog.title }}</a>
+
+                        / <span class="author">{{ post.blog.author }}</span>
+
+                        {% if post.published_at or post.updated_at %}
+                           <span class="time">
+                           {{ post.published_at|timesince or post.updated_at|timesince }}
+                        </span>
+                        {% endif %}
+
+                        {# <span class="clicks">{{ post.clicks if post.clicks else 0 }} 次点击</span>#}
+                        <span class="readtime">{{ post.pure_content|readtime }} 分钟阅读</span>
+                     </div>
+                  </div>
+               {% endfor %}
             </div>
-         {% endfor %}
 
-         {{ pagination(recommend_posts) }}
-      </div>
+            {{ pagination(recommend_posts) }}
+         </div>
 
-      <div class="col-sm-4">
-         <hr/>
-         <p>{{ blogs_count }} 博客，{{ posts_count }} 博文</p>
-         <hr/>
-
-         <h2>
-            最新博文
-            <a href="{{ url_for('blog.posts') }}" class="btn btn-primary btn-xs">
-               全部博文 <span class="fa fa-angle-right"></span>
-            </a>
-         </h2>
-
-         {% for post in latest_posts %}
-            <div>
-               {#               <a href="{{ url_for('blog.post', uid=post.id) }}">#}
-               {#                  {{ post.title }}#}
+         <div class="col-sm-4">
+            <h2 class="no-margin-top">
+               最新文章
+               {#               <a href="{{ url_for('blog.posts') }}" class="btn btn-primary btn-xs">#}
+               {#                  全部博文 <span class="fa fa-angle-right"></span>#}
                {#               </a>#}
-               <a href="{{ url_for('blog.redirect_post', uid=post.id) }}" target="_blank">
-                  {{ post.title }}
-               </a>
+            </h2>
 
-               {{ post.blog.author }}
+            <div class="latest-posts">
+               {% for post in latest_posts %}
+                  <div class="latest-post">
+                     <a href="{{ url_for('blog.redirect_post', uid=post.id) }}" target="_blank"
+                        class="title">
+                        {{ post.title }}
+                     </a>
+
+                     <div class="meta">
+                        <a href="{{ url_for('blog.view', uid=post.blog_id) }}">
+                           {{ post.blog.title }}
+                        </a>
+
+                        {% if post.published_at or post.updated_at %}
+                           <span class="time">
+                           {% if post.published_at %}
+                              {{ post.published_at|timesince }}
+                           {% else %}
+                              {{ post.updated_at|timesince }}
+                           {% endif %}
+                        </span>
+                        {% endif %}
+                     </div>
+                  </div>
+               {% endfor %}
             </div>
-         {% endfor %}
 
-         <h2>
-            最新收录博客
-            <a href="{{ url_for('blog.all_blogs') }}" class="btn btn-primary btn-xs">
-               全部博客 <span class="fa fa-angle-right"></span>
-            </a>
-         </h2>
-
-         {% for blog in latest_blogs %}
-            <div>
-               <a href="{{ url_for('blog.view', uid=blog.id) }}">{{ blog.title }}</a>
-            </div>
-         {% endfor %}
+            {#            <h2>#}
+            {#               最新收录博客#}
+            {#               <a href="{{ url_for('blog.all_blogs') }}" class="btn btn-primary btn-xs">#}
+            {#                  全部博客 <span class="fa fa-angle-right"></span>#}
+            {#               </a>#}
+            {#            </h2>#}
+            {##}
+            {#            {% for blog in latest_blogs %}#}
+            {#               <div>#}
+            {#                  <a href="{{ url_for('blog.view', uid=blog.id) }}">{{ blog.title }}</a>#}
+            {#               </div>#}
+            {#            {% endfor %}#}
+         </div>
       </div>
    </div>
 {% endblock %}

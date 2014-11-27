@@ -54,16 +54,18 @@
       {% endif %}
 
       <div class="collapse navbar-collapse">
-         <a href="{{ url_for('blog.add') }}" class="btn btn-primary navbar-btn navbar-left">
-            <span class="fa fa-plus"></span> 推荐博客
-         </a>
-
          <ul class="nav navbar-nav">
+            <li id="nav-index">
+               <a href="{{ url_for('site.index') }}">文章</a>
+            </li>
+            <li id="nav-blog">
+               <a href="{{ url_for('blog.square') }}">博客</a>
+            </li>
             <li id="nav-approve-results">
                <a href="{{ url_for('site.approve_results') }}">审核结果</a>
             </li>
             <li id="nav-suggest">
-               <a href="{{ url_for('site.suggest') }}">提建议</a>
+               <a href="{{ url_for('site.suggest') }}">建议</a>
             </li>
             <li id="nav-about">
                <a href="{{ url_for('site.about') }}">关于</a>
@@ -81,6 +83,10 @@
                </li>
             {% endif %}
          </ul>
+
+         <a href="{{ url_for('blog.add') }}" class="btn btn-primary navbar-btn navbar-left">
+            <span class="fa fa-plus"></span> 推荐博客
+         </a>
 
          {#         <form class="navbar-form navbar-left" role="search" method="get" action="#">#}
          {#            <div class="input-group">#}

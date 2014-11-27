@@ -64,6 +64,7 @@ def register_jinja(app):
 
     app.jinja_env.filters['timesince'] = filters.timesince
     app.jinja_env.filters['get_keywords'] = filters.get_keywords
+    app.jinja_env.filters['readtime'] = filters.readtime
 
     # inject vars into template context
     @app.context_processor

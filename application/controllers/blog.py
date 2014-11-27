@@ -8,6 +8,11 @@ from ..forms import AddBlogForm
 bp = Blueprint('blog', __name__)
 
 
+@bp.route('/square')
+def square():
+    return "1"
+
+
 @bp.route('/<int:uid>', defaults={'page': 1})
 @bp.route('/<int:uid>/page/<int:page>')
 def view(uid, page):
