@@ -65,15 +65,15 @@
                   </tr>
                {% endif %}
             </table>
+
+            {% if permissions.AdminPermission().check() %}
+               <a href="{{ url_for('admin.edit_blog', uid=blog.id) }}"
+                  class="btn btn-default btn-sm">
+                  <span class="fa fa-edit"></span> 编辑</a>
+            {% endif %}
          </div>
 
          <div class="col-sm-8">
-            {#            {% if permissions.AdminPermission().check() %}#}
-            {#               <a href="{{ url_for('admin.edit_blog', uid=blog.id) }}"#}
-            {#                  class="btn btn-default btn-sm">#}
-            {#                  <span class="fa fa-edit"></span> 编辑</a>#}
-            {#            {% endif %}#}
-
             {% for p in posts.items %}
                <div class="post">
                   <div class="pull-right">
