@@ -1,12 +1,15 @@
 # coding: utf-8
 import datetime
+from datetime import timedelta
 import json
 from math import ceil
 
 
 def timesince(value):
     """Friendly time gap"""
-    now = datetime.datetime.now()
+    # 系统时间是+800，而post保存的时间是UTC时间
+    # 故需先后退8小时
+    now = datetime.datetime.now() - timedelta(hours=8)
     delta = now - value
     if delta.days > 365:
         return '%d 年前' % (delta.days / 365)
