@@ -1,7 +1,7 @@
 # coding: utf-8
 from lxml import html
 import feedparser
-import HTMLParser
+from HTMLParser import HTMLParser
 from time import mktime
 from datetime import datetime
 from ..models import db, Post
@@ -52,7 +52,7 @@ def _get_info_to_post(post, entry):
     """将entry中的信息转存到post中"""
     title = remove_html_tag(entry.title)  # 去除HTML标签
     title = title.replace('\r', '').replace('\n', '')  # 去除换行符
-    html_parser = HTMLParser.HTMLParser()
+    html_parser = HTMLParser()
     post.title = html_parser.unescape(title)  # HTML反转义
     post.url = entry.link
 
@@ -79,6 +79,20 @@ def _get_time(time_struct):
     return datetime.fromtimestamp(mktime(time_struct))
 
 
-def remove_html_tag(content):
-    doc = html.fromstring(content)  # parse html string
-    return doc.text_content()
+# See: http://stackoverflow.com/questions/753052/strip-html-from-strings-in-python
+class MLStripper(HTMLParser):
+    def __init__(self):
+        self.reset()
+        self.fed = []
+
+    def handle_data(self, d):
+        self.fed.append(d)
+
+    def get_data(self):
+        return ''.join(self.fed)
+
+
+def remove_html_tag(html_string):
+    s = MLStripper()
+    s.feed(html_string)
+    return s.get_data()
