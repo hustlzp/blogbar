@@ -1,6 +1,7 @@
 # coding: utf-8
 import datetime
 import json
+from math import ceil
 
 
 def timesince(value):
@@ -27,8 +28,7 @@ def get_keywords(keywords):
 
 def readtime(content):
     words = len(content)
-    time = words / 600
-    return time if time else 1
+    return int(ceil(words / 500.0))
 
 
 def friendly_url(url):
