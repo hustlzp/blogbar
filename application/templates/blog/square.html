@@ -3,43 +3,46 @@
 {% block page_title %}博客广场{% endblock %}
 {% block page_content %}
    <div class="container">
-      <div class="col-sm-8">
-         <h2 class="no-margin-top">
-            <span class="fa fa-book"></span> 全部博客
-            <small>排名不分先后</small>
-         </h2>
+      <div class="row">
+         <div class="col-sm-8">
+            <h2 class="no-margin-top">
+               <span class="fa fa-book"></span> 全部博客
+               <small>排名不分先后</small>
+            </h2>
 
-         <div class="blogs">
-            {% for blog in blogs %}
-               <a class="blog" href="{{ url_for('blog.view', uid=blog.id) }}">
-                  <div class="title">
-                     {{ blog.title }}
-                  </div>
+            <div class="blogs">
+               {% for blog in blogs %}
+                  <a class="blog" title="{{ blog.subtitle }}"
+                     href="{{ url_for('blog.view', uid=blog.id) }}">
+                     <div class="inner-wap">
+                        <div class="title">{{ blog.title }}</div>
 
-                  {% if blog.subtitle %}
-                     <div class="subtitle">{{ blog.subtitle }}</div>
-                  {% endif %}
+                        {% if blog.subtitle %}
+                           <div class="subtitle">{{ blog.subtitle }}</div>
+                        {% endif %}
 
-                  {#                  <div class="author">by <span>{{ blog.author }}</span></div>#}
-               </a>
-            {% endfor %}
+                        {#                  <div class="author">by <span>{{ blog.author }}</span></div>#}
+                     </div>
+                  </a>
+               {% endfor %}
+            </div>
          </div>
-      </div>
 
-      <div class="col-sm-4">
-         <h2 class="no-margin-top">
-            <span class="fa fa-clock-o"></span> 最新收录
-         </h2>
+         <div class="col-sm-4">
+            <h2 class="no-margin-top">
+               <span class="fa fa-clock-o"></span> 最新收录
+            </h2>
 
-         <div class="latest-blogs">
-            {% for blog in latest_blogs %}
-               <div class="latest-blog">
-                  <a href="{{ url_for('blog.view', uid=blog.id) }}">{{ blog.title }}</a>
-                  {% if blog.subtitle %}
-                     <div class="subtitle">{{ blog.subtitle }}</div>
-                  {% endif %}
-               </div>
-            {% endfor %}
+            <div class="latest-blogs">
+               {% for blog in latest_blogs %}
+                  <div class="latest-blog">
+                     <a href="{{ url_for('blog.view', uid=blog.id) }}">{{ blog.title }}</a>
+                     {% if blog.subtitle %}
+                        <div class="subtitle">{{ blog.subtitle }}</div>
+                     {% endif %}
+                  </div>
+               {% endfor %}
+            </div>
          </div>
       </div>
    </div>
