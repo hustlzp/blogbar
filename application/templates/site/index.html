@@ -26,7 +26,9 @@
                         <a class="blog" href="{{ url_for('blog.view', uid=post.blog.id) }}">
                            {{ post.blog.title }}</a>
 
-                        / <span class="author">{{ post.blog.author }}</span>
+                        <span class="divider">/</span>
+
+                        <span class="author">{{ post.blog.author }}</span>
 
                         {% if post.published_at or post.updated_at %}
                            <span class="time">
