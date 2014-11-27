@@ -6,34 +6,46 @@
 {% block page_content %}
    <div class="container">
       <div class="row">
-         <div class="col-sm-8">
-            <h2 class="no-margin-top">
-               {{ blog.title }}
+         <div class="col-sm-4">
+            <div class="blog-header">
+               <div class="title">
+                  {{ blog.title }}
 
-               {% if blog.is_protected %}
-                  <sup title="作者禁止转载">
-                     <span class="fa fa-lock" style="color: #FAAD07;"></span>
-                  </sup>
+                  {% if blog.is_protected %}
+                     <sup title="作者禁止转载">
+                        <span class="fa fa-lock" style="color: #FAAD07;"></span>
+                     </sup>
+                  {% endif %}
+               </div>
+
+               {% if blog.subtitle %}
+                  <div class="subtitle">{{ blog.subtitle }}</div>
+               {% endif %}
+            </div>
+
+            <table class="table">
+               <tr>
+                  <td>URL</td>
+                  <td>
+                     <a class="url" href="{{ blog.url }}"
+                        target="_blank">{{ blog.url|friendly_url }}</a>
+                  </td>
+               </tr>
+
+               <tr>
+                  <td>博主</td>
+                  <td>{{ blog.author }}</td>
+               </tr>
+
+               {% if blog.since %}
+                  <tr>
+                     <td>Since</td>
+                     <td>
+                        {{ blog.since }}
+                     </td>
+                  </tr>
                {% endif %}
 
-               {% if permissions.AdminPermission().check() %}
-                  <a href="{{ url_for('admin.edit_blog', uid=blog.id) }}"
-                     class="btn btn-default btn-sm">
-                     <span class="fa fa-edit"></span> 编辑</a>
-               {% endif %}
-            </h2>
-
-            {% if blog.subtitle %}
-               <p>{{ blog.subtitle }}</p>
-            {% endif %}
-
-            {% if blog.since %}
-               <p>Since {{ blog.since }}</p>
-            {% endif %}
-
-            <p>链接：<a href="{{ blog.url }}" target="_blank">{{ blog.url }}</a></p>
-
-            <p>
                {% if blog.feed %}
                   {% set feed = blog.feed %}
                {% elif blog.has_spider and not blog.is_protected %}
@@ -43,22 +55,38 @@
                {% endif %}
 
                {% if feed %}
-                  订阅：<a href="{{ feed }}" target="_blank"><span class="fa fa-rss-square"></span></a>
+                  <tr>
+                     <td>订阅</td>
+                     <td>
+                        <a href="{{ feed }}" title="feed" target="_blank" class="feed">
+                           <span class="fa fa-rss-square"></span>
+                        </a>
+                     </td>
+                  </tr>
                {% endif %}
-            </p>
+            </table>
+         </div>
 
-            <p>作者：{{ blog.author }}</p>
+         <div class="col-sm-8">
+            {#            {% if permissions.AdminPermission().check() %}#}
+            {#               <a href="{{ url_for('admin.edit_blog', uid=blog.id) }}"#}
+            {#                  class="btn btn-default btn-sm">#}
+            {#                  <span class="fa fa-edit"></span> 编辑</a>#}
+            {#            {% endif %}#}
 
             {% for p in posts.items %}
-               <div>
-                  <a href="{{ url_for('blog.redirect_post', uid=p.id) }}"
+               <div class="post">
+                  <div class="pull-right">
+                     {% if p.published_at %}
+                        <span class="time utc-time utc-time-date">{{ p.published_at }}</span>
+                     {% endif %}
+                  </div>
+
+                  <a href="{{ url_for('blog.redirect_post', uid=p.id) }}" class="title"
                      target="_blank">{{ p.title }}</a>
 
-                  <div>
-                     {% if p.published_at %}
-                        发布于：
-                        <span class="utc-time">{{ p.published_at }}</span>
-                     {% endif %}
+                  <div class="abstract">
+                     {{ p.pure_content|truncate(30, true) }}
                   </div>
                </div>
             {% endfor %}

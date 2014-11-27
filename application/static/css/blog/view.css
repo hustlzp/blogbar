@@ -1,0 +1,33 @@
+.blog-header {
+  position: relative;
+  padding-bottom: 15px;
+}
+.blog-header .title {
+  font-size: 24px;
+  font-weight: bold;
+}
+.blog-header .subtitle {
+  margin-top: 10px;
+}
+.table tbody tr td {
+  font-size: 12px;
+  padding-left: 0;
+}
+.post {
+  margin-bottom: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #ddd;
+}
+.post .title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+  display: block;
+}
+.post .abstract {
+  color: #999;
+}
+.post .time {
+  color: #999;
+}

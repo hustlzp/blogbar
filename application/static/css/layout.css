@@ -25,6 +25,7 @@ body {
 .page-site-suggest #nav-suggest > a,
 .page-site-about #nav-about > a,
 .page-admin-approve #nav-admin > a {
+  color: #333;
   border-bottom: 2px solid #2a99c2;
 }
 .navbar {

@@ -23,8 +23,7 @@
                      <p class="abstract">{{ post.pure_content|truncate(25, true) }}</p>
 
                      <div class="meta">
-                        <a class="blog"
-                                href="{{ url_for('blog.view', uid=post.blog.id) }}">
+                        <a class="blog" href="{{ url_for('blog.view', uid=post.blog.id) }}">
                         {{ post.blog.title }}</a>
 
                         / <span class="author">{{ post.blog.author }}</span>

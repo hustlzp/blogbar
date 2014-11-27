@@ -10,7 +10,8 @@ $(function () {
         var time = moment($(this).text(), "YYYY-MM-DD HH:mm:ss");
 
         // 不包含具体的时刻
-        if (time.hour() === 0 && time.minute() === 0 && time.second() === 0) {
+        var only_date = time.hour() === 0 && time.minute() === 0 && time.second() === 0;
+        if (only_date || $(this).hasClass('utc-time-date')) {
             $(this).text(time.format("YYYY-MM-DD"));
             return true;
         }

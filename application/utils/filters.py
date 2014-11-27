@@ -29,3 +29,7 @@ def readtime(content):
     words = len(content)
     time = words / 600
     return time if time else 1
+
+
+def friendly_url(url):
+    return url.rstrip('/').replace('http://', '').replace('https://', '')
