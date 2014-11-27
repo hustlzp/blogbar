@@ -5,76 +5,66 @@
 {% block page_title %}{{ blog.title }}{% endblock %}
 {% block page_content %}
    <div class="container">
-      <div class="col-sm-8">
-         <h1>
-            {{ blog.title }}
+      <div class="row">
+         <div class="col-sm-8">
+            <h2 class="no-margin-top">
+               {{ blog.title }}
 
-            {% if blog.is_protected %}
-               <sup title="作者禁止转载">
-                  <span class="fa fa-lock" style="color: #FAAD07;"></span>
-               </sup>
+               {% if blog.is_protected %}
+                  <sup title="作者禁止转载">
+                     <span class="fa fa-lock" style="color: #FAAD07;"></span>
+                  </sup>
+               {% endif %}
+
+               {% if permissions.AdminPermission().check() %}
+                  <a href="{{ url_for('admin.edit_blog', uid=blog.id) }}"
+                     class="btn btn-default btn-sm">
+                     <span class="fa fa-edit"></span> 编辑</a>
+               {% endif %}
+            </h2>
+
+            {% if blog.subtitle %}
+               <p>{{ blog.subtitle }}</p>
             {% endif %}
 
-            {% if permissions.AdminPermission().check() %}
-               <a href="{{ url_for('admin.edit_blog', uid=blog.id) }}" class="btn btn-default">
-                  <span class="fa fa-edit"></span> 编辑</a>
-            {% endif %}
-         </h1>
-
-         {% if blog.subtitle %}
-            <p>{{ blog.subtitle }}</p>
-         {% endif %}
-
-         {% if blog.since %}
-            <p>Since {{ blog.since }}</p>
-         {% endif %}
-
-         <p>链接：<a href="{{ blog.url }}" target="_blank">{{ blog.url }}</a></p>
-
-         <p>
-            {% if blog.feed %}
-               {% set feed = blog.feed %}
-            {% elif blog.has_spider and not blog.is_protected %}
-               {% set feed = url_for('blog.feed', uid=blog.id) %}
-            {% else %}
-               {% set feed = None %}
+            {% if blog.since %}
+               <p>Since {{ blog.since }}</p>
             {% endif %}
 
-            {% if feed %}
-               订阅：<a href="{{ feed }}" target="_blank"><span class="fa fa-rss-square"></span></a>
-            {% endif %}
-         </p>
+            <p>链接：<a href="{{ blog.url }}" target="_blank">{{ blog.url }}</a></p>
 
-         <p>作者：{{ blog.author }}</p>
+            <p>
+               {% if blog.feed %}
+                  {% set feed = blog.feed %}
+               {% elif blog.has_spider and not blog.is_protected %}
+                  {% set feed = url_for('blog.feed', uid=blog.id) %}
+               {% else %}
+                  {% set feed = None %}
+               {% endif %}
 
-         <hr/>
+               {% if feed %}
+                  订阅：<a href="{{ feed }}" target="_blank"><span class="fa fa-rss-square"></span></a>
+               {% endif %}
+            </p>
 
-         {% for p in posts.items %}
-            <div>
-               <a href="{{ url_for('blog.redirect_post', uid=p.id) }}"
-                  target="_blank">{{ p.title }}</a>
-               {#               {% if blog.is_protected %}#}
-               {#                  <a href="{{ p.url }}" target="_blank">{{ p.title }}</a>#}
-               {#               {% else %}#}
-               {#                  <a href="{{ url_for('blog.post', uid=p.id) }}">{{ p.title }}</a>#}
-               {##}
-               {#                  &nbsp;&nbsp;#}
-               {##}
-               {#                  <a href="{{ p.url }}" target="_blank">#}
-               {#                     <span class="fa fa-external-link"></span>#}
-               {#                  </a>#}
-               {#               {% endif %}#}
+            <p>作者：{{ blog.author }}</p>
 
+            {% for p in posts.items %}
                <div>
-                  {% if p.published_at %}
-                     发布于：
-                     <span class="utc-time">{{ p.published_at }}</span>
-                  {% endif %}
-               </div>
-            </div>
-         {% endfor %}
+                  <a href="{{ url_for('blog.redirect_post', uid=p.id) }}"
+                     target="_blank">{{ p.title }}</a>
 
-         {{ pagination(posts) }}
+                  <div>
+                     {% if p.published_at %}
+                        发布于：
+                        <span class="utc-time">{{ p.published_at }}</span>
+                     {% endif %}
+                  </div>
+               </div>
+            {% endfor %}
+
+            {{ pagination(posts) }}
+         </div>
       </div>
    </div>
 {% endblock %}
