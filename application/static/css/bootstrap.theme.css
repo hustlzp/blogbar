@@ -8,3 +8,12 @@ h2 {
   font-size: 18px;
   margin-bottom: 20px;
 }
+h2 .fa {
+  margin-right: 4px;
+}
+a {
+  color: #2a99c2;
+}
+a:hover {
+  color: #18576e;
+}
