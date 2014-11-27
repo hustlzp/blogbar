@@ -79,5 +79,6 @@ body {
   padding-top: 20px;
 }
 #footer #links li {
-  margin-left: 10px;
+  padding-right: 0;
+  margin-left: 15px;
 }
