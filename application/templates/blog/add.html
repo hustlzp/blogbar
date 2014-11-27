@@ -1,46 +1,49 @@
 {% extends "layout.html" %}
-{% from "macro/form.html" import horizontal_field %}
+{% from "macro/form.html" import vertical_field %}
 
 {% block page_title %}首页{% endblock %}
 {% block page_content %}
    <div class="container">
-      <div class="col-sm-8">
-         <h2>博客推荐指南</h2>
+      <div class="row">
+         <div class="col-sm-8">
+            <h2 class="no-margin-top border">推荐博客</h2>
 
-         <ul>
-            <li>必须是<strong>个人</strong>博客，即必须体现出个人气息。</li>
-            <li>本站不收录团队博客，也不收录个人维护的商业性质博客，sorry。</li>
-            <li>博客的原创内容必须占所有内容的60%以上。</li>
-            <li>不要求是独立博客，在博客平台（如新浪博客、简书）写博客的都行。</li>
-         </ul>
+            <ul class="text-list">
+               <li>必须是<strong>个人</strong>博客，即必须体现出个人气息。</li>
+               <li>本站不收录团队博客，也不收录个人维护的商业性质博客，抱歉。</li>
+               <li>博客的原创内容必须占所有内容的60%以上。</li>
+               <li>不要求是独立博客，在博客平台（如新浪博客、简书）写博客的都行。</li>
+            </ul>
 
-         <h2>推荐博客</h2>
+            <form class="form-horizontal" role="form" method="post">
+               {{ form.csrf_token }}
 
-         <form class="form-horizontal" role="form" method="post"
-               action="">
-            {{ form.csrf_token }}
+               {{ vertical_field(form.url) }}
 
-            {{ horizontal_field(form.url) }}
+               {{ vertical_field(form.title) }}
 
-            {{ horizontal_field(form.title) }}
+               {{ vertical_field(form.subtitle) }}
 
-            {{ horizontal_field(form.subtitle) }}
+               {{ vertical_field(form.author) }}
 
-            {{ horizontal_field(form.author) }}
+               {{ vertical_field(form.feed) }}
 
-            {{ horizontal_field(form.feed) }}
+               {{ vertical_field(form.since) }}
 
-            {{ horizontal_field(form.since) }}
-
-            <div class="form-group">
-               <div class="col-md-6 col-md-offset-2">
-                  <input type="submit" value="提交" class="btn btn-sm btn-primary"/>
+               <div class="vertical-form-group">
+                  <button type="submit" class="btn btn-sm btn-primary">
+                     <span class="fa fa-send"></span> 推荐
+                  </button>
                </div>
-            </div>
-         </form>
-      </div>
+            </form>
+         </div>
 
-      <div class="col-sm-4">
+         <div class="col-sm-4">
+         </div>
       </div>
    </div>
+
+   <script type="text/javascript">
+      $('#url').focus();
+   </script>
 {% endblock %}

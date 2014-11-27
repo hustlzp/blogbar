@@ -34,6 +34,14 @@
 <nav class="navbar navbar-default navbar-static-top">
    <div class="container">
       <div class="navbar-header">
+         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                 data-target="#navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+         </button>
+
          <a class="navbar-brand" href="{{ url_for('site.index') }}">
             Blogbar <sup>Alpha</sup>
          </a>
@@ -51,7 +59,7 @@
          </p>
       {% endif %}
 
-      <div class="collapse navbar-collapse">
+      <div class="collapse navbar-collapse" id="navbar-collapse">
          <ul class="nav navbar-nav">
             <li id="nav-index">
                <a href="{{ url_for('site.index') }}">文章</a>

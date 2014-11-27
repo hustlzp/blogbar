@@ -49,6 +49,12 @@ body {
 }
 .navbar .navbar-btn.btn-sm {
   margin-top: 14px;
+  transition: 0.1s linear 2s;
+  -moz-transition: 0.1s linear 2s;
+  /* Firefox 4 */
+  -webkit-transition: 0.1s linear 2s;
+  /* Safari 和 Chrome */
+  -o-transition: 0.1s linear 2s;
 }
 .navbar .navbar-text {
   margin-top: 18px;

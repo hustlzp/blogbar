@@ -23,6 +23,14 @@
 {% endmacro %}
 
 
+{% macro vertical_field(field) %}
+   <div class="vertical-form-group">
+      {{ field(class="form-control",placeholder=field.description, **kwargs) }}
+      {{ field_errors(field) }}
+   </div>
+{% endmacro %}
+
+
 {% macro checkbox_field(field) %}
    <div class="form-group">
       <div class="col-md-offset-2 col-sm-10">
@@ -33,4 +41,3 @@
       </div>
    </div>
 {% endmacro %}
-

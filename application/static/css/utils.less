@@ -4,10 +4,17 @@
 @light-main: lighten(@main-color, 20%);
 
 // 圆角
-.border-radius( @radius:5px ) {
+.border-radius( @radius: 5px ) {
   -webkit-border-radius: @radius;
   -moz-border-radius: @radius;
   -ms-border-radius: @radius;
   -o-border-radius: @radius;
   border-radius: @radius;
+}
+
+.transition( @type: all, @time: 2s ) {
+  transition: @type linear @time;
+  -moz-transition: @type linear @time; /* Firefox 4 */
+  -webkit-transition: @type linear @time; /* Safari 和 Chrome */
+  -o-transition: @type linear @time;
 }

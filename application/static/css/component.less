@@ -2,3 +2,36 @@
 
 .article-item {
 }
+
+.text-list {
+  margin-bottom: 20px;
+  padding-left: 20px;
+  list-style-type: square;
+
+  li {
+    margin-bottom: 5px;
+  }
+}
+
+.vertical-form-group {
+  input {
+    padding-left: 0;
+    outline: 0;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    box-shadow: none;
+    margin-bottom: 15px;
+    .transition(border-color, 0.1s);
+
+    &:focus {
+      padding-bottom: 5px;
+      border-bottom: 2px solid @main-color;
+      box-shadow: none;
+    }
+  }
+
+  button[type='submit'] {
+    margin-top: 5px;
+  }
+}
