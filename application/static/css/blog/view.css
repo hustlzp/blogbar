@@ -6,6 +6,9 @@
   font-size: 24px;
   font-weight: bold;
 }
+.blog-header .title .forbid {
+  color: #FAAD07;
+}
 .blog-header .subtitle {
   margin-top: 10px;
 }

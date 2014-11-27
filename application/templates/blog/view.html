@@ -12,8 +12,8 @@
                   {{ blog.title }}
 
                   {% if blog.is_protected %}
-                     <sup title="作者禁止转载">
-                        <span class="fa fa-lock" style="color: #FAAD07;"></span>
+                     <sup title="作者禁止转载" class="forbid">
+                        <span class="fa fa-lock"></span>
                      </sup>
                   {% endif %}
                </div>
@@ -91,7 +91,7 @@
                            <span class="label label-success">推荐</span>
                         {% endif %}
 
-                        {% if p.hide %}
+                        {% if post.hide %}
                            <span class="label label-warning">隐藏</span>
                         {% endif %}
 
