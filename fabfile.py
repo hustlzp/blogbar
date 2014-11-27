@@ -11,13 +11,12 @@ def deploy():
     env.host_string = config.HOST_STRING
     with cd('/var/www/blogbar'):
         with shell_env(MODE='PRODUCTION'):
-            run('supervisorctl stop blogbar')
             run('git reset --hard HEAD')
             run('git pull')
             with prefix('source venv/bin/activate'):
                 run('pip install -r requirements.txt')
                 run('python manage.py db upgrade')
-            run('supervisorctl start blogbar')
+            run('supervisorctl restart blogbar')
 
 
 def pull():
