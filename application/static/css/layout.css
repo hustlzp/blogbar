@@ -44,12 +44,12 @@ body {
 }
 .navbar .navbar-nav > li > a {
   border-bottom: 2px solid transparent;
-  padding-top: 18px;
+  padding-top: 20px;
   padding-bottom: 18px;
 }
 .navbar .navbar-btn.btn-sm {
   margin-left: 15px;
-  margin-top: 14px;
+  margin-top: 15px;
   transition: all linear 0.08s;
   -moz-transition: all linear 0.08s;
   /* Firefox 4 */
@@ -58,7 +58,7 @@ body {
   -o-transition: all linear 0.08s;
 }
 .navbar .navbar-text {
-  margin-top: 18px;
+  margin-top: 20px;
 }
 .navbar .border {
   position: absolute;
