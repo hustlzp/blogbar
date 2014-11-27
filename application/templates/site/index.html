@@ -6,7 +6,9 @@
    <div class="container">
       <div class="row">
          <div class="col-sm-8">
-            <h2 class="no-margin-top">编辑推荐</h2>
+            <h2 class="no-margin-top">
+               <span class="fa fa-anchor"></span> 编辑推荐
+            </h2>
 
             <div class="recommends">
                {% for post in recommend_posts.items %}
@@ -45,7 +47,7 @@
 
          <div class="col-sm-4">
             <h2 class="no-margin-top">
-               最新文章
+               <span class="fa fa-clock-o"></span> 最新文章
                {#               <a href="{{ url_for('blog.posts') }}" class="btn btn-primary btn-xs">#}
                {#                  全部博文 <span class="fa fa-angle-right"></span>#}
                {#               </a>#}
@@ -77,19 +79,6 @@
                   </div>
                {% endfor %}
             </div>
-
-            {#            <h2>#}
-            {#               最新收录博客#}
-            {#               <a href="{{ url_for('blog.all_blogs') }}" class="btn btn-primary btn-xs">#}
-            {#                  全部博客 <span class="fa fa-angle-right"></span>#}
-            {#               </a>#}
-            {#            </h2>#}
-            {##}
-            {#            {% for blog in latest_blogs %}#}
-            {#               <div>#}
-            {#                  <a href="{{ url_for('blog.view', uid=blog.id) }}">{{ blog.title }}</a>#}
-            {#               </div>#}
-            {#            {% endfor %}#}
          </div>
       </div>
    </div>

@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block page_title %}博客广场{% endblock %}
+{% block page_content %}
+   <div class="container">
+      <div class="col-sm-8">
+         <h2 class="no-margin-top">
+            <span class="fa fa-book"></span> 全部博客
+            <small>排名不分先后</small>
+         </h2>
+
+         <div class="blogs">
+            {% for blog in blogs %}
+               <div class="blog">
+                  <a class="title" href="{{ url_for('blog.view', uid=blog.id) }}">
+                     {{ blog.title }}
+                  </a>
+
+                  {% if blog.subtitle %}
+                     <div class="subtitle">{{ blog.subtitle }}</div>
+                  {% endif %}
+
+                  {#                  <div class="author">by <span>{{ blog.author }}</span></div>#}
+               </div>
+            {% endfor %}
+         </div>
+      </div>
+
+      <div class="col-sm-4">
+         <h2 class="no-margin-top">
+            <span class="fa fa-clock-o"></span> 最新收录
+         </h2>
+
+         <div class="latest-blogs">
+            {% for blog in latest_blogs %}
+               <div class="latest-blog">
+                  <a href="{{ url_for('blog.view', uid=blog.id) }}">{{ blog.title }}</a>
+                  {% if blog.subtitle %}
+                     <div class="subtitle">{{ blog.subtitle }}</div>
+                  {% endif %}
+               </div>
+            {% endfor %}
+         </div>
+      </div>
+   </div>
+{% endblock %}

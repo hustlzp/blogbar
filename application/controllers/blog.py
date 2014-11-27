@@ -10,7 +10,10 @@ bp = Blueprint('blog', __name__)
 
 @bp.route('/square')
 def square():
-    return "1"
+    blogs_query = Blog.query.filter(Blog.is_approved)
+    blogs = blogs_query.order_by(Blog.title.asc())
+    latest_blogs = blogs_query.order_by(Blog.created_at.desc()).limit(15)
+    return render_template('blog/square.html', blogs=blogs, latest_blogs=latest_blogs)
 
 
 @bp.route('/<int:uid>', defaults={'page': 1})
@@ -23,12 +26,6 @@ def view(uid, page):
     posts = blog.posts.filter(~Post.hide). \
         order_by(Post.published_at.desc()).paginate(page, 20)
     return render_template('blog/view.html', blog=blog, posts=posts, posts_count=posts_count)
-
-
-@bp.route('/all')
-def all_blogs():
-    blogs = Blog.query.filter(Blog.is_approved)
-    return render_template('blog/all_blogs.html', blogs=blogs)
 
 
 @bp.route('/add', methods=['GET', 'POST'])
