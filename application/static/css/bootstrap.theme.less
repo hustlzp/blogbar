@@ -4,8 +4,10 @@ body {
   font-family: 'microsoft yahei';
 }
 
-.navbar {
-  margin-bottom: 40px;
+.nav .open > a,
+.nav .open > a:hover,
+.nav .open > a:focus {
+  border-color: transparent;
 }
 
 h2 {
@@ -22,5 +24,19 @@ a {
 
   &:hover {
     color: @dark-main;
+  }
+}
+
+.btn {
+}
+
+.btn-primary {
+  border-radius: 2px;
+  border-color: @main-color;
+  background-color: @main-color;
+
+  &:hover {
+    border-color: @dark-main;
+    background-color: @dark-main;
   }
 }

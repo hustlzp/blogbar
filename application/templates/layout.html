@@ -22,7 +22,7 @@
    {{ script('bower_components/moment/moment.js') }}
 </head>
 
-<body id="page">
+<body id="page" class="{{ page_name(self) }}">
 
 {# Flash message #}
 {% with message = get_flashed_messages()[0] %}
@@ -39,9 +39,7 @@
          </a>
       </div>
 
-      <p class="navbar-text navbar-right">
-         当你和世界不一样，那就让你不一样。
-      </p>
+      <p class="navbar-text navbar-right">当你和世界不一样，那就让你不一样。</p>
 
       {% if permissions.AdminPermission().check() %}
          <p class="navbar-right navbar-text">
@@ -70,8 +68,9 @@
             <li id="nav-about">
                <a href="{{ url_for('site.about') }}">关于</a>
             </li>
+
             {% if permissions.AdminPermission().check() %}
-               <li class="dropdown">
+               <li class="dropdown" id="nav-admin">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                      aria-expanded="false">
                      Admin <span class="fa fa-angle-down"></span>
@@ -84,7 +83,8 @@
             {% endif %}
          </ul>
 
-         <a href="{{ url_for('blog.add') }}" class="btn btn-primary navbar-btn navbar-left">
+         <a href="{{ url_for('blog.add') }}"
+            class="btn btn-primary btn-sm navbar-btn navbar-left">
             <span class="fa fa-plus"></span> 推荐博客
          </a>
 
@@ -119,6 +119,8 @@
          {#         </ul>#}
       </div>
    </div>
+
+   <div class="border"></div>
 </nav>
 
 <div id="main-wap">

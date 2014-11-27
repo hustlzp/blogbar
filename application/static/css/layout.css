@@ -19,13 +19,49 @@ body {
   text-align: center;
   display: none;
 }
-#page-account-signin #nav-signin a,
-#page-account-signup #nav-signup a {
-  color: #555;
-  background-color: #e7e7e7;
+.page-site-index #nav-index > a,
+.page-blog-square #nav-blog > a,
+.page-site-approve-results #nav-approve-results > a,
+.page-site-suggest #nav-suggest > a,
+.page-site-about #nav-about > a,
+.page-admin-approve #nav-admin > a {
+  border-bottom: 2px solid #2a99c2;
 }
-.navbar-form {
-  margin: 10px 0;
+.navbar {
+  position: relative;
+  border: none;
+  background-color: #fff;
+  margin-bottom: 40px;
+}
+.navbar .navbar-brand {
+  padding-top: 20px;
+}
+.navbar .navbar-nav > li {
+  padding-left: 5px;
+  padding-right: 5px;
+  z-index: 100;
+}
+.navbar .navbar-nav > li > a {
+  border-bottom: 2px solid transparent;
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+.navbar .navbar-btn.btn-sm {
+  margin-top: 14px;
+}
+.navbar .navbar-text {
+  margin-top: 18px;
+}
+.navbar .navbar-btn {
+  margin-left: 15px;
+}
+.navbar .border {
+  position: absolute;
+  height: 1px;
+  width: 100%;
+  background-color: #e7e7e7;
+  bottom: 0;
+  left: 0;
 }
 #footer {
   position: absolute;

@@ -1,8 +1,10 @@
 body {
   font-family: 'microsoft yahei';
 }
-.navbar {
-  margin-bottom: 40px;
+.nav .open > a,
+.nav .open > a:hover,
+.nav .open > a:focus {
+  border-color: transparent;
 }
 h2 {
   font-size: 18px;
@@ -15,5 +17,14 @@ a {
   color: #2a99c2;
 }
 a:hover {
-  color: #18576e;
+  color: #217898;
+}
+.btn-primary {
+  border-radius: 2px;
+  border-color: #2a99c2;
+  background-color: #2a99c2;
+}
+.btn-primary:hover {
+  border-color: #217898;
+  background-color: #217898;
 }
