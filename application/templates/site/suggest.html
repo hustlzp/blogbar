@@ -3,39 +3,35 @@
 {% block page_title %}提建议{% endblock %}
 {% block page_content %}
    <div class="container">
-      <div class="col-sm-8">
-         <h1>提建议</h1>
+      <div class="row">
+         <div class="col-sm-8">
+            <h2 class="no-margin-top">提建议</h2>
 
-         <div class="well well-lg">
-            <p>Blogbar目前仍处于Alpha版，没有界面设计，功能也近乎简陋，仅限于聚合个人博客。</p>
+            <p>Blogbar的维护者最近琐事缠身，无法抽出太多时间投入到开发之中。</p>
 
-            <p>未来的Beta版将对UI进行优化，同时在聚合的基础上提供更加个性化的服务。</p>
+            <p>不过永远敬请期待，Blogbar的下一次蜕变。</p>
 
-            <p>Blogbar的维护者最近琐事缠身，无法抽出太多时间投入到Blogbar的开发之中。</p>
+            <p>同时也非常欢迎大家提任何建议。</p>
 
-            <p>不过依然敬请期待，Blogbar的下一次蜕变。</p>
-
-            同时也非常欢迎大家提建议。
+            <!-- 多说评论框 start -->
+            <div class="ds-thread" data-thread-key="suggest" data-title="提建议"
+                 data-url="http://www.blogbar.cc/suggest"></div>
+            <!-- 多说评论框 end -->
+            <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+            <script type="text/javascript">
+               var duoshuoQuery = {short_name: "blogbar"};
+               (function () {
+                  var ds = document.createElement('script');
+                  ds.type = 'text/javascript';
+                  ds.async = true;
+                  ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+                  ds.charset = 'UTF-8';
+                  (document.getElementsByTagName('head')[0]
+                        || document.getElementsByTagName('body')[0]).appendChild(ds);
+               })();
+            </script>
+            <!-- 多说公共JS代码 end -->
          </div>
-
-         <!-- 多说评论框 start -->
-         <div class="ds-thread" data-thread-key="suggest" data-title="提建议"
-              data-url="http://www.blogbar.cc/suggest"></div>
-         <!-- 多说评论框 end -->
-         <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-         <script type="text/javascript">
-            var duoshuoQuery = {short_name: "blogbar"};
-            (function () {
-               var ds = document.createElement('script');
-               ds.type = 'text/javascript';
-               ds.async = true;
-               ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-               ds.charset = 'UTF-8';
-               (document.getElementsByTagName('head')[0]
-                     || document.getElementsByTagName('body')[0]).appendChild(ds);
-            })();
-         </script>
-         <!-- 多说公共JS代码 end -->
       </div>
    </div>
 {% endblock %}
