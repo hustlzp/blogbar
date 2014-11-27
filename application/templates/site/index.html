@@ -14,8 +14,7 @@
                {% for post in recommend_posts.items %}
                   <div class="recommend">
                      <div class="title">
-                        <a href="{{ url_for('blog.redirect_post', uid=post.id) }}"
-                           target="_blank">
+                        <a href="{{ url_for('blog.redirect_post', uid=post.id) }}" target="_blank">
                            {{ post.title }}
                         </a>
                      </div>
@@ -26,14 +25,12 @@
                         <a class="blog" href="{{ url_for('blog.view', uid=post.blog.id) }}">
                            {{ post.blog.title }}</a>
 
-                        <span class="divider">/</span>
-
-                        <span class="author">{{ post.blog.author }}</span>
+                        <span class="author">by {{ post.blog.author }}</span>
 
                         {% if post.published_at or post.updated_at %}
                            <span class="time">
-                           {{ post.published_at|timesince or post.updated_at|timesince }}
-                        </span>
+                              {{ post.published_at|timesince or post.updated_at|timesince }}
+                           </span>
                         {% endif %}
 
                         {# <span class="clicks">{{ post.clicks if post.clicks else 0 }} 次点击</span>#}

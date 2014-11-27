@@ -23,6 +23,7 @@
 .recommend .meta .divider {
   margin: 0 1px 0 2px;
 }
+.recommend .meta .author,
 .recommend .meta .time {
   margin-left: 15px;
 }
