@@ -82,8 +82,10 @@
                      {% endif %}
                   </div>
 
-                  <a href="{{ url_for('blog.redirect_post', uid=p.id) }}" class="title"
-                     target="_blank">{{ p.title }}</a>
+                  <div>
+                     <a href="{{ url_for('blog.redirect_post', uid=p.id) }}" class="title"
+                        target="_blank">{{ p.title }}</a>
+                  </div>
 
                   {% if p.pure_content %}
                      <div class="abstract">

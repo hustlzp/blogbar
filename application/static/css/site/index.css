@@ -46,9 +46,10 @@
   border-bottom: 1px solid #ddd;
 }
 .latest-posts .latest-post .title {
+  padding-bottom: 5px;
+}
+.latest-posts .latest-post .title a {
   color: #333;
-  display: block;
-  margin-bottom: 5px;
 }
 .latest-posts .latest-post .meta {
   color: #999;

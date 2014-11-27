@@ -24,7 +24,7 @@
 
                      <div class="meta">
                         <a class="blog" href="{{ url_for('blog.view', uid=post.blog.id) }}">
-                        {{ post.blog.title }}</a>
+                           {{ post.blog.title }}</a>
 
                         / <span class="author">{{ post.blog.author }}</span>
 
@@ -55,10 +55,11 @@
             <div class="latest-posts">
                {% for post in latest_posts %}
                   <div class="latest-post">
-                     <a href="{{ url_for('blog.redirect_post', uid=post.id) }}" target="_blank"
-                        class="title">
-                        {{ post.title }}
-                     </a>
+                     <div class="title">
+                        <a href="{{ url_for('blog.redirect_post', uid=post.id) }}" target="_blank">
+                           {{ post.title }}
+                        </a>
+                     </div>
 
                      <div class="meta">
                         <a href="{{ url_for('blog.view', uid=post.blog_id) }}">
