@@ -29,10 +29,14 @@ body {
 }
 #footer {
   position: absolute;
+  font-size: 12px;
   bottom: 0;
   width: 100%;
   /* Set the fixed height of the footer here */
   height: 60px;
   border-top: 1px solid #e2e2e2;
   padding-top: 20px;
+}
+#footer #links li {
+  margin-left: 10px;
 }
