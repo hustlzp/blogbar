@@ -4,6 +4,7 @@ from flask import render_template, Blueprint, flash, redirect, url_for, abort, r
 from werkzeug.contrib.atom import AtomFeed
 from ..models import db, Blog, Post, ApprovementLog
 from ..forms import AddBlogForm
+from ..utils.permissions import AdminPermission
 
 bp = Blueprint('blog', __name__)
 
@@ -23,8 +24,10 @@ def view(uid, page):
     if not blog.is_approved:
         abort(404)
     posts_count = blog.posts.filter(~Post.hide).count()
-    posts = blog.posts.filter(~Post.hide). \
-        order_by(Post.published_at.desc()).paginate(page, 20)
+    posts = blog.posts
+    if not AdminPermission().check():
+        posts = posts.filter(~Post.hide)
+    posts = posts.order_by(Post.published_at.desc()).paginate(page, 20)
     return render_template('blog/view.html', blog=blog, posts=posts, posts_count=posts_count)
 
 
