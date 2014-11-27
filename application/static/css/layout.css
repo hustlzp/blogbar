@@ -48,19 +48,17 @@ body {
   padding-bottom: 18px;
 }
 .navbar .navbar-btn.btn-sm {
+  margin-left: 15px;
   margin-top: 14px;
-  transition: 0.1s linear 2s;
-  -moz-transition: 0.1s linear 2s;
+  transition: all linear 0.08s;
+  -moz-transition: all linear 0.08s;
   /* Firefox 4 */
-  -webkit-transition: 0.1s linear 2s;
+  -webkit-transition: all linear 0.08s;
   /* Safari 和 Chrome */
-  -o-transition: 0.1s linear 2s;
+  -o-transition: all linear 0.08s;
 }
 .navbar .navbar-text {
   margin-top: 18px;
-}
-.navbar .navbar-btn {
-  margin-left: 15px;
 }
 .navbar .border {
   position: absolute;
