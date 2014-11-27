@@ -8,7 +8,12 @@ body {
 }
 h2 {
   font-size: 18px;
+  margin-top: 30px;
   margin-bottom: 20px;
+}
+h2 small {
+  margin-left: 5px;
+  color: #999;
 }
 h2 .fa {
   margin-right: 4px;
@@ -18,6 +23,9 @@ a {
 }
 a:hover {
   color: #217898;
+}
+.label {
+  border-radius: 2px;
 }
 .btn-primary {
   border-radius: 2px;

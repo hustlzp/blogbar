@@ -4,14 +4,14 @@
 {% block page_title %}审核结果{% endblock %}
 {% block page_content %}
    <div class="container">
-      <h2>待审核博客</h2>
+      <h2 class="no-margin-top">待审核博客</h2>
 
       {% macro render_logs(logs) %}
          <table class="table table-bordered">
             <tr>
                <th style="width: 300px;">博客</th>
                <th>作者</th>
-               <th>URL / Feed</th>
+               <th style="width: 300px;">URL / Feed</th>
                <th>推荐时间</th>
                <th>审核状态</th>
                <th>审核消息</th>
@@ -59,13 +59,9 @@
 
       {{ render_logs(unprocessed_logs) }}
 
-      <h2>
-         已审核博客
-      </h2>
+      <h2>已审核博客</h2>
 
-      <p style="font-size: 16px; color: #428bca;"><strong>说明：</strong></p>
-
-      <ul style="font-size: 16px;">
+      <ul class="notes">
          <li>若对审核结果有异议，请联系 support@blogbar.cc</li>
          <li>如果您是博客作者，而且不允许Blogbar转载您的文章，也请联系 support@blogbar.cc</li>
       </ul>
