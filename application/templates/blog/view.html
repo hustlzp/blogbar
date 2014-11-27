@@ -74,20 +74,20 @@
          </div>
 
          <div class="col-sm-8">
-            {% for p in posts.items %}
+            {% for post in posts.items %}
                <div class="post">
                   <div class="pull-right">
-                     {% if p.published_at %}
-                        <span class="time utc-time utc-time-date">{{ p.published_at }}</span>
+                     {% if post.published_at %}
+                        <span class="time utc-time utc-time-date">{{ post.published_at }}</span>
                      {% endif %}
                   </div>
 
                   <div>
-                     <a href="{{ url_for('blog.redirect_post', uid=p.id) }}" class="title"
-                        target="_blank">{{ p.title }}</a>
+                     <a href="{{ url_for('blog.redirect_post', uid=post.id) }}" class="title"
+                        target="_blank">{{ post.title }}</a>
 
                      {% if permissions.AdminPermission().check() %}
-                        {% if p.recommend %}
+                        {% if post.recommend %}
                            <span class="label label-success">推荐</span>
                         {% endif %}
 
@@ -96,24 +96,24 @@
                         {% endif %}
 
                         <div class="btn-group btn-group-xs">
-                           {% if p.hide %}
-                              <a href="{{ url_for('admin.show_post', uid=p.id) }}"
+                           {% if post.hide %}
+                              <a href="{{ url_for('admin.show_post', uid=post.id) }}"
                                  class="btn btn-sm btn-default">
                                  <span class="fa fa-eye"></span> 显示
                               </a>
                            {% else %}
-                              <a href="{{ url_for('admin.hide_post', uid=p.id) }}"
+                              <a href="{{ url_for('admin.hide_post', uid=post.id) }}"
                                  class="btn btn-sm btn-default">
                                  <span class="fa fa-eye-slash"></span> 隐藏
                               </a>{% endif %}
 
-                           {% if p.recommend %}
-                              <a href="{{ url_for('admin.unrecommend_post', uid=p.id) }}"
+                           {% if post.recommend %}
+                              <a href="{{ url_for('admin.unrecommend_post', uid=post.id) }}"
                                  class="btn btn-sm btn-default">
                                  <span class="fa fa-thumbs-down"></span> 取消推荐
                               </a>
                            {% else %}
-                              <a href="{{ url_for('admin.recommend_post', uid=p.id) }}"
+                              <a href="{{ url_for('admin.recommend_post', uid=post.id) }}"
                                  class="btn btn-sm btn-default">
                                  <span class="fa fa-thumbs-up"></span> 推荐
                               </a>
@@ -122,9 +122,9 @@
                      {% endif %}
                   </div>
 
-                  {% if p.pure_content %}
+                  {% if post.pure_content %}
                      <div class="abstract">
-                        {{ p.pure_content|truncate(30, true) }}
+                        {{ post.pure_content|truncate(30, true) }}
                      </div>
                   {% endif %}
                </div>
