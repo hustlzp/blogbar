@@ -11,17 +11,17 @@
 
          <div class="blogs">
             {% for blog in blogs %}
-               <div class="blog">
-                  <a class="title" href="{{ url_for('blog.view', uid=blog.id) }}">
+               <a class="blog" href="{{ url_for('blog.view', uid=blog.id) }}">
+                  <div class="title">
                      {{ blog.title }}
-                  </a>
+                  </div>
 
                   {% if blog.subtitle %}
                      <div class="subtitle">{{ blog.subtitle }}</div>
                   {% endif %}
 
-                  {#                  <div class="author">by <span>{{ blog.author }}</span></div>#}
-               </div>
+                  <div class="author">by <span>{{ blog.author }}</span></div>
+               </a>
             {% endfor %}
          </div>
       </div>

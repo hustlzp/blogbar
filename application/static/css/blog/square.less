@@ -4,13 +4,20 @@
   border-top: 1 ps solid #dddddd;
 
   .blog {
+    position: relative;
     border: 1px solid #DDDDDD;
-    margin: 0 20px 20px 0;
+    margin: 0 20px 25px 0;
     padding: 12px 15px 0 15px;
-    width: 220px;
-    height: 68px;
+    width: 180px;
+    height: 180px;
     display: inline-block;
     vertical-align: top;
+
+    &:hover {
+      background: #f9f9f9;
+      cursor: pointer;
+      text-decoration: none;
+    }
 
     .title {
       font-weight: bold;
@@ -20,14 +27,15 @@
     }
 
     .subtitle {
-      height: 18px;
-      overflow: hidden;
-      color: #999999;
+      color: #999;
       font-size: 12px;
       margin-bottom: 3px;
     }
 
     .author {
+      position: absolute;
+      bottom: 12px;
+      left: 15px;
       color: #999;
       font-size: 12px;
 
