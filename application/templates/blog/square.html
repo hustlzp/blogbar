@@ -13,18 +13,26 @@
 
             <div class="blogs">
                {% for blog in blogs.items %}
-                  <a class="blog" title="{{ blog.subtitle }}"
-                     href="{{ url_for('blog.view', uid=blog.id) }}">
-                     <div class="inner-wap">
-                        <div class="title">{{ blog.title }}</div>
+                  <div class="blog col-sm-6" title="{{ blog.subtitle }}">
+                     <a href="{{ url_for('blog.view', uid=blog.id) }}" class="title">
+                        {{ blog.title }}</a>
 
-                        {% if blog.subtitle %}
-                           <div class="subtitle">{{ blog.subtitle }}</div>
-                        {% endif %}
+                     {% if blog.subtitle %}
+                        <div class="subtitle">{{ blog.subtitle }}</div>
+                     {% endif %}
 
-                        {#                  <div class="author">by <span>{{ blog.author }}</span></div>#}
+                     <div class="kinds">
+                        {% for kind in blog.kinds %}
+                           <span>{{ kind.name }}</span>
+                           {% if not loop.last %} · {% endif %}
+                        {% endfor %}
                      </div>
-                  </a>
+                     {#                  <div class="author">by <span>{{ blog.author }}</span></div>#}
+                  </div>
+
+                  {% if loop.index % 2 == 0 %}
+                     <div class="clearfix"></div>
+                  {% endif %}
                {% endfor %}
             </div>
 

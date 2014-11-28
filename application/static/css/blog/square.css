@@ -4,44 +4,35 @@
 }
 .blogs .blog {
   position: relative;
-  border: 1px solid #DDDDDD;
-  margin: 0 20px 25px 0;
-  padding: 12px 15px 10px 15px;
-  width: 220px;
-  display: inline-block;
+  border-top: 1px solid #DDDDDD;
+  margin: 0 0px 15px 0;
+  padding: 15px 15px 10px 0px;
   vertical-align: top;
 }
-.blogs .blog .inner-wap {
-  height: 46px;
-  overflow: hidden;
-}
-.blogs .blog .inner-wap .title {
+.blogs .blog .title {
+  font-size: 16px;
   font-weight: bold;
   color: #000;
   display: block;
   margin-bottom: 5px;
 }
-.blogs .blog .inner-wap .subtitle {
-  height: 18px;
-  overflow: hidden;
-  color: #999;
+.blogs .blog .subtitle {
   font-size: 12px;
-  margin-bottom: 3px;
+  margin-bottom: 5px;
 }
-.blogs .blog .inner-wap .author {
+.blogs .blog .author {
   position: absolute;
   bottom: 12px;
   left: 15px;
   color: #999;
   font-size: 12px;
 }
-.blogs .blog .inner-wap .author span {
+.blogs .blog .author span {
   color: #666;
 }
-.blogs .blog:hover {
-  background: #f9f9f9;
-  cursor: pointer;
-  text-decoration: none;
+.blogs .blog .kinds {
+  font-size: 12px;
+  color: #999;
 }
 .latest-blogs {
   border-top: 1px solid #ddd;
