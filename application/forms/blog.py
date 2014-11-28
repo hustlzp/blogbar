@@ -49,4 +49,5 @@ class EditBlogForm(Form):
     subtitle = StringField('副标题', description='选填')
     author = StringField('作者', [DataRequired('不能为空')])
     feed = StringField('Feed', [check_url], description='选填')
+    feed_timezone_offset = StringField('Feed时区')
     since = StringField('Since', description='博客从哪一年开始写的。')
