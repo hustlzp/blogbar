@@ -13,7 +13,7 @@ bp = Blueprint('blog', __name__)
 def square():
     page = request.args.get('page', 1, int)
     blogs_query = Blog.query.filter(Blog.is_approved)
-    blogs = blogs_query.paginate(page, 45)
+    blogs = blogs_query.paginate(page, 36)
     latest_blogs = blogs_query.order_by(Blog.created_at.desc()).limit(15)
     return render_template('blog/square.html', blogs=blogs, latest_blogs=latest_blogs)
 
