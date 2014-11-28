@@ -1,5 +1,6 @@
 # coding: utf-8
 from __future__ import absolute_import
+import operator
 import traceback
 from celery_proj.app import app
 from application import create_app
@@ -37,27 +38,47 @@ def grab():
     return new_posts_count
 
 
-@app.task
-def analyse():
-    import json
-    from os.path import join
-    import jieba
-
-    flask_app = create_app()
-    config = flask_app.config
-    project_path = config.get('PROJECT_PATH')
-    jieba.set_dictionary(join(project_path, 'dict.txt.small'))
-
-    from jieba import analyse
-
-    with flask_app.app_context():
-        for post in Post.query.filter(Post.need_analysis):
-            print(post.title)
-            if not post.content:
-                continue
-            # 更新keywords
-            keywords = analyse.extract_tags(post.pure_content, topK=20, withWeight=True)
-            post.keywords = json.dumps(keywords)
-            post.need_analysis = False
-            db.session.add(post)
-            db.session.commit()
+# @app.task
+# def analyse():
+# import json
+# from os.path import join
+#     import jieba
+#
+#     flask_app = create_app()
+#     config = flask_app.config
+#     project_path = config.get('PROJECT_PATH')
+#     jieba.set_dictionary(join(project_path, 'dict.txt.small'))
+#
+#     from jieba import analyse
+#
+#     with flask_app.app_context():
+#         # 分析post关键字
+#         for post in Post.query.filter(Post.need_analysis):
+#             print(post.title)
+#             if not post.content:
+#                 continue
+#             # 更新keywords
+#             keywords = analyse.extract_tags(post.pure_content, topK=20, withWeight=True)
+#             post.keywords = json.dumps(keywords)
+#             post.need_analysis = False
+#             db.session.add(post)
+#             db.session.commit()
+#
+#         # 分析blog关键字
+#         for blog in Blog.query:
+#             tags = {}
+#             for post in blog.posts:
+#                 if post.keywords:
+#                     keywords = json.loads(post.keywords)
+#                     for keyword in keywords:
+#                         key = keyword[0]
+#                         if key in tags:
+#                             tags[key] += 1
+#                         else:
+#                             tags[key] = 1
+#             sorted_tags = sorted(tags.items(), key=operator.itemgetter(1))
+#             sorted_tags = sorted_tags[:5]
+#             keys = [key for key, value in sorted_tags]
+#             blog.keywords = json.dumps(keys)
+#             db.session.add(blog)
+#             db.session.commit()

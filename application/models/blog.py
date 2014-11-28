@@ -15,10 +15,13 @@ class Blog(db.Model):
     url = db.Column(db.String(200))
     since = db.Column(db.Integer)
     avatar = db.Column(db.String(200))
+    keywords = db.Column(db.Text)
+
     for_special_purpose = db.Column(db.Boolean, default=False)
     is_approved = db.Column(db.Boolean, default=False)  # 是否通过审批
     is_protected = db.Column(db.Boolean, default=False)  # 版权保护
     has_spider = db.Column(db.Boolean, default=False)  # 是否通过Spider获取数据
+
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
     updated_at = db.Column(db.DateTime)
 
