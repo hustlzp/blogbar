@@ -27,24 +27,20 @@
 
             {{ horizontal_field(form.since) }}
 
-            <hr/>
+            <div class="form-group">
+               <label class="col-md-2 control-label">标签</label>
 
-            {% for kind in kinds %}
-               <div class="form-group">
-                  <label class="col-md-2 control-label">{{ kind.name }}</label>
-
-                  <div class="col-md-10">
-                     <div class="kinds">
-                        {% for subkind in kind.children %}
-                           <span data-kind-id="{{ subkind.id }}"
-                                 data-blog-id="{{ blog.id }}"
-                                 class="kind {% if subkind.id in blog_kinds %}on{% endif %}">
-                              {{ subkind.name }}</span>
-                        {% endfor %}
-                     </div>
+               <div class="col-md-8">
+                  <div class="kinds">
+                     {% for kind in kinds %}
+                        <span data-kind-id="{{ kind.id }}"
+                              data-blog-id="{{ blog.id }}"
+                              class="kind {% if kind.id in blog_kinds %}on{% endif %}">
+                              {{ kind.name }}</span>
+                     {% endfor %}
                   </div>
                </div>
-            {% endfor %}
+            </div>
 
             <div class="form-group">
                <div class="col-md-6 col-md-offset-2">
