@@ -26,7 +26,8 @@
                      <div class="kinds">
                         {% for kind in blog.kinds %}
                            <span>{{ kind.name }}</span>
-                           {% if not loop.last %} · {% endif %}
+                           {% if not loop.last %} / {% endif %}
+                           {#                           ·#}
                         {% endfor %}
                      </div>
                      {#                  <div class="author">by <span>{{ blog.author }}</span></div>#}
