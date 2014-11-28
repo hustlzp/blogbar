@@ -42,14 +42,12 @@ def grab_by_spider(spider_class):
             new_posts_count += 1
             content = spider_class.get_post_(url)
             post = Post(url=url, title=title, published_at=published_at, content=content)
-            post.update()
             blog.posts.append(post)
             print(" new - %s" % title)
         elif published_at != post.published_at:  # 更新文章
             post.title = title
             post.published_at = published_at
             post.content = spider_class.get_post_(url)
-            post.update()
             db.session.add(post)
             print(" update - %s" % title)
     db.session.add(blog)
