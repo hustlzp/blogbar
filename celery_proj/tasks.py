@@ -51,6 +51,7 @@ def analyse():
 
     with flask_app.app_context():
         for post in Post.query.filter(Post.need_analysis):
+            print(post.title)
             # 更新keywords
             keywords = analyse.extract_tags(post.pure_content, topK=20, withWeight=True)
             post.keywords = json.dumps(keywords)

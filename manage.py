@@ -80,6 +80,13 @@ def remote_grab():
 
 
 @manager.command
+def remote_analyse():
+    from celery_proj.tasks import analyse
+
+    analyse.delay()
+
+
+@manager.command
 def process_posts():
     """生成pure_content, keywords"""
     with app.app_context():

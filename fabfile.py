@@ -52,3 +52,11 @@ def remote_grab():
     with cd('/var/www/blogbar'):
         with prefix('source venv/bin/activate'):
             run('python manage.py remote_grab')
+
+
+def remote_analyse():
+    """启动后台分析"""
+    env.host_string = config.HOST_STRING
+    with cd('/var/www/blogbar'):
+        with prefix('source venv/bin/activate'):
+            run('python manage.py remote_analyse')
