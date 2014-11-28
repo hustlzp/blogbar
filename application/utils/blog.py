@@ -1,5 +1,4 @@
 # coding: utf-8
-from lxml import html
 import feedparser
 from HTMLParser import HTMLParser
 from time import mktime
