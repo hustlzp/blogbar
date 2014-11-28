@@ -9,9 +9,9 @@ $(function () {
     $('.utc-time').each(function () {
         var time = moment($(this).text(), "YYYY-MM-DD HH:mm:ss");
 
-        // 不包含具体的时刻
+        // 不包含具体时刻，则不进行时区转换
         var only_date = time.hour() === 0 && time.minute() === 0 && time.second() === 0;
-        if (only_date || $(this).hasClass('utc-time-date')) {
+        if (only_date) {
             $(this).text(time.format("YYYY-MM-DD"));
             return true;
         }
@@ -20,7 +20,12 @@ $(function () {
         var date = new Date();
         var offset = date.getTimezoneOffset();
         time = time.subtract(offset, 'minutes');
-        $(this).text(time.format("YYYY-MM-DD HH:mm:ss"));
+
+        if ($(this).hasClass('utc-time-date')) {
+            $(this).text(time.format("YYYY-MM-DD"));
+        } else {
+            $(this).text(time.format("YYYY-MM-DD HH:mm:ss"));
+        }
     });
 });
 
