@@ -3,6 +3,7 @@ import feedparser
 from HTMLParser import HTMLParser
 from time import mktime
 from datetime import datetime
+from datetime import timedelta
 from ..models import db, Post
 
 
@@ -34,9 +35,9 @@ def grab_by_feed(blog):
             published_at = None
 
             if 'updated_parsed' in entry:
-                updated_at = _get_time(entry.updated_parsed)
+                updated_at = _get_time(entry.updated_parsed, blog)
             if 'published_parsed' in entry:
-                published_at = _get_time(entry.published_parsed)
+                published_at = _get_time(entry.published_parsed, blog)
 
             if (updated_at and updated_at != post.updated_at) or (
                         published_at and published_at != post.published_at):
@@ -56,9 +57,9 @@ def _get_info_to_post(post, entry):
     post.url = entry.link
 
     if 'published_parsed' in entry:
-        post.published_at = _get_time(entry.published_parsed)
+        post.published_at = _get_time(entry.published_parsed, blog)
     if 'updated_parsed' in entry:
-        post.updated_at = _get_time(entry.updated_parsed)
+        post.updated_at = _get_time(entry.updated_parsed, blog)
 
     # 若published_at不存在，则使用updated_at
     if not post.published_at:
@@ -73,8 +74,11 @@ def _get_info_to_post(post, entry):
         post.content = entry.summary
 
 
-def _get_time(time_struct):
-    return datetime.fromtimestamp(mktime(time_struct))
+def _get_time(time_struct, blog):
+    result_time = datetime.fromtimestamp(mktime(time_struct))
+    if blog.feed_timezone_offset:
+        result_time -= timedelta(hours=blog.feed_timezone_offset)
+    return result_time
 
 
 # See: http://stackoverflow.com/questions/753052/strip-html-from-strings-in-python

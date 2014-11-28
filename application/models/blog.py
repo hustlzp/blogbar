@@ -10,8 +10,11 @@ class Blog(db.Model):
     title = db.Column(db.String(100))
     subtitle = db.Column(db.String(100))
     author = db.Column(db.String(50))
+
     feed = db.Column(db.String(500))
+    feed_timezone_offset = db.Column(db.Integer, default=0)
     feed_version = db.Column(db.String(20))
+
     url = db.Column(db.String(200))
     since = db.Column(db.Integer)
     avatar = db.Column(db.String(200))
@@ -27,6 +30,14 @@ class Blog(db.Model):
 
     def __repr__(self):
         return '<Blog %s>' % self.title
+
+
+class Kind(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(20))
+
+    parent_id = db.Column(db.Integer, db.ForeignKey('kind.id'))
+    parent = db.relationship("Kind", remote_side=[id], backref=db.backref('children'))
 
 
 class Post(db.Model):
@@ -63,14 +74,6 @@ class Post(db.Model):
         self.need_analysis = True
 
 
-def _get_pure_content(content):
-    doc = html.fromstring(content)  # parse html string
-    pure_content = doc.text_content().strip().strip('　')  # 去除首位的空格、缩进
-    pure_content = pure_content.replace('　', ' ')  # 将缩进替换为空格
-    pure_content = re.sub('\s+', ' ', pure_content)  # 将多个空格替换为单个空格
-    return pure_content
-
-
 class GrabLog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     message = db.Column(db.Text)
@@ -93,3 +96,11 @@ class ApprovementLog(db.Model):
     blog_id = db.Column(db.Integer, db.ForeignKey('blog.id'))
     blog = db.relationship('Blog', backref=db.backref('approvement_logs', lazy='dynamic',
                                                       order_by='desc(ApprovementLog.created_at)'))
+
+
+def _get_pure_content(content):
+    doc = html.fromstring(content)  # parse html string
+    pure_content = doc.text_content().strip().strip('　')  # 去除首位的空格、缩进
+    pure_content = pure_content.replace('　', ' ')  # 将缩进替换为空格
+    pure_content = re.sub('\s+', ' ', pure_content)  # 将多个空格替换为单个空格
+    return pure_content
