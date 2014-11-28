@@ -14,8 +14,10 @@
             <div class="blogs clearfix">
                {% for blog in blogs.items %}
                   <div class="blog col-sm-6" title="{{ blog.subtitle }}">
-                     <a href="{{ url_for('blog.view', uid=blog.id) }}" class="title">
-                        {{ blog.title }}</a>
+                     <div class="title">
+                        <a href="{{ url_for('blog.view', uid=blog.id) }}">
+                           {{ blog.title }}</a>
+                     </div>
 
                      {% if blog.subtitle %}
                         <div class="subtitle">{{ blog.subtitle }}</div>
