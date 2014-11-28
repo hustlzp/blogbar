@@ -28,6 +28,9 @@ class Blog(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
     updated_at = db.Column(db.DateTime)
 
+    kind_id = db.Column(db.Integer, db.ForeignKey('kind.id'))
+    kind = db.relationship("Kind", backref=db.backref('blogs', lazy='dynamic'))
+
     def __repr__(self):
         return '<Blog %s>' % self.title
 
@@ -37,7 +40,8 @@ class Kind(db.Model):
     name = db.Column(db.String(20))
 
     parent_id = db.Column(db.Integer, db.ForeignKey('kind.id'))
-    parent = db.relationship("Kind", remote_side=[id], backref=db.backref('children'))
+    parent = db.relationship("Kind", remote_side=[id],
+                             backref=db.backref('children', lazy='dynamic'))
 
 
 class Post(db.Model):
