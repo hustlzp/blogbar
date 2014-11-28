@@ -3,7 +3,7 @@ from __future__ import absolute_import
 import traceback
 from celery_proj.app import app
 from application import create_app
-from application.models import db, Blog, GrabLog
+from application.models import db, Blog, GrabLog, Post
 from application.utils.blog import grab_by_feed
 from spiders import grab_by_spider, spiders
 
@@ -35,3 +35,25 @@ def grab():
 
         db.session.commit()
     return new_posts_count
+
+
+@app.task
+def analyse():
+    import json
+    from os.path import join
+    import jieba
+    from jieba import analyse
+
+    flask_app = create_app()
+    config = flask_app.config
+    project_path = config.get('PROJECT_PATH')
+    jieba.set_dictionary(join(project_path, 'dict.txt.small'))
+
+    with flask_app.app_context():
+        for post in Post.query.filter(Post.need_analysis):
+            # 更新keywords
+            keywords = analyse.extract_tags(post.pure_content, topK=20, withWeight=True)
+            post.keywords = json.dumps(keywords)
+            post.need_analysis = False
+            db.session.add(post)
+            db.session.commit()

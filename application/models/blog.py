@@ -1,15 +1,8 @@
 # coding: utf-8
 import re
-from os.path import dirname, abspath, join
 import datetime
-import json
-# import jieba
-# from jieba import analyse
 from lxml import html
 from ._base import db
-
-# project_path = abspath(dirname(dirname(dirname(__file__))))
-# jieba.set_dictionary(join(project_path, 'dict.txt.small'))
 
 
 class Blog(db.Model):
@@ -44,6 +37,7 @@ class Post(db.Model):
 
     hide = db.Column(db.Boolean, default=False)
     recommend = db.Column(db.Boolean, default=False)
+    need_analysis = db.Column(db.Boolean, default=True)
 
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
     published_at = db.Column(db.DateTime)
@@ -63,9 +57,7 @@ class Post(db.Model):
         pure_content = pure_content.replace('　', ' ')  # 将缩进替换为空格
         pure_content = re.sub('\s+', ' ', pure_content)  # 将多个空格替换为单个空格
         self.pure_content = pure_content
-        # 更新keywords
-        # keywords = analyse.extract_tags(self.pure_content, topK=20, withWeight=True)
-        # self.keywords = json.dumps(keywords)
+
 
 
 class GrabLog(db.Model):
