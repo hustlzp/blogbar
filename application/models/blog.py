@@ -45,10 +45,12 @@ class Blog(db.Model):
 class Kind(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20))
+    show_order = db.Column(db.Integer, default=0)
 
     parent_id = db.Column(db.Integer, db.ForeignKey('kind.id'))
     parent = db.relationship("Kind", remote_side=[id],
-                             backref=db.backref('children', lazy='dynamic'))
+                             backref=db.backref('children', lazy='dynamic',
+                                                order_by='asc(Kind.show_order)'))
 
 
 class Post(db.Model):
