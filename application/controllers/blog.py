@@ -11,8 +11,9 @@ bp = Blueprint('blog', __name__)
 
 @bp.route('/square')
 def square():
+    page = request.args.get('page', 1, int)
     blogs_query = Blog.query.filter(Blog.is_approved)
-    blogs = blogs_query.order_by(Blog.title.asc())
+    blogs = blogs_query.order_by(Blog.title.asc()).paginate(page, 45)
     latest_blogs = blogs_query.order_by(Blog.created_at.desc()).limit(15)
     return render_template('blog/square.html', blogs=blogs, latest_blogs=latest_blogs)
 
