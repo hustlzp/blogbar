@@ -4,6 +4,12 @@ import datetime
 from lxml import html
 from ._base import db
 
+blog_kind_association_table = (
+    db.Table('blog_kind',
+             db.Column('kind_id', db.Integer, db.ForeignKey('kind.id')),
+             db.Column('blog_id', db.Integer, db.ForeignKey('blog.id'))
+    ))
+
 
 class Blog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -25,11 +31,12 @@ class Blog(db.Model):
     is_protected = db.Column(db.Boolean, default=False)  # 版权保护
     has_spider = db.Column(db.Boolean, default=False)  # 是否通过Spider获取数据
 
+    kinds = db.relationship('Kind',
+                            secondary=blog_kind_association_table,
+                            backref=db.backref('blogs', lazy='dynamic'))
+
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
     updated_at = db.Column(db.DateTime)
-
-    kind_id = db.Column(db.Integer, db.ForeignKey('kind.id'))
-    kind = db.relationship("Kind", backref=db.backref('blogs', lazy='dynamic'))
 
     def __repr__(self):
         return '<Blog %s>' % self.title
