@@ -18,3 +18,25 @@
   -webkit-transition: @type linear @time; /* Safari 和 Chrome */
   -o-transition: @type linear @time;
 }
+
+// See: http://stackoverflow.com/questions/2610497/change-an-inputs-html5-placeholder-color-with-css
+.placeholder-color( @color: #999 ) {
+  ::-webkit-input-placeholder {
+    /* WebKit browsers */
+    color: @color;
+  }
+  :-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color: @color;
+    opacity: 1;
+  }
+  ::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: @color;
+    opacity: 1;
+  }
+  :-ms-input-placeholder {
+    /* Internet Explorer 10+ */
+    color: @color;
+  }
+}
