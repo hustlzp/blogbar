@@ -42,12 +42,13 @@ def analyse():
     import json
     from os.path import join
     import jieba
-    from jieba import analyse
 
     flask_app = create_app()
     config = flask_app.config
     project_path = config.get('PROJECT_PATH')
     jieba.set_dictionary(join(project_path, 'dict.txt.small'))
+
+    from jieba import analyse
 
     with flask_app.app_context():
         for post in Post.query.filter(Post.need_analysis):

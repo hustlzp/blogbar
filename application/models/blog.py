@@ -57,7 +57,7 @@ class Post(db.Model):
         pure_content = pure_content.replace('　', ' ')  # 将缩进替换为空格
         pure_content = re.sub('\s+', ' ', pure_content)  # 将多个空格替换为单个空格
         self.pure_content = pure_content
-
+        self.need_analysis = True
 
 
 class GrabLog(db.Model):
