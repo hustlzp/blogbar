@@ -3,6 +3,7 @@
 <head>
    <title>{% block page_title %}{% endblock %}</title>
    <meta name="renderer" content="webkit">
+   <meta name="csrf-token" content="{{ csrf_token() }}"/>
    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
    {% block meta %}{% endblock %}
@@ -151,16 +152,11 @@
 {# 访问统计 #}
 {# TODO #}
 
-{# 单页JS代码 #}
-{{ page_script(self) }}
-
 {# 全局JS代码 #}
-<script type="text/javascript">
-   var locals = locals || {};
-   locals = $.extend(locals, {
-   });
-</script>
 {{ script('js/layout.js') }}
+
+{# 单页JS代码 #}
+{#{{ page_script(self) }}#}
 
 </body>
 </html>

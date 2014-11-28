@@ -1,0 +1,19 @@
+.kinds {
+  margin-top: 5px;
+}
+.kinds .kind {
+  padding: 5px 5px;
+  background-color: #eee;
+  cursor: pointer;
+  display: inline-block;
+  line-height: 1;
+  margin: 0 5px 5px 0;
+  font-size: 12px;
+}
+.kinds .kind:hover {
+  background-color: #ddd;
+}
+.kinds .kind.on {
+  background-color: #2a99c2;
+  color: white;
+}

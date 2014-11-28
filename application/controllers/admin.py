@@ -1,7 +1,8 @@
 # coding: utf-8
+import json
 import datetime
 from flask import render_template, Blueprint, flash, redirect, url_for, abort, request
-from ..models import db, Blog, Post, ApprovementLog
+from ..models import db, Blog, Post, ApprovementLog, Kind
 from ..utils.permissions import AdminPermission
 from ..forms import EditBlogForm
 
@@ -49,13 +50,16 @@ def edit_blog(uid):
     """编辑博客"""
     blog = Blog.query.get_or_404(uid)
     form = EditBlogForm(obj=blog)
+    kinds = Kind.query.filter(Kind.parent_id == None)
+    blog_kinds = [kind.id for kind in blog.kinds]
     if form.validate_on_submit():
         form.populate_obj(blog)
         db.session.add(blog)
         db.session.commit()
         flash('操作成功')
         return redirect(request.form.get('referer') or request.referrer)
-    return render_template('admin/edit_blog.html', form=form)
+    return render_template('admin/edit_blog.html', form=form, kinds=kinds, blog_kinds=blog_kinds,
+                           blog=blog)
 
 
 @bp.route('/posts', defaults={'page': 1})
@@ -109,3 +113,35 @@ def show_post(uid):
     db.session.add(post)
     db.session.commit()
     return redirect(request.referrer)
+
+
+@bp.route('/add_kind_to_blog', methods=['POST'])
+@AdminPermission()
+def add_kind_to_blog():
+    kind_id = request.form.get('kind_id', type=int)
+    blog_id = request.form.get('blog_id', type=int)
+    if not kind_id or not blog_id:
+        abort(500)
+    blog = Blog.query.get_or_404(blog_id)
+    kind = Kind.query.get_or_404(kind_id)
+    if not blog.kinds.filter(Kind.id == kind_id).first():
+        blog.kinds.append(kind)
+        db.session.add(blog)
+        db.session.commit()
+    return json.dumps({'status': 'yes'})
+
+
+@bp.route('/remove_kind_from_blog', methods=['POST'])
+@AdminPermission()
+def remove_kind_from_blog():
+    kind_id = request.form.get('kind_id', type=int)
+    blog_id = request.form.get('blog_id', type=int)
+    if not kind_id or not blog_id:
+        abort(500)
+    blog = Blog.query.get_or_404(blog_id)
+    kind = Kind.query.get_or_404(kind_id)
+    if blog.kinds.filter(Kind.id == kind_id).first():
+        blog.kinds.remove(kind)
+        db.session.add(blog)
+        db.session.commit()
+    return json.dumps({'status': 'yes'})

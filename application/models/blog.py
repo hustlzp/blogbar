@@ -31,7 +31,7 @@ class Blog(db.Model):
     is_protected = db.Column(db.Boolean, default=False)  # 版权保护
     has_spider = db.Column(db.Boolean, default=False)  # 是否通过Spider获取数据
 
-    kinds = db.relationship('Kind',
+    kinds = db.relationship('Kind', lazy='dynamic',
                             secondary=blog_kind_association_table,
                             backref=db.backref('blogs', lazy='dynamic'))
 

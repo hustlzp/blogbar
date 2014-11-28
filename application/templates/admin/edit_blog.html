@@ -27,6 +27,25 @@
 
             {{ horizontal_field(form.since) }}
 
+            <hr/>
+
+            {% for kind in kinds %}
+               <div class="form-group">
+                  <label class="col-md-2 control-label">{{ kind.name }}</label>
+
+                  <div class="col-md-10">
+                     <div class="kinds">
+                        {% for subkind in kind.children %}
+                           <span data-kind-id="{{ subkind.id }}"
+                                 data-blog-id="{{ blog.id }}"
+                                 class="kind {% if subkind.id in blog_kinds %}on{% endif %}">
+                              {{ subkind.name }}</span>
+                        {% endfor %}
+                     </div>
+                  </div>
+               </div>
+            {% endfor %}
+
             <div class="form-group">
                <div class="col-md-6 col-md-offset-2">
                   <input type="submit" value="保存" class="btn btn-sm btn-primary"/>
@@ -38,4 +57,34 @@
       <div class="col-sm-4">
       </div>
    </div>
+
+   <script type="text/javascript">
+      $('.kind').click(function () {
+         var btn = $(this);
+         var kindId = $(this).data('kind-id');
+         var blogId = $(this).data('blog-id');
+         var on = $(this).hasClass('on');
+         var url = "";
+
+         if (on) {
+            url = '/admin/remove_kind_from_blog';
+         } else {
+            url = '/admin/add_kind_to_blog';
+         }
+
+         $.ajax({
+            url: url,
+            method: 'POST',
+            dataType: 'json',
+            data: {
+               'kind_id': kindId,
+               'blog_id': blogId
+            }, success: function (res) {
+               if (res.status === 'yes') {
+                  $(btn).toggleClass('on');
+               }
+            }
+         });
+      });
+   </script>
 {% endblock %}

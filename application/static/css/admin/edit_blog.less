@@ -1,0 +1,24 @@
+@import "../utils";
+
+.kinds {
+  margin-top: 5px;
+
+  .kind {
+    padding: 5px 5px;
+    background-color: #eee;
+    cursor: pointer;
+    display: inline-block;
+    line-height: 1;
+    margin: 0 5px 5px 0;
+    font-size: 12px;
+
+    &:hover {
+      background-color: #ddd;
+    }
+
+    &.on {
+      background-color: @main-color;
+      color: white;
+    }
+  }
+}
