@@ -20,6 +20,12 @@
 .blogs .blog .title a {
   color: #000;
 }
+.blogs .blog .title .offline {
+  margin-left: 5px;
+  font-size: 12px;
+  font-weight: normal;
+  color: #ff0000;
+}
 .blogs .blog .subtitle {
   font-size: 12px;
   margin-bottom: 6px;

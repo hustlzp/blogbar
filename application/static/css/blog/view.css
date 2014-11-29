@@ -6,6 +6,12 @@
   font-size: 24px;
   font-weight: bold;
 }
+.blog-header .title .offline {
+  font-size: 14px;
+  margin-left: 2px;
+  font-weight: normal;
+  color: #ff0000;
+}
 .blog-header .title .forbid {
   color: #FAAD07;
 }

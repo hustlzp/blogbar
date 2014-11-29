@@ -25,8 +25,11 @@
 
                      <div class="title">
                         <a href="{{ url_for('blog.view', uid=blog.id) }}">
-                           {{ blog.title }}
-                        </a>
+                           {{ blog.title }}</a>
+
+                        {% if blog.offline %}
+                           <span class="offline">offline</span>
+                        {% endif %}
                      </div>
 
                      {% if blog.subtitle %}

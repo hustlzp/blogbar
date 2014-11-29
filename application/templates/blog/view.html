@@ -11,6 +11,10 @@
                <div class="title">
                   {{ blog.title }}
 
+                  {% if blog.offline %}
+                     <span class="offline">offline</span>
+                  {% endif %}
+
                   {% if blog.is_protected %}
                      <sup title="作者禁止转载" class="forbid">
                         <span class="fa fa-lock"></span>
