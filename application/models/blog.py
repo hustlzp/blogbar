@@ -53,6 +53,9 @@ class Kind(db.Model):
                                                 order_by='asc(Kind.show_order)'))
 
 
+
+
+
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     url = db.Column(db.String(500))

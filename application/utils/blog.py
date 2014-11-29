@@ -19,6 +19,8 @@ def grab_by_feed(blog):
     db.session.add(blog)
     print(blog.title)
 
+    timezone_offset = blog.feed_timezone_offset
+
     for entry in result.entries:
         url = entry.link
         post = blog.posts.filter(Post.url == url).first()
@@ -26,7 +28,7 @@ def grab_by_feed(blog):
         if not post:
             new_posts_count += 1
             post = Post(url=url)
-            _get_info_to_post(post, entry)
+            _get_info_to_post(post, entry, timezone_offset)
             blog.posts.append(post, blog)
             print(" new - %s" % post.title)
         else:
@@ -35,20 +37,20 @@ def grab_by_feed(blog):
             published_at = None
 
             if 'updated_parsed' in entry:
-                updated_at = _get_time(entry.updated_parsed, blog)
+                updated_at = _get_time(entry.updated_parsed, timezone_offset)
             if 'published_parsed' in entry:
-                published_at = _get_time(entry.published_parsed, blog)
+                published_at = _get_time(entry.published_parsed, timezone_offset)
 
             if (updated_at and updated_at != post.updated_at) or (
                         published_at and published_at != post.published_at):
-                _get_info_to_post(post, entry, blog)
+                _get_info_to_post(post, entry, timezone_offset)
                 print(" update - %s" % post.title)
                 db.session.add(post)
     db.session.commit()
     return new_posts_count
 
 
-def _get_info_to_post(post, entry, blog):
+def _get_info_to_post(post, entry, timezone_offset):
     """将entry中的信息转存到post中"""
     title = remove_html_tag(entry.title)  # 去除HTML标签
     title = title.replace('\r', '').replace('\n', '')  # 去除换行符
@@ -57,9 +59,9 @@ def _get_info_to_post(post, entry, blog):
     post.url = entry.link
 
     if 'published_parsed' in entry:
-        post.published_at = _get_time(entry.published_parsed, blog)
+        post.published_at = _get_time(entry.published_parsed, timezone_offset)
     if 'updated_parsed' in entry:
-        post.updated_at = _get_time(entry.updated_parsed, blog)
+        post.updated_at = _get_time(entry.updated_parsed, timezone_offset)
 
     # 若published_at不存在，则使用updated_at
     if not post.published_at and post.updated_at:
@@ -78,10 +80,10 @@ def _get_info_to_post(post, entry, blog):
         post.content = entry.summary
 
 
-def _get_time(time_struct, blog):
+def _get_time(time_struct, timezone_offset=None):
     result_time = datetime.fromtimestamp(mktime(time_struct))
-    if blog.feed_timezone_offset:
-        result_time -= timedelta(hours=blog.feed_timezone_offset)
+    if timezone_offset:
+        result_time -= timedelta(hours=timezone_offset)
     return result_time
 
 
