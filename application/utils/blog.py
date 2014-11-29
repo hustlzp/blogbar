@@ -27,7 +27,7 @@ def grab_by_feed(blog):
             new_posts_count += 1
             post = Post(url=url)
             _get_info_to_post(post, entry)
-            blog.posts.append(post)
+            blog.posts.append(post, blog)
             print(" new - %s" % post.title)
         else:
             # 更新
@@ -41,14 +41,14 @@ def grab_by_feed(blog):
 
             if (updated_at and updated_at != post.updated_at) or (
                         published_at and published_at != post.published_at):
-                _get_info_to_post(post, entry)
+                _get_info_to_post(post, entry, blog)
                 print(" update - %s" % post.title)
                 db.session.add(post)
     db.session.commit()
     return new_posts_count
 
 
-def _get_info_to_post(post, entry):
+def _get_info_to_post(post, entry, blog):
     """将entry中的信息转存到post中"""
     title = remove_html_tag(entry.title)  # 去除HTML标签
     title = title.replace('\r', '').replace('\n', '')  # 去除换行符
@@ -62,8 +62,12 @@ def _get_info_to_post(post, entry):
         post.updated_at = _get_time(entry.updated_parsed, blog)
 
     # 若published_at不存在，则使用updated_at
-    if not post.published_at:
+    if not post.published_at and post.updated_at:
         post.published_at = post.updated_at
+
+    # 若published_at与updated_at均不存在，则使用当前时间作为publishe_at
+    if not post.published and not post.updated_at:
+        post.publishe_at = datetime.now()
 
     if 'content' in entry:
         if isinstance(entry.content, list):
