@@ -24,7 +24,8 @@
                      {% endif %}
 
                      <div class="kinds">
-                        {% for kind in blog.kinds %}
+                        {% for blog_kind in blog.blog_kinds %}
+                           {% set kind = blog_kind.kind %}
                            <span>{{ kind.name }}</span>
                            {% if not loop.last %} · {% endif %}
                         {% endfor %}

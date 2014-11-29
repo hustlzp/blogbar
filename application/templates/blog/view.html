@@ -65,11 +65,12 @@
                   </tr>
                {% endif %}
 
-               {% if blog.kinds.count() %}
+               {% if blog.blog_kinds.count() %}
                   <tr>
                      <td>标签</td>
                      <td>
-                        {% for kind in blog.kinds %}
+                        {% for blog_kind in blog.blog_kinds %}
+                           {% set kind = blog_kind.kind %}
                            {{ kind.name }}
                            {% if not loop.last %} / {% endif %}
                         {% endfor %}

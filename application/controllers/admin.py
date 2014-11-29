@@ -2,7 +2,7 @@
 import json
 import datetime
 from flask import render_template, Blueprint, flash, redirect, url_for, abort, request
-from ..models import db, Blog, Post, ApprovementLog, Kind
+from ..models import db, Blog, Post, ApprovementLog, Kind, BlogKind
 from ..utils.permissions import AdminPermission
 from ..forms import EditBlogForm
 
@@ -51,7 +51,7 @@ def edit_blog(uid):
     blog = Blog.query.get_or_404(uid)
     form = EditBlogForm(obj=blog)
     kinds = Kind.query
-    blog_kinds = [kind.id for kind in blog.kinds]
+    blog_kinds = [blog_kind.blog_id for blog_kind in blog.blog_kinds]
     if form.validate_on_submit():
         form.populate_obj(blog)
         db.session.add(blog)
@@ -122,11 +122,12 @@ def add_kind_to_blog():
     blog_id = request.form.get('blog_id', type=int)
     if not kind_id or not blog_id:
         abort(500)
-    blog = Blog.query.get_or_404(blog_id)
-    kind = Kind.query.get_or_404(kind_id)
-    if not blog.kinds.filter(Kind.id == kind_id).first():
-        blog.kinds.append(kind)
-        db.session.add(blog)
+    if not BlogKind.filter(BlogKind.blog_id == blog_id,
+                           BlogKind.kind_id == kind_id).first():
+        blog = Blog.query.get_or_404(blog_id)
+        kind = Kind.query.get_or_404(kind_id)
+        blog_kind = BlogKind(blog_id=blog_id, kind_id=kind_id)
+        db.session.add(blog_kind)
         db.session.commit()
     return json.dumps({'status': 'yes'})
 
@@ -138,10 +139,8 @@ def remove_kind_from_blog():
     blog_id = request.form.get('blog_id', type=int)
     if not kind_id or not blog_id:
         abort(500)
-    blog = Blog.query.get_or_404(blog_id)
-    kind = Kind.query.get_or_404(kind_id)
-    if blog.kinds.filter(Kind.id == kind_id).first():
-        blog.kinds.remove(kind)
-        db.session.add(blog)
-        db.session.commit()
+    blog_kinds = BlogKind.filter(BlogKind.blog_id == blog_id,
+                                 BlogKind.kind_id == kind_id)
+    map(db.session.delete, blog_kinds)
+    db.session.commit()
     return json.dumps({'status': 'yes'})

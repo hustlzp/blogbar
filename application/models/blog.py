@@ -4,12 +4,6 @@ import datetime
 from lxml import html
 from ._base import db
 
-blog_kind_association_table = (
-    db.Table('blog_kind',
-             db.Column('kind_id', db.Integer, db.ForeignKey('kind.id')),
-             db.Column('blog_id', db.Integer, db.ForeignKey('blog.id'))
-    ))
-
 
 class Blog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -31,10 +25,6 @@ class Blog(db.Model):
     is_protected = db.Column(db.Boolean, default=False)  # 版权保护
     has_spider = db.Column(db.Boolean, default=False)  # 是否通过Spider获取数据
 
-    kinds = db.relationship('Kind', lazy='dynamic',
-                            secondary=blog_kind_association_table,
-                            backref=db.backref('blogs', lazy='dynamic'))
-
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
     updated_at = db.Column(db.DateTime)
 
@@ -44,7 +34,8 @@ class Blog(db.Model):
 
 class Kind(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(20))
+    name = db.Column(db.String(50))
+    created_at = db.Column(db.DateTime, default=datetime.datetime.now)
     show_order = db.Column(db.Integer, default=0)
 
     parent_id = db.Column(db.Integer, db.ForeignKey('kind.id'))
@@ -53,7 +44,17 @@ class Kind(db.Model):
                                                 order_by='asc(Kind.show_order)'))
 
 
+class BlogKind(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    created_at = db.Column(db.DateTime, default=datetime.datetime.now)
+    show_order = db.Column(db.Integer, default=0)
 
+    blog_id = db.Column(db.Integer, db.ForeignKey('blog.id'))
+    blog = db.relationship('Blog', backref=db.backref('blog_kinds', lazy='dynamic',
+                                                      order_by='asc(BlogKind.show_order)'))
+
+    kind_id = db.Column(db.Integer, db.ForeignKey('kind.id'))
+    kind = db.relationship('Kind', backref=db.backref('blog_kinds', lazy='dynamic'))
 
 
 class Post(db.Model):
