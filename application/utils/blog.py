@@ -42,7 +42,7 @@ def grab_by_feed(blog):
             new_posts_count += 1
             post = Post(url=url)
             _get_info_to_post(post, entry, timezone_offset)
-            blog.posts.append(post, blog)
+            blog.posts.append(post)
             print(" new - %s" % post.title)
         else:
             # 更新
