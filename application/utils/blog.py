@@ -16,6 +16,8 @@ def grab_by_feed(blog):
         res = requests.get(blog.url)
         if res.status_code >= 400:
             blog.offline = True
+        else:
+            blog.offline = False
     except Exception, e:
         blog.offline = True
 
