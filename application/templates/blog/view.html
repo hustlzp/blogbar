@@ -72,7 +72,7 @@
                         {% for blog_kind in blog.blog_kinds %}
                            {% set kind = blog_kind.kind %}
                            {{ kind.name }}
-                           {% if not loop.last %} / {% endif %}
+                           {% if not loop.last %} · {% endif %}
                         {% endfor %}
                      </td>
                   </tr>
