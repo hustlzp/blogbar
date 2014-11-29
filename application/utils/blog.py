@@ -14,13 +14,11 @@ def grab_by_feed(blog):
 
     # 检测博客是否在线
     try:
-        res = requests.get(blog.url)
+        res = requests.get(blog.url, verify=False)
         if res.status_code == 400 or res.status_code >= 500:
             blog.offline = True
         else:
             blog.offline = False
-    except SSLError, e:
-        pass
     except Exception, e:
         blog.offline = True
 
