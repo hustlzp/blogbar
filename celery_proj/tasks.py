@@ -24,6 +24,7 @@ def grab():
                 except Exception, e:
                     log = GrabLog(message=e, details=traceback.format_exc(), blog_id=blog.id)
                     db.session.add(log)
+                    db.session.commit()
 
         # 通过spider抓取blog
         for spider in spiders:
@@ -33,8 +34,7 @@ def grab():
                 blog = Blog.query.filter(Blog.url == spider.url).first_or_404()
                 log = GrabLog(message=e, details=traceback.format_exc(), blog_id=blog.id)
                 db.session.add(log)
-
-        db.session.commit()
+                db.session.commit()
     return new_posts_count
 
 
