@@ -1,5 +1,6 @@
 # coding: utf-8
 import requests
+from requests.exceptions import SSLError
 import feedparser
 from HTMLParser import HTMLParser
 from time import mktime
@@ -18,6 +19,8 @@ def grab_by_feed(blog):
             blog.offline = True
         else:
             blog.offline = False
+    except SSLError, e:
+        pass
     except Exception, e:
         blog.offline = True
 
