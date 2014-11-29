@@ -51,13 +51,13 @@ def edit_blog(uid):
     blog = Blog.query.get_or_404(uid)
     form = EditBlogForm(obj=blog)
     kinds = Kind.query
-    blog_kinds = [blog_kind.blog_id for blog_kind in blog.blog_kinds]
+    blog_kinds = [blog_kind.kind_id for blog_kind in blog.blog_kinds]
     if form.validate_on_submit():
         form.populate_obj(blog)
         db.session.add(blog)
         db.session.commit()
         flash('操作成功')
-        return redirect(request.form.get('referer') or request.referrer)
+        return redirect(request.form.get('referer') or request.referrer or url_for('site.idnex'))
     return render_template('admin/edit_blog.html', form=form, kinds=kinds, blog_kinds=blog_kinds,
                            blog=blog)
 
@@ -122,8 +122,8 @@ def add_kind_to_blog():
     blog_id = request.form.get('blog_id', type=int)
     if not kind_id or not blog_id:
         abort(500)
-    if not BlogKind.filter(BlogKind.blog_id == blog_id,
-                           BlogKind.kind_id == kind_id).first():
+    if not BlogKind.query.filter(BlogKind.blog_id == blog_id,
+                                 BlogKind.kind_id == kind_id).first():
         blog = Blog.query.get_or_404(blog_id)
         kind = Kind.query.get_or_404(kind_id)
         blog_kind = BlogKind(blog_id=blog_id, kind_id=kind_id)
@@ -139,8 +139,8 @@ def remove_kind_from_blog():
     blog_id = request.form.get('blog_id', type=int)
     if not kind_id or not blog_id:
         abort(500)
-    blog_kinds = BlogKind.filter(BlogKind.blog_id == blog_id,
-                                 BlogKind.kind_id == kind_id)
+    blog_kinds = BlogKind.query.filter(BlogKind.blog_id == blog_id,
+                                       BlogKind.kind_id == kind_id)
     map(db.session.delete, blog_kinds)
     db.session.commit()
     return json.dumps({'status': 'yes'})
