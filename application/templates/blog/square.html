@@ -17,11 +17,16 @@
                {% for blog in blogs.items %}
                   {% set has_kinds = blog.blog_kinds.count() %}
 
-                  <div class="blog col-sm-6
-                       {% if admin and not has_kinds %}no-kinds{% endif %}">
+                  <div class="blog col-sm-6 {% if admin and not has_kinds %}no-kinds{% endif %}">
+                     {% if admin %}
+                        <a href="{{ url_for('admin.edit_blog', uid=blog.id) }}"
+                           class=" pull-right">edit</a>
+                     {% endif %}
+
                      <div class="title">
                         <a href="{{ url_for('blog.view', uid=blog.id) }}">
-                           {{ blog.title }}</a>
+                           {{ blog.title }}
+                        </a>
                      </div>
 
                      {% if blog.subtitle %}
