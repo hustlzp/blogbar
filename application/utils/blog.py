@@ -68,7 +68,7 @@ def _get_info_to_post(post, entry, timezone_offset):
         post.published_at = post.updated_at
 
     # 若published_at与updated_at均不存在，则使用当前时间作为publishe_at
-    if not post.published and not post.updated_at:
+    if not post.published_at and not post.updated_at:
         post.publishe_at = datetime.now()
 
     if 'content' in entry:
