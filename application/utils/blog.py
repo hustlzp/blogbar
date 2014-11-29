@@ -24,9 +24,12 @@ def grab_by_feed(blog):
 
     result = feedparser.parse(blog.feed)
 
-    # feed失效
+    # 检测feed是否失效
     if not result.feed:
         blog.bad_feed = True
+    else:
+        blog.bad_feed = False
+
     if not blog.feed_version:
         blog.feed_version = result.version
     if not blog.subtitle and 'subtitle' in result.feed:
