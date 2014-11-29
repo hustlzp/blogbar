@@ -24,6 +24,7 @@ class Blog(db.Model):
     is_approved = db.Column(db.Boolean, default=False)  # 是否通过审批
     is_protected = db.Column(db.Boolean, default=False)  # 版权保护
     has_spider = db.Column(db.Boolean, default=False)  # 是否通过Spider获取数据
+    offline = db.Column(db.Boolean, default=False)
 
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
     updated_at = db.Column(db.DateTime)

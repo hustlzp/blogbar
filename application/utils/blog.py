@@ -1,4 +1,5 @@
 # coding: utf-8
+import requests
 import feedparser
 from HTMLParser import HTMLParser
 from time import mktime
@@ -9,6 +10,14 @@ from ..models import db, Post
 
 def grab_by_feed(blog):
     new_posts_count = 0
+
+    # 检测博客是否在线
+    try:
+        res = requests.get(blog.url)
+        if res.status_code >= 400:
+            blog.offline = True
+    except Exception, e:
+        blog.offline = True
 
     result = feedparser.parse(blog.feed)
     if not blog.feed_version:
