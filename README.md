@@ -3,13 +3,13 @@ Blogbar
 
 http://www.blogbar.cc
 
-> 当你和世界不一样，那就让你不一样。
+个人博客之死，就是个人博客之生。
 
-个人博客之死，就是个人博客之生。将信息的快速传递交给新兴媒介，让个人博客回归应有的位置：一种信息的雕刻与沉淀的工具。
-
-Blogbar，聚合个人博客。
+将信息的快速传递交给新兴媒介，让个人博客回归原来的位置：一种信息的雕刻与沉淀的工具。
 
 世界的频道太多，这里只有 **个人**<sup>兆赫</sup>。
+
+Blogbar，聚合个人博客。
 
 ###Tech Stack
 
@@ -18,4 +18,3 @@ Blogbar，聚合个人博客。
 * Use [Celery](http://celery.readthedocs.org/) to grab data periodically, and [Flower](http://flower.readthedocs.org/en/latest/) as monitor.
 * Use [feerparser](http://pythonhosted.org/feedparser/) to parse RSS and Atom.
 * Use [requests](http://docs.python-requests.org/en/latest/) and [lxml](http://lxml.de/) to grab structured data from HTML page.
-* Use [jieba](https://github.com/fxsjy/jieba) to get key words from post.
