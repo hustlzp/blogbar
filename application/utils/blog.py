@@ -20,6 +20,10 @@ def grab_by_feed(blog):
         blog.offline = True
 
     result = feedparser.parse(blog.feed)
+
+    # feed失效
+    if not result.feed:
+        blog.bad_feed = True
     if not blog.feed_version:
         blog.feed_version = result.version
     if not blog.subtitle and 'subtitle' in result.feed:

@@ -14,6 +14,7 @@ class Blog(db.Model):
     feed = db.Column(db.String(500))
     feed_timezone_offset = db.Column(db.Integer, default=0)
     feed_version = db.Column(db.String(20))
+    bad_feed = db.Column(db.Boolean, default=False)
 
     url = db.Column(db.String(200))
     since = db.Column(db.Integer)
