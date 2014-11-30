@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+{% from 'macro/ui.html' import pagination %}
+
+{% block page_title %}博客管理{% endblock %}
+{% block page_content %}
+   <div class="container">
+      {% macro render_blogs(blogs) %}
+         <table class="table table-bordered">
+            <tr>
+               <th style="width: 320px;">博客</th>
+               <th>作者</th>
+               <th>URL / Feed</th>
+               <th>Since</th>
+               <th>编辑</th>
+            </tr>
+
+            {% for blog in blogs %}
+               <tr>
+                  <td>
+                     <strong>{{ blog.title }}</strong>
+                     {% if blog.subtitle %}
+                        <br/>
+                        <small class="text-light">{{ blog.subtitle }}</small>
+                     {% endif %}
+                  </td>
+                  <td>{{ blog.author }}</td>
+                  <td>
+                     <a href="{{ blog.url }}" target="_blank">
+                        {{ blog.url }}
+                     </a>
+
+                     {% if blog.feed %}
+                        &nbsp;/&nbsp;
+                        <a href="{{ blog.feed }}" target="_blank">
+                           <span class="fa fa-rss-square "></span>
+                        </a>
+                     {% endif %}
+                  </td>
+                  <td>{{ blog.since or "" }}</td>
+                  <td>
+                     <a href="{{ url_for('admin.edit_blog', uid=blog.id) }}"
+                        class="btn btn-default btn-sm">
+                        <span class="fa fa-edit"></span>
+                     </a>
+                  </td>
+               </tr>
+            {% endfor %}
+         </table>
+      {% endmacro %}
+
+      <h2 class="no-margin-top">Offline 博客</h2>
+
+      {{ render_blogs(offline_blogs) }}
+
+      <h2>Feed 失效博客</h2>
+
+      {{ render_blogs(bad_feed_blogs) }}
+   </div>
+{% endblock %}

@@ -62,6 +62,15 @@ def edit_blog(uid):
                            blog=blog)
 
 
+@bp.route('/blogs')
+@AdminPermission()
+def blogs():
+    offline_blogs = Blog.query.filter(Blog.offline)
+    bad_feed_blogs = Blog.query.filter(Blog.bad_feed)
+    return render_template('admin/blogs.html', offline_blogs=offline_blogs,
+                           bad_feed_blogs=bad_feed_blogs)
+
+
 @bp.route('/posts', defaults={'page': 1})
 @bp.route('/posts/page/<int:page>')
 @AdminPermission()
