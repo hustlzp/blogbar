@@ -67,8 +67,7 @@
 
                      <div class="meta">
                         <a href="{{ url_for('blog.view', uid=post.blog_id) }}">
-                           {{ post.blog.title }}
-                        </a>
+                           {{ post.blog.title }}</a>
 
                         {% if post.published_at or post.updated_at %}
                            <span class="time">
