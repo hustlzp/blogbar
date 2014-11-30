@@ -1,3 +1,7 @@
+.feed {
+  font-size: 14px;
+  margin-left: 5px;
+}
 .recommends {
   border-top: 1px solid #ddd;
   padding-top: 20px;
