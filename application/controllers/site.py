@@ -1,5 +1,6 @@
 # coding: utf-8
-from flask import render_template, Blueprint
+from flask import render_template, Blueprint, current_app, request
+from werkzeug.contrib.atom import AtomFeed
 from ..models import db, Blog, Post, ApprovementLog
 
 bp = Blueprint('site', __name__)
@@ -16,7 +17,7 @@ def index(page):
     blogs_count = blogs_query.count()
     latest_blogs = blogs_query.order_by(Blog.created_at.desc()).limit(15)
 
-    posts_query = Post.query.filter(~Post.hide).\
+    posts_query = Post.query.filter(~Post.hide). \
         filter(Post.blog.has(Blog.is_approved))
     posts_count = posts_query.count()
     latest_posts = posts_query.order_by(Post.published_at.desc()).limit(10)
@@ -47,3 +48,22 @@ def suggest():
 def about():
     """关于页"""
     return render_template('site/about.html')
+
+
+@bp.route('/feed/posts.xml')
+def posts_feed():
+    config = current_app.config
+    domain = config.get('SITE_DOMAIN')
+    feed = AtomFeed("Blogbar - 编辑推荐文章",
+                    subtitle='当你和世界不一样，那就让你不一样。',
+                    feed_url="%s%s" % (domain, request.path),
+                    url=domain,
+                    id=domain)
+    recommend_posts = Post.query.filter(Post.recommend). \
+        order_by(Post.published_at.desc()).limit(15)
+    for post in recommend_posts:
+        feed.add(post.title, post.content, content_type='html', author=post.blog.author,
+                 url=post.url, id=post.url, updated=post.published_at)
+    response = feed.get_response()
+    response.headers['Content-Type'] = 'application/xml'
+    return response
