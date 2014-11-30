@@ -15,7 +15,7 @@ def grab_by_feed(blog):
     # 检测博客是否在线
     try:
         res = requests.get(blog.url, verify=False)
-        if res.status_code >= 500:
+        if res.status_code >= 500 or res.status_code == 404:
             blog.offline = True
         else:
             blog.offline = False
@@ -25,7 +25,7 @@ def grab_by_feed(blog):
     result = feedparser.parse(blog.feed)
 
     # 检测feed是否失效
-    if not result.feed:
+    if not result.entries:
         blog.bad_feed = True
     else:
         blog.bad_feed = False
