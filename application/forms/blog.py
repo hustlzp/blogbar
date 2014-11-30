@@ -1,7 +1,7 @@
 # coding: utf-8
 from urlparse import urlparse
 from flask_wtf import Form
-from wtforms import StringField, TextAreaField, IntegerField
+from wtforms import StringField, TextAreaField, IntegerField, SelectMultipleField
 from wtforms.validators import DataRequired, Email, URL
 from ..models import Blog
 
@@ -31,6 +31,7 @@ class AddBlogForm(Form):
     author = StringField('作者', [DataRequired('不能为空')], description='博主')
     feed = StringField('Feed', [check_url], description='RSS 订阅地址  /  选填')
     since = StringField('Since', description='博客从哪一年开始写的，如 2012  /  选填')
+    kinds = SelectMultipleField('Kinds', coerce=int)
 
     def validate_url(self, field):
         blog = Blog.query.filter(Blog.url == field.data).first()

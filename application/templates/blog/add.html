@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% from "macro/form.html" import vertical_field %}
 
-{% block page_title %}首页{% endblock %}
+{% block page_title %}推荐博客{% endblock %}
 {% block page_content %}
    <div class="container">
       <div class="row">
@@ -30,9 +30,27 @@
 
                {{ vertical_field(form.since) }}
 
+               <div class="form-group">
+                  <div class="col-md-8">
+                     <div class="label-for-tags">标签：</div>
+                     <div class="kinds">
+                        {% for kind in kinds %}
+                           <span data-kind-id="{{ kind.id }}"
+                                 class="kind {% if kind.id in kinds_data %}on{% endif %}">
+                              {{ kind.name }}
+
+                              {% if kind.id in kinds_data %}
+                                 <input type="hidden" name="kinds" value="{{ kind.id }}"/>
+                              {% endif %}
+                           </span>
+                        {% endfor %}
+                     </div>
+                  </div>
+               </div>
+
                <div class="vertical-form-group">
                   <button type="submit" class="btn btn-sm btn-primary">
-                     <span class="fa fa-plus"></span> 推荐
+                     <span class="fa fa-paper-plane"></span> 提交
                   </button>
                </div>
             </form>
@@ -45,5 +63,17 @@
 
    <script type="text/javascript">
       $('#url').focus();
+
+      $('.kind').click(function () {
+         var kindId = $(this).data('kind-id');
+
+         $(this).toggleClass('on');
+
+         if ($(this).hasClass('on')) {
+            $(this).append("<input name='kinds' type='hidden' value=" + kindId + " />");
+         } else {
+            $(this).find('input').detach();
+         }
+      });
    </script>
 {% endblock %}

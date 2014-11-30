@@ -1,0 +1,28 @@
+.label-for-tags {
+  display: table-cell;
+  vertical-align: top;
+  padding-top: 10px;
+  padding-right: 5px;
+  font-weight: bold;
+}
+.kinds {
+  display: table-cell;
+  vertical-align: top;
+  padding-top: 10px;
+}
+.kinds .kind {
+  padding: 5px 6px;
+  background-color: #e8e8e8;
+  cursor: pointer;
+  display: inline-block;
+  line-height: 1;
+  margin: 0 5px 10px 0;
+  font-size: 12px;
+}
+.kinds .kind:hover {
+  background-color: #d8d8d8;
+}
+.kinds .kind.on {
+  background-color: #2a99c2;
+  color: white;
+}

@@ -2,7 +2,7 @@
 import json
 from flask import render_template, Blueprint, flash, redirect, url_for, abort, request
 from werkzeug.contrib.atom import AtomFeed
-from ..models import db, Blog, Post, ApprovementLog
+from ..models import db, Blog, Post, ApprovementLog, Kind, BlogKind
 from ..forms import AddBlogForm
 from ..utils.permissions import AdminPermission
 
@@ -35,16 +35,29 @@ def view(uid, page):
 @bp.route('/add', methods=['GET', 'POST'])
 def add():
     """推荐博客"""
+    kinds = Kind.query
     form = AddBlogForm()
+    form.kinds.choices = [(kind.id, kind.name) for kind in kinds]
+    kinds_data = form.kinds.data or []
+
     if form.validate_on_submit():
+        if not form.since.data:  # 创建Blog
+            form.since.data = 0
+        del form.kinds
         blog = Blog(**form.data)
+
+        for kind_id in kinds_data:  # 添加标签
+            blog_kind = BlogKind(kind_id=kind_id)
+            blog.blog_kinds.append(blog_kind)
+
         db.session.add(blog)
+
         log = ApprovementLog(blog=blog)  # 添加log
         db.session.add(log)
         db.session.commit()
         flash('非常感谢你的推荐！我们会在第一时间审核。')
         return redirect(url_for('site.approve_results'))
-    return render_template('blog/add.html', form=form)
+    return render_template('blog/add.html', form=form, kinds=kinds, kinds_data=kinds_data)
 
 
 @bp.route('/post/<int:uid>/redirect')

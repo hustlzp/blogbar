@@ -6,18 +6,21 @@
 .text-list li {
   margin-bottom: 5px;
 }
+.form-group,
 .vertical-form-group {
   margin-bottom: 10px;
 }
-.vertical-form-group input {
-  padding-left: 0;
+.form-group input[type='text'],
+.vertical-form-group input[type='text'] {
+  padding-left: 0px;
+  padding-right: 0px;
   outline: 0;
   border-radius: 0;
   border: none;
   border-bottom: 1px solid #ddd;
   box-shadow: none;
   margin-bottom: 5px;
-  color: #000;
+  color: #333;
   transition: border-color linear 0.1s;
   -moz-transition: border-color linear 0.1s;
   /* Firefox 4 */
@@ -25,14 +28,17 @@
   /* Safari 和 Chrome */
   -o-transition: border-color linear 0.1s;
 }
-.vertical-form-group input:focus {
+.form-group input[type='text']:focus,
+.vertical-form-group input[type='text']:focus {
   padding-bottom: 5px;
   border-bottom: 2px solid #2a99c2;
   box-shadow: none;
 }
+.form-group .list-form-errors,
 .vertical-form-group .list-form-errors {
   font-size: 12px;
 }
+.form-group button[type='submit'],
 .vertical-form-group button[type='submit'] {
   margin-top: 5px;
 }
