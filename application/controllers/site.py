@@ -54,7 +54,7 @@ def about():
 def posts_feed():
     config = current_app.config
     domain = config.get('SITE_DOMAIN')
-    feed = AtomFeed("Blogbar - 编辑推荐文章",
+    feed = AtomFeed("Blogbar编辑推荐",
                     subtitle='当你和世界不一样，那就让你不一样。',
                     feed_url="%s%s" % (domain, request.path),
                     url=domain,
