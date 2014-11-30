@@ -30,7 +30,8 @@
 .recommend .meta .author {
   margin-left: 5px;
 }
-.recommend .meta .time {
+.recommend .meta .time,
+.recommend .meta .clicks {
   margin-left: 15px;
 }
 .site-info {
