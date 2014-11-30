@@ -11,7 +11,9 @@
   margin-bottom: 10px;
 }
 .form-group input[type='text'],
-.vertical-form-group input[type='text'] {
+.vertical-form-group input[type='text'],
+.form-group input[type='password'],
+.vertical-form-group input[type='password'] {
   padding-left: 0px;
   padding-right: 0px;
   outline: 0;
@@ -29,7 +31,9 @@
   -o-transition: border-color linear 0.1s;
 }
 .form-group input[type='text']:focus,
-.vertical-form-group input[type='text']:focus {
+.vertical-form-group input[type='text']:focus,
+.form-group input[type='password']:focus,
+.vertical-form-group input[type='password']:focus {
   padding-bottom: 5px;
   border-bottom: 2px solid #2a99c2;
   box-shadow: none;

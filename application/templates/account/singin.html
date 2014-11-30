@@ -1,15 +1,14 @@
 {% extends "layout.html" %}
 {% from 'macro/form.html' import horizontal_field %}
 
-{% block page_title %}Signin{% endblock %}
+{% block page_title %}登陆{% endblock %}
 {% block page_content %}
    <div class="container">
       <div class="row">
-         <div class="col-sm-10">
+         <div class="col-sm-8">
             <h2 class="no-margin-top border">登陆</h2>
 
-            <form method="post" class="form-horizontal"
-                  action="{{ url_for('account.signin') }}">
+            <form method="post" class="form-horizontal" action="{{ url_for('account.signin') }}">
                {{ form.csrf_token() }}
 
                {{ horizontal_field(form.email) }}
@@ -18,7 +17,7 @@
 
                <div class="form-group">
                   <div class="col-sm-6 col-sm-offset-2">
-                     <input type="submit" value="Signin" class="btn btn-sm btn-primary"/>
+                     <button type="submit" class="btn btn-sm btn-primary">登陆</button>
                   </div>
                </div>
             </form>

@@ -7,14 +7,14 @@ from ..models import User
 
 class SigninForm(Form):
     """Form for signin"""
-    email = StringField('Email',
+    email = StringField('邮箱',
                         validators=[
                             DataRequired(),
                             Email()
                         ],
                         description='Email')
 
-    password = PasswordField('Password',
+    password = PasswordField('密码',
                              validators=[DataRequired()],
                              description='Password')
 
