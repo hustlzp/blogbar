@@ -12,10 +12,17 @@ bp = Blueprint('blog', __name__)
 @bp.route('/square')
 def square():
     page = request.args.get('page', 1, int)
+    kind_id = request.args.get('kind_id', 0, int)
+    kinds = Kind.query.order_by(Kind.show_order.asc())
     blogs_query = Blog.query.filter(Blog.is_approved)
-    blogs = blogs_query.paginate(page, 36)
+    if kind_id:
+        blogs = blogs_query.filter(Blog.blog_kinds.any(BlogKind.kind_id == kind_id))
+    else:
+        blogs = blogs_query
+    blogs = blogs.paginate(page, 36)
     latest_blogs = blogs_query.order_by(Blog.created_at.desc()).limit(15)
-    return render_template('blog/square.html', blogs=blogs, latest_blogs=latest_blogs)
+    return render_template('blog/square.html', blogs=blogs, kinds=kinds, latest_blogs=latest_blogs,
+                           kind_id=kind_id)
 
 
 @bp.route('/<int:uid>', defaults={'page': 1})
@@ -35,7 +42,7 @@ def view(uid, page):
 @bp.route('/add', methods=['GET', 'POST'])
 def add():
     """推荐博客"""
-    kinds = Kind.query
+    kinds = Kind.query.order_by(Kind.show_order.asc())
     form = AddBlogForm()
     form.kinds.choices = [(kind.id, kind.name) for kind in kinds]
     kinds_data = form.kinds.data or []

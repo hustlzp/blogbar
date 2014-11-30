@@ -50,7 +50,7 @@ def edit_blog(uid):
     """编辑博客"""
     blog = Blog.query.get_or_404(uid)
     form = EditBlogForm(obj=blog)
-    kinds = Kind.query
+    kinds = Kind.query.order_by(Kind.show_order.asc())
     blog_kinds = [blog_kind.kind_id for blog_kind in blog.blog_kinds]
     if form.validate_on_submit():
         form.populate_obj(blog)
