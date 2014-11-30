@@ -4,53 +4,55 @@
 {% block page_title %}编辑博客{% endblock %}
 {% block page_content %}
    <div class="container">
-      <div class="col-sm-8">
-         <h2 class="no-margin-top border">编辑博客</h2>
+      <div class="row">
+         <div class="col-sm-8">
+            <h2 class="no-margin-top border">编辑博客</h2>
 
-         <form class="form-horizontal" role="form" method="post"
-               action="">
-            {{ form.csrf_token }}
+            <form class="form-horizontal" role="form" method="post"
+                  action="">
+               {{ form.csrf_token }}
 
-            <input type="hidden" name="referer" value="{{ request.referrer }}"/>
+               <input type="hidden" name="referer" value="{{ request.referrer }}"/>
 
-            {{ horizontal_field(form.url) }}
+               {{ horizontal_field(form.url) }}
 
-            {{ horizontal_field(form.title) }}
+               {{ horizontal_field(form.title) }}
 
-            {{ horizontal_field(form.subtitle) }}
+               {{ horizontal_field(form.subtitle) }}
 
-            {{ horizontal_field(form.author) }}
+               {{ horizontal_field(form.author) }}
 
-            {{ horizontal_field(form.feed) }}
+               {{ horizontal_field(form.feed) }}
 
-            {{ horizontal_field(form.feed_timezone_offset) }}
+               {{ horizontal_field(form.feed_timezone_offset) }}
 
-            {{ horizontal_field(form.since) }}
+               {{ horizontal_field(form.since) }}
 
-            <div class="form-group">
-               <label class="col-md-2 control-label">标签</label>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label">标签</label>
 
-               <div class="col-md-8">
-                  <div class="kinds">
-                     {% for kind in kinds %}
-                        <span data-kind-id="{{ kind.id }}"
-                              data-blog-id="{{ blog.id }}"
-                              class="kind {% if kind.id in blog_kinds %}on{% endif %}">
+                  <div class="col-sm-10">
+                     <div class="kinds">
+                        {% for kind in kinds %}
+                           <span data-kind-id="{{ kind.id }}"
+                                 data-blog-id="{{ blog.id }}"
+                                 class="kind {% if kind.id in blog_kinds %}on{% endif %}">
                               {{ kind.name }}</span>
-                     {% endfor %}
+                        {% endfor %}
+                     </div>
                   </div>
                </div>
-            </div>
 
-            <div class="form-group">
-               <div class="col-md-6 col-md-offset-2">
-                  <button type="submit" class="btn btn-sm btn-primary">保存</button>
+               <div class="form-group">
+                  <div class="col-sm-6 col-sm-offset-2">
+                     <button type="submit" class="btn btn-sm btn-primary">保存</button>
+                  </div>
                </div>
-            </div>
-         </form>
-      </div>
+            </form>
+         </div>
 
-      <div class="col-sm-4">
+         <div class="col-sm-4">
+         </div>
       </div>
    </div>
 

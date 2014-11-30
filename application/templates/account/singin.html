@@ -5,8 +5,8 @@
 {% block page_content %}
    <div class="container">
       <div class="row">
-         <div class="col-sm-8">
-            <h1 class="no-margin-top">Signin</h1>
+         <div class="col-sm-10">
+            <h2 class="no-margin-top border">登陆</h2>
 
             <form method="post" class="form-horizontal"
                   action="{{ url_for('account.signin') }}">
@@ -17,7 +17,7 @@
                {{ horizontal_field(form.password) }}
 
                <div class="form-group">
-                  <div class="col-md-6 col-md-offset-2">
+                  <div class="col-sm-6 col-sm-offset-2">
                      <input type="submit" value="Signin" class="btn btn-sm btn-primary"/>
                   </div>
                </div>

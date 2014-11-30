@@ -7,14 +7,14 @@
 {% endmacro %}
 
 
-{% macro horizontal_field(field, length=6, label=True, static=False) %}
+{% macro horizontal_field(field, length=8, label=True, static=False) %}
    <div class="form-group">
       {% if label %}
-         {{ field.label(class="col-md-2 control-label") }}
+         {{ field.label(class="col-sm-2 control-label") }}
       {% endif %}
 
       <div class="col-md-{{ length }}
-         {% if not label %}col-md-offset-2{% endif %}
+         {% if not label %}col-sm-offset-2{% endif %}
          {% if static %}form-control-static{% endif %}">
          {{ field(class="form-control", placeholder=field.description, **kwargs) }}
          {{ field_errors(field) }}
@@ -33,7 +33,7 @@
 
 {% macro checkbox_field(field) %}
    <div class="form-group">
-      <div class="col-md-offset-2 col-sm-10">
+      <div class="col-sm-offset-2 col-sm-10">
          <div class="checkbox">
             {{ field() }}
             {{ field.label() }}
