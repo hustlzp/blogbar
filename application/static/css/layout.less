@@ -35,6 +35,11 @@ body {
   & > a {
     color: #333;
     border-bottom: 2px solid @main-color;
+
+    @media (max-width: 768px) {
+      border-bottom: none;
+      background-color: #dddddd;
+    }
   }
 }
 
@@ -45,18 +50,31 @@ body {
   margin-bottom: 40px;
 
   .navbar-brand {
-    padding-top: 20px;
+    @media (min-width: 768px) {
+      padding-top: 20px;
+      padding-bottom: 20px;
+      height: auto;
+    }
   }
 
-  .navbar-nav > li {
-    padding-left: 5px;
-    padding-right: 5px;
-    z-index: 100;
+  .navbar-nav {
+    @media (max-width: 768px) {
+      border-bottom: 1px solid #e7e7e7;
+    }
 
-    & > a {
-      border-bottom: 2px solid transparent;
-      padding-top: 20px;
-      padding-bottom: 18px;
+    & > li {
+      z-index: 100;
+
+      @media (min-width: 768px) {
+        padding-left: 5px;
+        padding-right: 5px;
+
+        & > a {
+          border-bottom: 2px solid transparent;
+          padding-top: 20px;
+          padding-bottom: 18px;
+        }
+      }
     }
   }
 
@@ -64,10 +82,12 @@ body {
     margin-left: 15px;
     margin-top: 15px;
     .transition(all, 0.08s);
-  }
 
-  .navbar-text {
-    margin-top: 20px;
+    @media (max-width: 768px) {
+      margin-top: 5.5px;
+      margin-bottom: 15px;
+      margin-left: 0;
+    }
   }
 
   .border {

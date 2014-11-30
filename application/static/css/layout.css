@@ -28,24 +28,48 @@ body {
   color: #333;
   border-bottom: 2px solid #2a99c2;
 }
+@media (max-width: 768px) {
+  .page-site-index #nav-index > a,
+  .page-blog-square #nav-blog > a,
+  .page-site-approve-results #nav-approve-results > a,
+  .page-site-suggest #nav-suggest > a,
+  .page-site-about #nav-about > a,
+  .page-admin-approve #nav-admin > a {
+    border-bottom: none;
+    background-color: #dddddd;
+  }
+}
 .navbar {
   position: relative;
   border: none;
   background-color: #fff;
   margin-bottom: 40px;
 }
-.navbar .navbar-brand {
-  padding-top: 20px;
+@media (min-width: 768px) {
+  .navbar .navbar-brand {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    height: auto;
+  }
+}
+@media (max-width: 768px) {
+  .navbar .navbar-nav {
+    border-bottom: 1px solid #e7e7e7;
+  }
 }
 .navbar .navbar-nav > li {
-  padding-left: 5px;
-  padding-right: 5px;
   z-index: 100;
 }
-.navbar .navbar-nav > li > a {
-  border-bottom: 2px solid transparent;
-  padding-top: 20px;
-  padding-bottom: 18px;
+@media (min-width: 768px) {
+  .navbar .navbar-nav > li {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .navbar .navbar-nav > li > a {
+    border-bottom: 2px solid transparent;
+    padding-top: 20px;
+    padding-bottom: 18px;
+  }
 }
 .navbar .navbar-btn.btn-sm {
   margin-left: 15px;
@@ -57,8 +81,12 @@ body {
   /* Safari 和 Chrome */
   -o-transition: all linear 0.08s;
 }
-.navbar .navbar-text {
-  margin-top: 20px;
+@media (max-width: 768px) {
+  .navbar .navbar-btn.btn-sm {
+    margin-top: 5.5px;
+    margin-bottom: 15px;
+    margin-left: 0;
+  }
 }
 .navbar .border {
   position: absolute;
