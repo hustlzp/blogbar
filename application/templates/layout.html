@@ -48,13 +48,11 @@
          </a>
       </div>
 
-      {% if permissions.AdminPermission().check() %}
+      {% if permissions.AdminPermission().check() and new_blogs_count %}
          <p class="navbar-right navbar-text">
-            {% if new_blogs_count %}
-               <a href="{{ url_for('admin.approve') }}">
-                  <span class="label label-info">{{ new_blogs_count }}</span>
-               </a>
-            {% endif %}
+            <a href="{{ url_for('admin.approve') }}">
+               <span class="label label-info">{{ new_blogs_count }}</span>
+            </a>
          </p>
       {% endif %}
 
