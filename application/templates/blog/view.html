@@ -97,13 +97,11 @@
 
             {% for post in posts.items %}
                <div class="post">
-                  <div class="pull-right">
-                     {% if post.published_at %}
-                        <span class="time utc-time utc-time-date">{{ post.published_at }}</span>
-                     {% endif %}
-                  </div>
+                  {% if post.published_at %}
+                     <span class="time utc-time utc-time-date">{{ post.published_at }}</span>
+                  {% endif %}
 
-                  <div>
+                  <div class="title-wap">
                      <a href="{{ url_for('blog.redirect_post', uid=post.id) }}" class="title"
                         target="_blank">{{ post.title }}</a>
 
