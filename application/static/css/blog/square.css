@@ -9,11 +9,11 @@
   line-height: 1;
   margin: 0 8px 10px 0;
   font-size: 12px;
+  text-decoration: none;
   color: #333;
 }
 .kinds-selector .kind:hover {
   background-color: #ddd;
-  text-decoration: none;
 }
 .kinds-selector .kind.on {
   background-color: #2a99c2;
