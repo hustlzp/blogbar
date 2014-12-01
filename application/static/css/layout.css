@@ -28,7 +28,7 @@ body {
   color: #333;
   border-bottom: 2px solid #2a99c2;
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .page-site-index #nav-index > a,
   .page-blog-square #nav-blog > a,
   .page-site-approve-results #nav-approve-results > a,
@@ -52,7 +52,7 @@ body {
     height: auto;
   }
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .navbar .navbar-nav {
     border-bottom: 1px solid #e7e7e7;
   }
@@ -81,7 +81,7 @@ body {
   /* Safari 和 Chrome */
   -o-transition: all linear 0.08s;
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .navbar .navbar-btn.btn-sm {
     margin-top: 5.5px;
     margin-bottom: 15px;
