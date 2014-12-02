@@ -92,6 +92,15 @@ body {
     margin-left: 0;
   }
 }
+.navbar .navbar-right {
+  margin-right: 0px;
+}
+.navbar .navbar-new-blogs-count a {
+  text-decoration: none;
+}
+.navbar .navbar-new-blogs-count a .label:hover {
+  background-color: #31b0d5;
+}
 .navbar .border {
   position: absolute;
   height: 1px;
