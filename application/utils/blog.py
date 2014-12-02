@@ -71,10 +71,11 @@ def grab_by_feed(blog):
 
 def _get_info_to_post(post, entry, timezone_offset):
     """将entry中的信息转存到post中"""
-    title = remove_html_tag(entry.title)  # 去除HTML标签
-    title = title.replace('\r', '').replace('\n', '')  # 去除换行符
     html_parser = HTMLParser()
-    post.title = html_parser.unescape(title)  # HTML反转义
+    title = html_parser.unescape(entry.title)  # 进行2次HTML反转义
+    title = html_parser.unescape(title)
+    title = title.replace('\r', '').replace('\n', '')  # 去除换行符
+    post.title = title
     post.url = entry.link
 
     if 'published_parsed' in entry:
