@@ -1,5 +1,6 @@
 # coding: utf-8
-from flask import render_template, Blueprint, current_app, request
+import hashlib
+from flask import render_template, Blueprint, current_app, request, abort
 from werkzeug.contrib.atom import AtomFeed
 from ..models import db, Blog, Post, ApprovementLog
 
@@ -67,3 +68,22 @@ def posts_feed():
     response = feed.get_response()
     response.headers['Content-Type'] = 'application/xml'
     return response
+
+
+@bp.route('/weixin')
+def weixin():
+    config = current_app.config
+    weixin_token = config.get('WEIXIN_TOKEN')
+
+    signature = request.args.get('signature')
+    timestamp = request.args.get('timestamp')
+    nonce = request.args.get('nonce')
+    echostr = request.args.get('echostr')
+
+    temp_str = ''.join(sorted([weixin_token, timestamp, nonce]))
+    hash_sha1 = hashlib.sha1(temp_str)
+    temp_str = hash_sha1.hexdigest()
+    if temp_str == signature:
+        return echostr
+    else:
+        abort(500)
