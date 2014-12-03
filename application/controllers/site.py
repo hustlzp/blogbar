@@ -51,6 +51,12 @@ def about():
     return render_template('site/about.html')
 
 
+@bp.route('/disclaimer')
+def disclaimer():
+    """免责声明"""
+    return render_template('site/disclaimer.html')
+
+
 @bp.route('/feed/posts.xml')
 def posts_feed():
     config = current_app.config
