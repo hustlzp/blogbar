@@ -1,0 +1,10 @@
+#ds-thread #ds-reset.ds-no-opacity .ds-tab a.ds-current {
+    background: none;
+    border: none;
+    padding-left: 0;
+}
+
+#ds-thread #ds-reset .ds-post-self {
+    padding-left: 0;
+    padding-right: 0;
+}
