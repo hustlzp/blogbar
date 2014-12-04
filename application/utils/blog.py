@@ -38,13 +38,41 @@ def grab_by_feed(blog):
     db.session.add(blog)
     print(blog.title)
 
-    timezone_offset = blog.feed_timezone_offset
+    timezone_offset = blog.feed_timezone_offset or 0
 
     for entry in result.entries:
         url = entry.link
+
+        # 判断该entry是否存在于数据库
+        # 若存在url一致的条目，则存在
+        # 否则判断标题和published_at
+        # 若存在标题一致的post，但entry中不包含published_at，则判断为存在
+        # 若存在标题一致的post，而published_at相差不超过一天，则判断为存在
+        # 其他情况均判断为不存在
         post = blog.posts.filter(Post.url == url).first()
+        if post:
+            exist = True
+        else:
+            post = blog.posts.filter(Post.title == _process_title(entry.title)).first()
+            if post:
+                published_at = _get_entry_published_at(entry, timezone_offset)
+                if not published_at:
+                    exist = True
+                else:
+                    if published_at >= post.published_at:
+                        timediff = published_at - post.published_at
+                    else:
+                        timediff = post.published_at - published_at
+
+                    if timediff <= timedelta(days=1):
+                        exist = True
+                    else:
+                        exist = False
+            else:
+                exist = False
+
         # 新博文
-        if not post:
+        if not exist:
             new_posts_count += 1
             post = Post(url=url)
             _get_info_to_post(post, entry, timezone_offset)
@@ -71,11 +99,7 @@ def grab_by_feed(blog):
 
 def _get_info_to_post(post, entry, timezone_offset):
     """将entry中的信息转存到post中"""
-    html_parser = HTMLParser()
-    title = html_parser.unescape(entry.title)  # 进行2次HTML反转义
-    title = html_parser.unescape(title)
-    title = title.replace('\r', '').replace('\n', '')  # 去除换行符
-    post.title = title
+    post.title = _process_title(entry.title)
     post.url = entry.link
 
     if 'published_parsed' in entry:
@@ -100,7 +124,26 @@ def _get_info_to_post(post, entry, timezone_offset):
         post.content = entry.summary
 
 
+def _process_title(title):
+    """处理feed.entries中的title"""
+    html_parser = HTMLParser()
+    title = html_parser.unescape(title)  # 进行2次HTML反转义
+    title = html_parser.unescape(title)
+    return title.replace('\r', '').replace('\n', '')  # 去除换行符
+
+
+def _get_entry_published_at(entry, timezone_offset):
+    """获取entry中的published_at"""
+    if 'published_parsed' in entry:
+        return _get_time(entry.published_parsed, timezone_offset)
+    elif 'updated_parsed' in entry:
+        return _get_time(entry.updated_parsed, timezone_offset)
+    else:
+        return None
+
+
 def _get_time(time_struct, timezone_offset=None):
+    """获取UTC时间"""
     result_time = datetime.fromtimestamp(mktime(time_struct))
     if timezone_offset:
         result_time -= timedelta(hours=timezone_offset)
@@ -121,6 +164,7 @@ class MLStripper(HTMLParser):
 
 
 def remove_html_tag(html_string):
+    """从字符串中去除HTML元素（但是好像会过度去除？比如HTML转义字符？）"""
     s = MLStripper()
     s.feed(html_string)
     return s.get_data()
