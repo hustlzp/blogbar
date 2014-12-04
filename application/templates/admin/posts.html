@@ -27,9 +27,12 @@
                   </td>
                   <td>{{ blog.author }}</td>
                   <td>{{ post.pure_content|length if post.pure_content else 0 }}字</td>
-                  {#                  <td>{{ post.keywords|get_keywords if post.keywords else "" }}</td>#}
-                  <td>{{ post.published_at if post.published_at else "" }}</td>
-                  <td>{{ post.updated_at if post.updated_at else "" }}</td>
+                  <td class="utc-time">
+                     {{ post.published_at if post.published_at else "" }}
+                  </td>
+                  <td class="utc-time">
+                     {{ post.updated_at if post.updated_at else "" }}
+                  </td>
                   <td>
                      {% if post.recommend %}
                         <span class="label label-success">推荐</span>
