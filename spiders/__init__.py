@@ -1,5 +1,6 @@
 # coding: utf-8
 from application.models import db, Blog, Post
+from application.utils.blog import check_offline
 from .lifesinger import LifeSingerSpider
 from .wangyin import WangYinSpider
 from .livid import LividSpider
@@ -29,6 +30,9 @@ def grab_by_spider(spider_class):
             blog.for_special_purpose = True
         db.session.add(blog)
         db.session.commit()
+
+    # 检测博客是否在线
+    blog.offline = check_offline(blog.url)
 
     for p in spider_class.get_posts_():
         url = p['url']

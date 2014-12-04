@@ -13,14 +13,7 @@ def grab_by_feed(blog):
     new_posts_count = 0
 
     # 检测博客是否在线
-    try:
-        res = requests.get(blog.url, verify=False)
-        if res.status_code >= 500 or res.status_code == 404:
-            blog.offline = True
-        else:
-            blog.offline = False
-    except Exception, e:
-        blog.offline = True
+    blog.offline = check_offline(blog.url)
 
     result = feedparser.parse(blog.feed)
 
@@ -168,3 +161,15 @@ def remove_html_tag(html_string):
     s = MLStripper()
     s.feed(html_string)
     return s.get_data()
+
+
+def check_offline(url):
+    """判断博客是否在线。"""
+    try:
+        res = requests.get(url, verify=False)
+        if res.status_code >= 500 or res.status_code == 404 or not res.text:
+            return True
+        else:
+            return False
+    except Exception, e:
+        return True
