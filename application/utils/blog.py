@@ -26,7 +26,7 @@ def grab_by_feed(blog):
     if not blog.feed_version:
         blog.feed_version = result.version
     if not blog.subtitle and 'subtitle' in result.feed:
-        blog.subtitle = remove_html_tag(result.feed.subtitle)
+        blog.subtitle = _process_title(result.feed.subtitle)
 
     db.session.add(blog)
     print(blog.title)
@@ -64,28 +64,18 @@ def grab_by_feed(blog):
             else:
                 exist = False
 
-        # 新博文
-        if not exist:
-            new_posts_count += 1
-            post = Post(url=url)
+        # 更新
+        if exist:
+            _get_info_to_post(post, entry, timezone_offset)
+            db.session.add(post)
+        else:
+            # 新博文
+            post = Post()
             _get_info_to_post(post, entry, timezone_offset)
             blog.posts.append(post)
+            new_posts_count += 1
             print(" new - %s" % post.title)
-        else:
-            # 更新
-            updated_at = None
-            published_at = None
 
-            if 'updated_parsed' in entry:
-                updated_at = _get_time(entry.updated_parsed, timezone_offset)
-            if 'published_parsed' in entry:
-                published_at = _get_time(entry.published_parsed, timezone_offset)
-
-            if (updated_at and updated_at != post.updated_at) or (
-                        published_at and published_at != post.published_at):
-                _get_info_to_post(post, entry, timezone_offset)
-                print(" update - %s" % post.title)
-                db.session.add(post)
     db.session.commit()
     return new_posts_count
 
@@ -106,7 +96,7 @@ def _get_info_to_post(post, entry, timezone_offset):
 
     # 若published_at与updated_at均不存在，则使用当前时间作为publishe_at
     if not post.published_at and not post.updated_at:
-        post.publishe_at = datetime.now()
+        post.published_at = datetime.now()
 
     if 'content' in entry:
         if isinstance(entry.content, list):
@@ -122,7 +112,8 @@ def _process_title(title):
     html_parser = HTMLParser()
     title = html_parser.unescape(title)  # 进行2次HTML反转义
     title = html_parser.unescape(title)
-    return title.replace('\r', '').replace('\n', '')  # 去除换行符
+    title = title.replace('\r', '').replace('\n', '')  # 去除换行符
+    return remove_html_tag(title)
 
 
 def _get_entry_published_at(entry, timezone_offset):
