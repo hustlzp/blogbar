@@ -59,7 +59,7 @@ def add():
 
         db.session.add(blog)
 
-        log = ApprovementLog(blog=blog)  # 添加log
+        log = ApprovementLog(blog=blog, ip=request.remote_addr)  # 添加log
         db.session.add(log)
         db.session.commit()
         flash('非常感谢你的推荐！我们会在第一时间审核。')

@@ -110,6 +110,7 @@ class ApprovementLog(db.Model):
     status = db.Column(db.Integer, default=-1)
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
     updated_at = db.Column(db.DateTime, default=datetime.datetime.now)
+    ip = db.Column(db.String(100))
     message = db.Column(db.Text)
 
     blog_id = db.Column(db.Integer, db.ForeignKey('blog.id'))
