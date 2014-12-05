@@ -66,6 +66,7 @@ def register_jinja(app):
     app.jinja_env.filters['get_keywords'] = filters.get_keywords
     app.jinja_env.filters['readtime'] = filters.readtime
     app.jinja_env.filters['friendly_url'] = filters.friendly_url
+    app.jinja_env.filters['clean_url'] = filters.clean_url
 
     # inject vars into template context
     @app.context_processor

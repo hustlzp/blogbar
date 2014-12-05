@@ -1,4 +1,5 @@
 # coding: utf-8
+import re
 import datetime
 from datetime import timedelta
 import json
@@ -42,3 +43,10 @@ def readtime(content):
 
 def friendly_url(url):
     return url.rstrip('/').replace('http://', '').replace('https://', '')
+
+
+def clean_url(url):
+    if re.compile("fuck|porn|xxx").search(url):
+        return "http://www.baidu.com"
+    else:
+        return url

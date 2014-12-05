@@ -29,12 +29,13 @@
                   </td>
                   <td>{{ blog.author }}</td>
                   <td>
-                     <a href="{{ blog.url }}" target="_blank">{{ blog.url }}</a>
+                     <a href="{{ blog.url|clean_url }}" target="_blank">
+                        {{ blog.url|clean_url }}</a>
 
                      {% if blog.feed %}
                         &nbsp;/&nbsp;
 
-                        <a href="{{ blog.feed }}" target="_blank">
+                        <a href="{{ blog.feed|clean_url }}" target="_blank">
                            <span class="fa fa-rss-square "></span>
                         </a>
                      {% endif %}
