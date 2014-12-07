@@ -3,6 +3,7 @@ import requests
 from requests.exceptions import SSLError
 import feedparser
 from HTMLParser import HTMLParser
+from flask import current_app
 from time import mktime
 from datetime import datetime
 from datetime import timedelta
@@ -15,7 +16,10 @@ def grab_by_feed(blog):
     # 检测博客是否在线
     blog.offline = check_offline(blog.url)
 
-    result = feedparser.parse(blog.feed)
+    # 解析Feed时设置User-Agent和Referer头部，以免出现403现象
+    config = current_app.config
+    site_domain = config.get('SITE_DOMAIN')
+    result = feedparser.parse(blog.feed, agent=site_domain, referrer=site_domain)
 
     # 检测feed是否失效
     if not result.entries:
