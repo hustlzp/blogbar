@@ -26,7 +26,8 @@
                      <a href="{{ post.url }}" target="_blank">{{ post.title }}</a>
                   </td>
                   <td>
-                     <a href="{{ url_for('blog.view', uid=blog.id) }}">{{ blog.author }}</a>
+                     <a href="{{ url_for('blog.view', uid=blog.id) }}" target="_blank">
+                        {{ blog.author }}</a>
                   </td>
                   <td>{{ post.pure_content|length if post.pure_content else 0 }}字</td>
                   <td class="utc-time">
