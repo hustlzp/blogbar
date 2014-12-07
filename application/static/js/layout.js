@@ -15,7 +15,13 @@ $(function () {
 
 // 转换成UTC时间
 $('.utc-time').each(function () {
-    var time = moment($(this).text(), "YYYY-MM-DD HH:mm:ss");
+    var timeText = $.trim($(this).text());
+
+    if (timeText === "") {
+        return;
+    }
+
+    var time = moment(timeText, "YYYY-MM-DD HH:mm:ss");
 
     // 不包含具体时刻，则不进行时区转换
     var only_date = time.hour() === 0 && time.minute() === 0 && time.second() === 0;
