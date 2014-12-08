@@ -98,8 +98,10 @@ def _get_info_to_post(post, entry, timezone_offset):
         post.published_at = post.updated_at
 
     # 若published_at与updated_at均不存在，则使用当前时间作为published_at
+    config = current_app.config
+    timezone = config.get('TIMEZONE')
     if not post.published_at and not post.updated_at:
-        post.published_at = datetime.now()
+        post.published_at = datetime.now() - timedelta(hours=timezone)
 
     if 'content' in entry:
         if isinstance(entry.content, list):

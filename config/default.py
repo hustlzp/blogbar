@@ -11,6 +11,7 @@ class Config(object):
     WEIXIN_TOKEN = ""
     PERMANENT_SESSION_LIFETIME = 3600 * 24 * 7
     SESSION_COOKIE_NAME = 'blogbar_session'
+    TIMEZONE = 8
 
     # Root path of project
     PROJECT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
