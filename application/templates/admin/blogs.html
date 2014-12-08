@@ -23,7 +23,10 @@
                         <small class="text-light">{{ blog.subtitle }}</small>
                      {% endif %}
                   </td>
-                  <td>{{ blog.author }}</td>
+                  <td>
+                     <a href="{{ url_for('blog.view', uid=blog.id) }}" target="_blank">
+                        {{ blog.author }}</a>
+                  </td>
                   <td>
                      <a href="{{ blog.url }}" target="_blank">{{ blog.url }}</a>
 

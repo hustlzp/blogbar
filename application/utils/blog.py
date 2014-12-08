@@ -1,6 +1,5 @@
 # coding: utf-8
 import requests
-from requests.exceptions import SSLError
 import feedparser
 from HTMLParser import HTMLParser
 from flask import current_app
@@ -98,7 +97,7 @@ def _get_info_to_post(post, entry, timezone_offset):
     if not post.published_at and post.updated_at:
         post.published_at = post.updated_at
 
-    # 若published_at与updated_at均不存在，则使用当前时间作为publishe_at
+    # 若published_at与updated_at均不存在，则使用当前时间作为published_at
     if not post.published_at and not post.updated_at:
         post.published_at = datetime.now()
 
