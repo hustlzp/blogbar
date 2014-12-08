@@ -5,6 +5,6 @@ CELERY_TIMEZONE = 'Asia/Shanghai'
 CELERYBEAT_SCHEDULE = {
     'grab': {
         'task': 'celery_proj.tasks.grab',
-        'schedule': crontab(hour='0, 6, 11, 18', minute=0)
+        'schedule': crontab(hour='6, 12, 18, 23', minute=0)
     }
 }
