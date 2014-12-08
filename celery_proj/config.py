@@ -1,5 +1,6 @@
 from celery.schedules import crontab
 
+CELERY_DISABLE_RATE_LIMITS = True
 CELERY_TIMEZONE = 'Asia/Shanghai'
 CELERYBEAT_SCHEDULE = {
     'grab': {
