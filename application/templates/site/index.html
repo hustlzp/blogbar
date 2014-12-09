@@ -24,7 +24,9 @@
                         </a>
                      </div>
 
-                     <p class="abstract">{{ post.pure_content|truncate(30, true) }}</p>
+                     {% if post.pure_content %}
+                        <p class="abstract">{{ post.pure_content|truncate(30, true) }}</p>
+                     {% endif %}
 
                      <div class="meta">
                         <a class="blog" href="{{ url_for('blog.view', uid=post.blog.id) }}">
