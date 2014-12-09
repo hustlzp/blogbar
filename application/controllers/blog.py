@@ -49,10 +49,7 @@ def add():
     kinds_data = form.kinds.data or []
 
     if form.validate_on_submit():
-        since = parse_int(form.since.data)
-        if since is None:
-            since = 0
-        form.since.data = since
+        form.since.data = parse_int(form.since.data, 0)
         del form.kinds
         blog = Blog(**form.data)
 
