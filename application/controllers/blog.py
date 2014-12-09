@@ -5,6 +5,7 @@ from werkzeug.contrib.atom import AtomFeed
 from ..models import db, Blog, Post, ApprovementLog, Kind, BlogKind
 from ..forms import AddBlogForm
 from ..utils.permissions import AdminPermission
+from ..utils.helper import parse_int
 
 bp = Blueprint('blog', __name__)
 
@@ -48,8 +49,10 @@ def add():
     kinds_data = form.kinds.data or []
 
     if form.validate_on_submit():
-        if not form.since.data:  # 创建Blog
-            form.since.data = 0
+        since = parse_int(form.since.data)
+        if since is None:
+            since = 0
+        form.since.data = since
         del form.kinds
         blog = Blog(**form.data)
 
