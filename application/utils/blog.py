@@ -15,10 +15,7 @@ def grab_by_feed(blog):
     # 检测博客是否在线
     blog.offline = check_offline(blog.url)
 
-    # 解析Feed时设置User-Agent和Referer头部，以免出现403现象
-    config = current_app.config
-    site_domain = config.get('SITE_DOMAIN')
-    result = feedparser.parse(blog.feed, agent=site_domain, referrer=site_domain)
+    result = parse_feed(blog.feed)
 
     # 检测feed是否失效
     if not result.entries:
@@ -172,3 +169,20 @@ def check_offline(url):
             return False
     except Exception, e:
         return True
+
+
+def parse_feed(feed):
+    """解析Feed"""
+    # 解析Feed时设置User-Agent和Referer头部，以免出现403现象
+    config = current_app.config
+    site_domain = config.get('SITE_DOMAIN')
+    result = feedparser.parse(feed, agent=site_domain, referrer=site_domain)
+
+    # 天涯博客
+    if 'blog.tianya.cn' in feed:
+        for entry in result.entries:
+            published_text = entry.published.split('(')[0]
+            published = datetime.strptime(published_text, "%Y-%m-%d %H:%M:%S")
+            entry.published_parsed = published.timetuple()
+
+    return result
