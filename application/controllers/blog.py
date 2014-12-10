@@ -53,9 +53,15 @@ def add():
         del form.kinds
         blog = Blog(**form.data)
 
-        for kind_id in kinds_data:  # 添加标签
+        # 添加标签
+        for kind_id in kinds_data:
             blog_kind = BlogKind(kind_id=kind_id)
             blog.blog_kinds.append(blog_kind)
+
+        # 预设博客的feed_timezone_offset
+        # 天涯博客
+        if 'blog.tianya.cn' in form.feed.data:
+            blog.feed_timezone_offset = 8
 
         db.session.add(blog)
 
