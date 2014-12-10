@@ -13,7 +13,7 @@ bp = Blueprint('blog', __name__)
 @bp.route('/square')
 def square():
     page = request.args.get('page', 1, int)
-    kind_id = request.args.get('kind_id', 0, int)
+    kind_id = request.args.get('kind', 0, int)
     kinds = Kind.query.order_by(Kind.show_order.asc())
     blogs_query = Blog.query.filter(Blog.is_approved)
     if kind_id:

@@ -20,7 +20,7 @@
 
                   {% for kind in kinds %}
                      <a class="kind {% if kind_id == kind.id %}on{% endif %}"
-                        href="{{ url_for('blog.square', kind_id=kind.id) }}">
+                        href="{{ url_for('blog.square', kind=kind.id) }}">
                         {{ kind.name }}
                      </a>
                   {% endfor %}
