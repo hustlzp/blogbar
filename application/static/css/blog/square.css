@@ -10,7 +10,7 @@
   margin: 0 8px 10px 0;
   font-size: 12px;
   text-decoration: none;
-  color: #333;
+  color: #555;
 }
 .kinds-selector .kind:hover {
   background-color: #ddd;
@@ -38,7 +38,7 @@
   margin-bottom: 6px;
 }
 .blogs .blog .title a {
-  color: #000;
+  color: #333;
 }
 .blogs .blog .title .offline {
   margin-left: 5px;
