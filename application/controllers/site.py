@@ -57,9 +57,9 @@ def disclaimer():
     return render_template('site/disclaimer.html')
 
 @bp.route('/help')
-def help():
+def wiki():
     """帮助"""
-    return render_template('site/help.html')
+    return render_template('site/wiki.html')
 
 @bp.route('/feed/posts.xml')
 def posts_feed():
