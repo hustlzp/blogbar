@@ -24,6 +24,7 @@ body {
 .page-site-approve-results #nav-approve-results > a,
 .page-site-suggest #nav-suggest > a,
 .page-site-about #nav-about > a,
+.page-site-help #nav-help > a,
 .page-admin-approve #nav-admin > a,
 .page-admin-posts #nav-admin > a,
 .page-admin-blogs #nav-admin > a {
@@ -36,6 +37,7 @@ body {
   .page-site-approve-results #nav-approve-results > a,
   .page-site-suggest #nav-suggest > a,
   .page-site-about #nav-about > a,
+  .page-site-help #nav-help > a,
   .page-admin-approve #nav-admin > a,
   .page-admin-posts #nav-admin > a,
   .page-admin-blogs #nav-admin > a {

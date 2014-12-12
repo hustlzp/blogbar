@@ -56,6 +56,10 @@ def disclaimer():
     """免责声明"""
     return render_template('site/disclaimer.html')
 
+@bp.route('/help')
+def help():
+    """帮助"""
+    return render_template('site/help.html')
 
 @bp.route('/feed/posts.xml')
 def posts_feed():

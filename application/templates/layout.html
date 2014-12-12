@@ -74,6 +74,9 @@
             <li id="nav-about">
                <a href="{{ url_for('site.about') }}">关于</a>
             </li>
+            <li id="nav-help">
+               <a href="{{ url_for('site.help') }}">如何写博客？</a>
+            </li>
 
             {% if permissions.AdminPermission().check() %}
                <li class="dropdown" id="nav-admin">
