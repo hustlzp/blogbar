@@ -83,6 +83,10 @@
                {% endif %}
             </table>
 
+            <p class="report-error">
+               <a href="{{ url_for('site.suggest') }}" target="_blank">信息有误？</a>
+            </p>
+
             {% if permissions.AdminPermission().check() %}
                <a href="{{ url_for('admin.edit_blog', uid=blog.id) }}"
                   class="btn btn-default btn-sm">
