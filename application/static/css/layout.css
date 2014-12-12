@@ -125,3 +125,6 @@ body {
   padding-right: 0;
   margin-left: 15px;
 }
+img[src='http://eiv.baidu.com/hmt/icon/21.gif'] {
+  display: none;
+}
