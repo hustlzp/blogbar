@@ -151,14 +151,17 @@
    </div>
 </div>
 
-{# 访问统计 #}
-{# TODO #}
-
 {# 全局JS代码 #}
 {{ script('js/layout.js') }}
 
 {# 单页JS代码 #}
 {#{{ page_script(self) }}#}
+
+{# 访问统计 #}
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ff995064249cc264a55b9dbb0b62406d8' type='text/javascript'%3E%3C/script%3E"));
+</script>
 
 </body>
 </html>
