@@ -100,7 +100,7 @@
 
          <form class="navbar-form navbar-right" role="search" method="get" action="{{ url_for('blog.search') }}">
             <input type="text" name="keyword" class="form-control input-sm"
-                   placeholder="搜索博客">
+                   placeholder="搜索博客" value="{{ keyword if keyword else "" }}">
             <button class="btn btn-default btn-sm" type="submit" title="搜索">
                <span class="fa fa-search"></span>
             </button>
