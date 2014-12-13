@@ -14,7 +14,7 @@
             {% set admin = permissions.AdminPermission().check() %}
 
             <div class="row">
-               <div class="kinds-selector col-xs-12 col-md-10">
+               <div class="kinds-selector col-xs-12 col-lg-10">
                   <a class="kind {% if not kind_id or kind_id == 0 %}on{% endif %}"
                      href="{{ url_for('blog.square') }}">全部</a>
 
