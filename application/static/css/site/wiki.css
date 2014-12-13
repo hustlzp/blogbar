@@ -1,11 +1,10 @@
 table .blog {
   display: inline-block;
-  margin-right: 12px;
+  margin-right: 15px;
 }
 table a {
   color: #333;
 }
 table img {
   height: 16px;
-  vertical-align: text-bottom;
 }
