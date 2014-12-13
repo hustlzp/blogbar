@@ -163,6 +163,7 @@ def check_offline(url):
         if res.status_code >= 500 \
                 or res.status_code == 404 \
                 or 'http://mcc.godaddy.com/park' in res.text \
+                or 'Welcome to nginx!' in res.text \
                 or not res.text:
             return True
         else:
