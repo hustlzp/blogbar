@@ -23,3 +23,42 @@
       </ul>
    {% endif %}
 {% endmacro %}
+
+
+{% macro render_blogs(blogs) %}
+   {% for blog in blogs %}
+      {% set has_kinds = blog.blog_kinds.count() %}
+
+      <div class="m-blog col-sm-6 {% if admin and not has_kinds %}no-kinds{% endif %}">
+         {% if admin %}
+            <a href="{{ url_for('admin.edit_blog', uid=blog.id) }}"
+               class=" pull-right">edit</a>
+         {% endif %}
+
+         <div class="title">
+            <a href="{{ url_for('blog.view', uid=blog.id) }}">
+               {{ blog.title }}</a>
+
+            {% if blog.offline %}
+               <span class="offline">offline</span>
+            {% endif %}
+         </div>
+
+         {% if blog.subtitle %}
+            <div class="subtitle">{{ blog.subtitle }}</div>
+         {% endif %}
+
+         <div class="kinds">
+            {% for blog_kind in blog.blog_kinds %}
+               {% set kind = blog_kind.kind %}
+               <span>{{ kind.name }}</span>
+               {% if not loop.last %} · {% endif %}
+            {% endfor %}
+         </div>
+      </div>
+
+      {% if loop.index % 2 == 0 %}
+         <div class="clearfix"></div>
+      {% endif %}
+   {% endfor %}
+{% endmacro %}

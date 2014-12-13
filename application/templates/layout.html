@@ -98,7 +98,7 @@
             <span class="fa fa-plus"></span> 推荐博客
          </a>
 
-         <form class="navbar-form navbar-right" role="search" method="get" action="#">
+         <form class="navbar-form navbar-right" role="search" method="get" action="{{ url_for('blog.search') }}">
             <input type="text" name="keyword" class="form-control input-sm"
                    placeholder="搜索博客">
             <button class="btn btn-default btn-sm" type="submit" title="搜索">

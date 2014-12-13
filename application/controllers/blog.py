@@ -26,6 +26,17 @@ def square():
                            kind_id=kind_id)
 
 
+@bp.route('/search')
+def search():
+    keyword = request.args.get('keyword', '')
+    page = request.args.get('page', 1, int)
+    if not keyword:
+        blogs = {'total': 0}
+    else:
+        blogs = Blog.query.filter(Blog.title.like('%%%s%%' % keyword)).paginate(page, 15)
+    return render_template('blog/search.html', blogs=blogs, keyword=keyword)
+
+
 @bp.route('/<int:uid>', defaults={'page': 1})
 @bp.route('/<int:uid>/page/<int:page>')
 def view(uid, page):

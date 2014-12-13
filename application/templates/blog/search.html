@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% from 'macro/ui.html' import pagination, render_blogs %}
+
+{% block page_title %}搜索{% endblock %}
+{% block page_content %}
+   <div class="container">
+      <div class="row">
+         <div class="col-sm-8">
+            <h2>
+               <span class="fa fa-search"></span> 搜索结果
+               {% if keyword %}
+                  ：{{ keyword }}
+               {% endif %}
+            </h2>
+
+            <div class="blogs clearfix">
+               {% if not keyword %}
+                  <p class="text-light">请输入博客标题</p>
+               {% else %}
+                  {% if not blogs.total %}
+                     <p class="text-light">找不到相关博客</p>
+                  {% else %}
+                     {{ render_blogs(blogs.items) }}
+
+                     {{ pagination(blogs) }}
+                  {% endif %}
+               {% endif %}
+            </div>
+         </div>
+      </div>
+   </div>
+{% endblock %}

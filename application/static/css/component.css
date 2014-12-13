@@ -1,3 +1,50 @@
+.m-blog {
+  position: relative;
+  border-top: 1px solid #DDDDDD;
+  margin: 0 0px 15px 0;
+  padding: 15px 0 0 0;
+  vertical-align: top;
+}
+@media (min-width: 768px) {
+  .m-blog {
+    padding-right: 25px;
+  }
+}
+.m-blog.no-kinds .title a {
+  color: #ff0000;
+}
+.m-blog .title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+.m-blog .title a {
+  color: #333;
+}
+.m-blog .title .offline {
+  margin-left: 5px;
+  font-size: 12px;
+  font-weight: normal;
+  color: #ff0000;
+}
+.m-blog .subtitle {
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+.m-blog .author {
+  position: absolute;
+  bottom: 12px;
+  left: 15px;
+  color: #999;
+  font-size: 12px;
+}
+.m-blog .author span {
+  color: #666;
+}
+.m-blog .kinds {
+  font-size: 12px;
+  color: #999;
+}
 .text-list {
   margin-bottom: 20px;
   padding-left: 20px;

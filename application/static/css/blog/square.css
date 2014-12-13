@@ -19,53 +19,6 @@
 .blogs {
   padding-top: 5px;
 }
-.blogs .blog {
-  position: relative;
-  border-top: 1px solid #DDDDDD;
-  margin: 0 0px 15px 0;
-  padding: 15px 0 0 0;
-  vertical-align: top;
-}
-@media (min-width: 768px) {
-  .blogs .blog {
-    padding-right: 25px;
-  }
-}
-.blogs .blog.no-kinds .title a {
-  color: #ff0000;
-}
-.blogs .blog .title {
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 6px;
-}
-.blogs .blog .title a {
-  color: #333;
-}
-.blogs .blog .title .offline {
-  margin-left: 5px;
-  font-size: 12px;
-  font-weight: normal;
-  color: #ff0000;
-}
-.blogs .blog .subtitle {
-  font-size: 12px;
-  margin-bottom: 6px;
-}
-.blogs .blog .author {
-  position: absolute;
-  bottom: 12px;
-  left: 15px;
-  color: #999;
-  font-size: 12px;
-}
-.blogs .blog .author span {
-  color: #666;
-}
-.blogs .blog .kinds {
-  font-size: 12px;
-  color: #999;
-}
 .latest-blogs {
   border-top: 1px solid #ddd;
   padding-top: 10px;

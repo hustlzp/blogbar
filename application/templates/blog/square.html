@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from 'macro/ui.html' import pagination %}
+{% from 'macro/ui.html' import pagination, render_blogs %}
 
 {% block page_title %}博客广场{% endblock %}
 {% block page_content %}
@@ -32,42 +32,7 @@
                   <p class="text-light">暂未收录</p>
                {% endif %}
 
-               {% for blog in blogs.items %}
-                  {% set has_kinds = blog.blog_kinds.count() %}
-
-                  <div class="blog col-sm-6 {% if admin and not has_kinds %}no-kinds{% endif %}">
-                     {% if admin %}
-                        <a href="{{ url_for('admin.edit_blog', uid=blog.id) }}"
-                           class=" pull-right">edit</a>
-                     {% endif %}
-
-                     <div class="title">
-                        <a href="{{ url_for('blog.view', uid=blog.id) }}">
-                           {{ blog.title }}</a>
-
-                        {% if blog.offline %}
-                           <span class="offline">offline</span>
-                        {% endif %}
-                     </div>
-
-                     {% if blog.subtitle %}
-                        <div class="subtitle">{{ blog.subtitle }}</div>
-                     {% endif %}
-
-                     <div class="kinds">
-                        {% for blog_kind in blog.blog_kinds %}
-                           {% set kind = blog_kind.kind %}
-                           <span>{{ kind.name }}</span>
-                           {% if not loop.last %} · {% endif %}
-                        {% endfor %}
-                     </div>
-                     {#                  <div class="author">by <span>{{ blog.author }}</span></div>#}
-                  </div>
-
-                  {% if loop.index % 2 == 0 %}
-                     <div class="clearfix"></div>
-                  {% endif %}
-               {% endfor %}
+               {{ render_blogs(blogs.items) }}
             </div>
 
             {{ pagination(blogs) }}
