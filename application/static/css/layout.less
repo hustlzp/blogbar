@@ -81,6 +81,50 @@ body {
     }
   }
 
+  .navbar-form {
+    position: relative;
+    margin-top: 15px;
+    padding-right: 0;
+    border: none;
+
+    @media (max-width: @screen-md-max) {
+      margin-top: 0;
+      margin-bottom: 15px;
+      float: none !important;
+      clear: both;
+      padding: 0;
+      width: 220px;
+    }
+
+    @media (max-width: @screen-xs-max) {
+      padding-left: 15px;
+      width: 100%;
+    }
+
+    input {
+      display: block;
+      width: 100%;
+      border-radius: 0;
+      border: 1px solid #ddd;
+      box-shadow: none;
+
+      &:hover,
+      &:focus {
+        border-color: @main-color;
+      }
+    }
+
+    button {
+      background-color: transparent;
+      border: none;
+      position: absolute;
+      right: 0;
+      bottom: 2px;
+      z-index: 100;
+      color: #aaa;
+    }
+  }
+
   .navbar-btn.btn-sm {
     margin-left: 15px;
     margin-top: 15px;

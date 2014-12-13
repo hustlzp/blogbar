@@ -30,8 +30,12 @@
     position: relative;
     border-top: 1px solid #DDDDDD;
     margin: 0 0px 15px 0;
-    padding: 15px 25px 0px 0px;
+    padding: 15px 0 0 0;
     vertical-align: top;
+
+    @media (min-width: @screen-sm-min) {
+      padding-right: 25px;
+    }
 
     &.no-kinds .title a {
       color: #ff0000;

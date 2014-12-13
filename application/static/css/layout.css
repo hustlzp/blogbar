@@ -77,6 +77,48 @@ body {
     padding-bottom: 18px;
   }
 }
+.navbar .navbar-form {
+  position: relative;
+  margin-top: 15px;
+  padding-right: 0;
+  border: none;
+}
+@media (max-width: 1199px) {
+  .navbar .navbar-form {
+    margin-top: 0;
+    margin-bottom: 15px;
+    float: none !important;
+    clear: both;
+    padding: 0;
+    width: 220px;
+  }
+}
+@media (max-width: 767px) {
+  .navbar .navbar-form {
+    padding-left: 15px;
+    width: 100%;
+  }
+}
+.navbar .navbar-form input {
+  display: block;
+  width: 100%;
+  border-radius: 0;
+  border: 1px solid #ddd;
+  box-shadow: none;
+}
+.navbar .navbar-form input:hover,
+.navbar .navbar-form input:focus {
+  border-color: #2a99c2;
+}
+.navbar .navbar-form button {
+  background-color: transparent;
+  border: none;
+  position: absolute;
+  right: 0;
+  bottom: 2px;
+  z-index: 100;
+  color: #aaa;
+}
 .navbar .navbar-btn.btn-sm {
   margin-left: 15px;
   margin-top: 15px;

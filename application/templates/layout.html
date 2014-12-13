@@ -98,17 +98,13 @@
             <span class="fa fa-plus"></span> 推荐博客
          </a>
 
-         {#         <form class="navbar-form navbar-left" role="search" method="get" action="#">#}
-         {#            <div class="input-group">#}
-         {#               <input type="text" name="keyword" class="form-control input-sm"#}
-         {#                      placeholder="">#}
-         {#               <span class="input-group-btn">#}
-         {#                  <button class="btn btn-default btn-sm" type="submit">#}
-         {#                     <span class="fa fa-search"></span>#}
-         {#                  </button>#}
-         {#               </span>#}
-         {#            </div>#}
-         {#         </form>#}
+         <form class="navbar-form navbar-right" role="search" method="get" action="#">
+            <input type="text" name="keyword" class="form-control input-sm"
+                   placeholder="搜索博客">
+            <button class="btn btn-default btn-sm" type="submit" title="搜索">
+               <span class="fa fa-search"></span>
+            </button>
+         </form>
 
          {#         <ul class="nav navbar-nav navbar-right">#}
          {#            {% if g.user %}#}
@@ -159,8 +155,8 @@
 
 {# 访问统计 #}
 <script type="text/javascript">
-var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ff995064249cc264a55b9dbb0b62406d8' type='text/javascript'%3E%3C/script%3E"));
+   var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+   document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ff995064249cc264a55b9dbb0b62406d8' type='text/javascript'%3E%3C/script%3E"));
 </script>
 
 </body>
