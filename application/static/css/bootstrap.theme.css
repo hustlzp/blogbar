@@ -22,6 +22,12 @@ h2.border {
   border-bottom: 1px solid #ddd;
   padding-bottom: 15px;
 }
+h3 {
+  font-size: 16px;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
 a {
   color: #2a99c2;
 }
