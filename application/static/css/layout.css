@@ -170,9 +170,6 @@ body {
 #footer #links li a {
   color: #777;
 }
-#footer #links li a:hover {
-  color: #2a99c2;
-}
 img[src='http://eiv.baidu.com/hmt/icon/21.gif'] {
   display: none;
 }
