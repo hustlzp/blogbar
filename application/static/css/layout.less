@@ -169,11 +169,20 @@ body {
   height: 60px;
   border-top: 1px solid #e2e2e2;
   padding-top: 20px;
+  color: #777;
 
   #links {
     li {
       padding-right: 0;
       margin-left: 15px;
+
+      a {
+        color: #777;
+
+        &:hover {
+          color: @main-color;
+        }
+      }
     }
   }
 }

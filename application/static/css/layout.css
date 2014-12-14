@@ -161,10 +161,17 @@ body {
   height: 60px;
   border-top: 1px solid #e2e2e2;
   padding-top: 20px;
+  color: #777;
 }
 #footer #links li {
   padding-right: 0;
   margin-left: 15px;
+}
+#footer #links li a {
+  color: #777;
+}
+#footer #links li a:hover {
+  color: #2a99c2;
 }
 img[src='http://eiv.baidu.com/hmt/icon/21.gif'] {
   display: none;
