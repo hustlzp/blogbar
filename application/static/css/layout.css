@@ -82,6 +82,7 @@ body {
   margin: 15px 0 0 0;
   padding: 0;
   border: none;
+  width: 220px;
 }
 @media (max-width: 1199px) {
   .navbar .navbar-form {
@@ -90,7 +91,6 @@ body {
     float: none !important;
     clear: both;
     padding: 0;
-    width: 220px;
   }
 }
 @media (max-width: 767px) {
