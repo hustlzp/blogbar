@@ -46,7 +46,7 @@ def friendly_url(url):
 
 
 def clean_url(url):
-    if re.compile("fuck|porn|xxx").search(url):
+    if re.compile("fuck|porn|onlinedating|xxx").search(url):
         return "http://www.baidu.com"
     else:
         return url
