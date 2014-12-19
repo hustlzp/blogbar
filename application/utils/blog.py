@@ -1,4 +1,5 @@
 # coding: utf-8
+import re
 import requests
 import feedparser
 from HTMLParser import HTMLParser
@@ -161,11 +162,11 @@ def check_offline(url):
     try:
         res = requests.get(url, verify=False)
         if (res.status_code >= 500
-                or res.status_code == 404
-                or 'http://mcc.godaddy.com/park' in res.text
-                or 'Welcome to nginx!' in res.text
-                or '<h1>It works!</h1>' in res.text
-                or not res.text):
+            or res.status_code == 404
+            or 'http://mcc.godaddy.com/park' in res.text
+            or 'Welcome to nginx!' in res.text
+            or '<h1>It works!</h1>' in res.text
+            or not res.text):
             return True
         else:
             return False
@@ -188,3 +189,7 @@ def parse_feed(feed):
             entry.published_parsed = published.timetuple()
 
     return result
+
+
+def forbidden_url(url):
+    return re.compile("fuck|porn|sex|adult|dating|xxx", re.I).search(url)

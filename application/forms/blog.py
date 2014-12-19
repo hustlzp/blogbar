@@ -1,9 +1,12 @@
 # coding: utf-8
+import re
+from flask import abort
 from urlparse import urlparse
 from flask_wtf import Form
 from wtforms import StringField, TextAreaField, IntegerField, SelectMultipleField
 from wtforms.validators import DataRequired, Email, URL
 from ..models import Blog
+from ..utils.blog import forbidden_url
 
 
 def check_url(form, field):
@@ -34,6 +37,10 @@ class AddBlogForm(Form):
     kinds = SelectMultipleField('Kinds', coerce=int)
 
     def validate_url(self, field):
+        url = field.data
+        if forbidden_url(url):
+            raise ValueError('URL不合法')
+
         blog = Blog.query.filter(Blog.url == field.data).first()
         if blog:
             raise ValueError('博客URL已存在')

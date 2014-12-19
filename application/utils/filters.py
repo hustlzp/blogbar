@@ -1,9 +1,9 @@
 # coding: utf-8
-import re
 import datetime
 from datetime import timedelta
 import json
 from math import ceil
+from .blog import forbidden_url
 
 
 def timesince(value):
@@ -46,7 +46,7 @@ def friendly_url(url):
 
 
 def clean_url(url):
-    if re.compile("fuck|porn|onlinedating|xxx").search(url):
+    if forbidden_url(url):
         return "http://www.baidu.com"
     else:
         return url
