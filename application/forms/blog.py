@@ -27,7 +27,7 @@ class AddBlogForm(Form):
     url = StringField('博客地址', [
         DataRequired('不能为空'),
         check_url,
-        URL('格式错误')
+        URL(message='格式错误')
     ], description='博客 URL 地址')
     title = StringField('标题', [DataRequired('不能为空')], description='标题')
     subtitle = StringField('副标题', description='副标题  /  选填')
