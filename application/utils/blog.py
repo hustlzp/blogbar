@@ -192,4 +192,4 @@ def parse_feed(feed):
 
 
 def forbidden_url(url):
-    return re.compile("fuck|porn|sex|adult|dating|xxx", re.I).search(url)
+    return re.compile("fuck|porn|sex|adult|dating|swinger|xxx|xvideo", re.I).search(url)
