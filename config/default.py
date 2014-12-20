@@ -49,3 +49,5 @@ class Config(object):
 
     # Host string, used by fabric
     HOST_STRING = "root@107.170.238.33"
+
+    BAN_IPS = []

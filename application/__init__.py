@@ -7,7 +7,7 @@ project_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if project_path not in sys.path:
     sys.path.insert(0, project_path)
 
-from flask import Flask, request, url_for, g, render_template
+from flask import Flask, request, url_for, g, render_template, abort
 from flask_wtf.csrf import CsrfProtect
 from flask.ext.uploads import configure_uploads
 from flask_debugtoolbar import DebugToolbarExtension
@@ -56,6 +56,9 @@ def create_app():
     # before every request
     @app.before_request
     def before_request():
+        ban_ips = app.config.get('BAN_IPS')
+        if request.remote_addr in ban_ips:
+            abort(404)
         g.user = get_current_user()
 
     return app
