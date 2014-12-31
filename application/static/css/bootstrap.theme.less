@@ -54,7 +54,9 @@ a {
   border-color: @main-color;
   background-color: @main-color;
 
-  &:hover {
+  &:hover,
+  &:focus {
+    outline: none;
     border-color: @dark-main;
     background-color: @dark-main;
   }

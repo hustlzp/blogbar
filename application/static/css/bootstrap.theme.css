@@ -42,7 +42,9 @@ a:hover {
   border-color: #2a99c2;
   background-color: #2a99c2;
 }
-.btn-primary:hover {
+.btn-primary:hover,
+.btn-primary:focus {
+  outline: none;
   border-color: #217898;
   background-color: #217898;
 }
