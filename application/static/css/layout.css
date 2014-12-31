@@ -105,7 +105,6 @@ body {
   border: 1px solid #ddd;
   box-shadow: none;
 }
-.navbar .navbar-form input:hover,
 .navbar .navbar-form input:focus {
   border-color: #2a99c2;
 }
