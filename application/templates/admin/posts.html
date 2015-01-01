@@ -14,8 +14,8 @@
                <th>发表时间</th>
                <th>更新时间</th>
                <th>备注</th>
-               <th>标记重复</th>
-               <th>推荐</th>
+               <th>点击</th>
+               <th>操作</th>
             </tr>
 
             {% for post in posts %}
@@ -52,6 +52,9 @@
                      {% endif %}
                   </td>
                   <td>
+                     {{ post.clicks or 0 }}
+                  </td>
+                  <td>
                      {% if post.hide %}
                         <a href="{{ url_for('admin.show_post', uid=post.id) }}"
                            class="btn btn-sm btn-default">
@@ -61,9 +64,9 @@
                         <a href="{{ url_for('admin.hide_post', uid=post.id) }}"
                            class="btn btn-sm btn-default">
                            <span class="fa fa-eye-slash"></span> 隐藏
-                        </a>{% endif %}
-                  </td>
-                  <td>
+                        </a>
+                     {% endif %}
+
                      {% if post.recommend %}
                         <a href="{{ url_for('admin.unrecommend_post', uid=post.id) }}"
                            class="btn btn-sm btn-default">
