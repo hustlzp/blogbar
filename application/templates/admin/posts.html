@@ -11,10 +11,10 @@
                <th>作者</th>
                <th>字数</th>
                {#               <th>关键词</th>#}
+               <th>点击</th>
                <th>发表时间</th>
                <th>更新时间</th>
                <th>备注</th>
-               <th>点击</th>
                <th>操作</th>
             </tr>
 
@@ -29,7 +29,12 @@
                      <a href="{{ url_for('blog.view', uid=blog.id) }}" target="_blank">
                         {{ blog.author }}</a>
                   </td>
-                  <td>{{ post.pure_content|length if post.pure_content else 0 }}字</td>
+                  <td>
+                     {{ post.pure_content|length if post.pure_content else 0 }}字
+                  </td>
+                  <td>
+                     {{ post.clicks or 0 }}
+                  </td>
                   <td class="utc-time">
                      {{ post.published_at if post.published_at else "" }}
                   </td>
@@ -50,9 +55,6 @@
                      {% if blog.for_special_purpose %}
                         <span class="label label-info">特殊用途</span>
                      {% endif %}
-                  </td>
-                  <td>
-                     {{ post.clicks or 0 }}
                   </td>
                   <td>
                      {% if post.hide %}
