@@ -21,6 +21,9 @@ def grab_by_feed(blog):
     # 检测feed是否失效
     if not result.entries:
         blog.bad_feed = True
+        db.session.add(blog)
+        db.session.commit()
+        return
     else:
         blog.bad_feed = False
 
