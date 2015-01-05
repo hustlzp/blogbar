@@ -18,7 +18,7 @@ def grab_by_feed(blog):
 
     result = parse_feed(blog.feed)
 
-    # 检测feed是否失效
+    # 检测feed是否失效，若失效，则退出
     if not result.entries:
         blog.bad_feed = True
         db.session.add(blog)

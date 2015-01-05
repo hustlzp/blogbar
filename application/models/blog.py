@@ -56,7 +56,8 @@ class BlogKind(db.Model):
                                                       order_by='asc(BlogKind.show_order)'))
 
     kind_id = db.Column(db.Integer, db.ForeignKey('kind.id'))
-    kind = db.relationship('Kind', backref=db.backref('blog_kinds', lazy='dynamic'))
+    kind = db.relationship('Kind', backref=db.backref('blog_kinds', lazy='dynamic',
+                                                      cascade="all, delete, delete-orphan"))
 
 
 class Post(db.Model):
@@ -78,7 +79,8 @@ class Post(db.Model):
 
     blog_id = db.Column(db.Integer, db.ForeignKey('blog.id'))
     blog = db.relationship('Blog', backref=db.backref('posts', lazy='dynamic',
-                                                      order_by='desc(Post.published_at)'))
+                                                      order_by='desc(Post.published_at)',
+                                                      cascade="all, delete, delete-orphan"))
 
     def __setattr__(self, name, value):
         # 每当设置content时，更新pure_content和need_analysis
@@ -101,7 +103,8 @@ class GrabLog(db.Model):
 
     blog_id = db.Column(db.Integer, db.ForeignKey('blog.id'))
     blog = db.relationship('Blog', backref=db.backref('logs', lazy='dynamic',
-                                                      order_by='desc(GrabLog.created_at)'))
+                                                      order_by='desc(GrabLog.created_at)',
+                                                      cascade="all, delete, delete-orphan"))
 
 
 class ApprovementLog(db.Model):
@@ -115,7 +118,8 @@ class ApprovementLog(db.Model):
 
     blog_id = db.Column(db.Integer, db.ForeignKey('blog.id'))
     blog = db.relationship('Blog', backref=db.backref('approvement_logs', lazy='dynamic',
-                                                      order_by='desc(ApprovementLog.created_at)'))
+                                                      order_by='desc(ApprovementLog.created_at)',
+                                                      cascade="all, delete, delete-orphan"))
 
 
 def _get_pure_content(content):
