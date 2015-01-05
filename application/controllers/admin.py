@@ -62,6 +62,17 @@ def edit_blog(uid):
                            blog=blog)
 
 
+@bp.route('/delete_blog/<int:uid>')
+@AdminPermission()
+def delete_blog(uid):
+    """删除博客"""
+    blog = Blog.query.get_or_404(uid)
+    db.session.delete(blog)
+    db.session.commit()
+    flash('已删除')
+    return redirect(url_for('site.index'))
+
+
 @bp.route('/blogs')
 @AdminPermission()
 def blogs():

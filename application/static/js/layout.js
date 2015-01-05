@@ -1,3 +1,4 @@
+// 给Ajax添加csrf token
 var csrf_token = $("meta[name='csrf-token']").attr('content');
 $.ajaxSetup({
     beforeSend: function (xhr, settings) {
@@ -7,10 +8,19 @@ $.ajaxSetup({
     }
 });
 
-/* 显示flash message */
+
 $(function () {
+    // 显示flash message
     setTimeout(showFlash, 200);
     setTimeout(hideFlash, 2000);
+
+    // confirm弹窗
+    $('.need-confirm').click(function () {
+        var confirmText = $(this).data('confirm');
+        if (!confirm(confirmText)) {
+            return false;
+        }
+    });
 });
 
 // 转换成UTC时间

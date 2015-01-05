@@ -88,9 +88,14 @@
             </p>
 
             {% if permissions.AdminPermission().check() %}
-               <a href="{{ url_for('admin.edit_blog', uid=blog.id) }}"
-                  class="btn btn-default btn-sm">
-                  <span class="fa fa-edit"></span> 编辑</a>
+               <div class="btn-group btn-group-sm">
+                  <a href="{{ url_for('admin.edit_blog', uid=blog.id) }}"
+                     class="btn btn-default">
+                     <span class="fa fa-edit"></span> 编辑</a>
+                  <a href="{{ url_for('admin.delete_blog', uid=blog.id) }}"
+                     class="btn btn-default need-confirm" data-confirm="确认删除此博文（不可逆操作）？">
+                     <span class="fa fa-trash-o"></span> 删除</a>
+               </div>
             {% endif %}
          </div>
 
