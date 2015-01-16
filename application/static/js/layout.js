@@ -8,7 +8,6 @@ $.ajaxSetup({
     }
 });
 
-
 $(function () {
     // 显示flash message
     setTimeout(showFlash, 200);
