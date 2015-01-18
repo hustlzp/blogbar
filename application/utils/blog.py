@@ -11,6 +11,7 @@ from ..models import db, Post
 
 
 def grab_by_feed(blog):
+    """通过Feed获取博客内容"""
     new_posts_count = 0
 
     # 检测博客是否在线
@@ -38,38 +39,10 @@ def grab_by_feed(blog):
     timezone_offset = blog.feed_timezone_offset or 0
 
     for entry in result.entries:
-        url = entry.link
+        exist, post = _check_entry_exist(entry, blog)
 
-        # 判断该entry是否存在于数据库
-        # 若存在url一致的条目，则存在
-        # 否则判断标题和published_at
-        # 若存在标题一致的post，但entry中不包含published_at，则判断为存在
-        # 若存在标题一致的post，而published_at相差不超过一天，则判断为存在
-        # 其他情况均判断为不存在
-        post = blog.posts.filter(Post.url == url).first()
-        if post:
-            exist = True
-        else:
-            post = blog.posts.filter(Post.title == _process_title(entry.title)).first()
-            if post:
-                published_at = _get_entry_published_at(entry, timezone_offset)
-                if not published_at:
-                    exist = True
-                else:
-                    if published_at >= post.published_at:
-                        timediff = published_at - post.published_at
-                    else:
-                        timediff = post.published_at - published_at
-
-                    if timediff <= timedelta(days=1):
-                        exist = True
-                    else:
-                        exist = False
-            else:
-                exist = False
-
-        # 更新
         if exist:
+            # 更新文章
             _get_info_to_post(post, entry, timezone_offset)
             db.session.add(post)
         else:
@@ -82,6 +55,44 @@ def grab_by_feed(blog):
 
     db.session.commit()
     return new_posts_count
+
+
+def _check_entry_exist(entry, blog):
+    """判断该entry是否存在于该博客中"""
+    exist = False
+    timezone_offset = blog.feed_timezone_offset or 0
+    post = blog.posts.filter(Post.url == entry.link).first()
+    if post:
+        exist = True
+    else:
+        # 是否存在标题一致，且发表时间相近的文章
+        post = blog.posts.filter(Post.title == _process_title(entry.title)).first()
+        if post:
+            published_at = _get_entry_published_at(entry, timezone_offset)
+            if published_at:
+                exist = _get_time_diff(published_at, post.published_at) <= timedelta(days=1)
+            else:
+                exist = True
+        else:
+            # 是否存在标题一致，且发表时间相近的文章
+            entry_content = _get_entry_content(entry)
+            post = blog.posts.filter(Post.content == entry_content).first()
+            if post:
+                published_at = _get_entry_published_at(entry, timezone_offset)
+                if published_at:
+                    exist = _get_time_diff(published_at, post.published_at) <= timedelta(days=1)
+                else:
+                    exist = True
+    return exist, post
+
+
+def _get_time_diff(one_time, another_time):
+    """计算时间差"""
+    if one_time >= another_time:
+        timediff = one_time - another_time
+    else:
+        timediff = another_time - one_time
+    return timediff
 
 
 def _get_info_to_post(post, entry, timezone_offset):
@@ -104,13 +115,20 @@ def _get_info_to_post(post, entry, timezone_offset):
     if not post.published_at and not post.updated_at:
         post.published_at = datetime.now() - timedelta(hours=timezone)
 
+    post.content = _get_entry_content(entry)
+
+
+def _get_entry_content(entry):
+    """获取entry中的文章正文"""
+    content = ''
     if 'content' in entry:
         if isinstance(entry.content, list):
-            post.content = entry.content[0].value
+            content = entry.content[0].value
         else:
-            post.content = entry.content
+            content = entry.content
     elif 'summary' in entry:
-        post.content = entry.summary
+        content = entry.summary
+    return content
 
 
 def _process_title(title):
@@ -140,8 +158,11 @@ def _get_time(time_struct, timezone_offset=None):
     return result_time
 
 
-# See: http://stackoverflow.com/questions/753052/strip-html-from-strings-in-python
 class MLStripper(HTMLParser):
+    """
+    See: http://stackoverflow.com/questions/753052/strip-html-from-strings-in-python
+    """
+
     def __init__(self):
         self.reset()
         self.fed = []
@@ -195,4 +216,5 @@ def parse_feed(feed):
 
 
 def forbidden_url(url):
+    """禁止某些URL"""
     return re.compile("fuck|porn|sex|adult|dating|swinger|xxx|xvideo", re.I).search(url)
