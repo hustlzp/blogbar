@@ -49,6 +49,7 @@ def grab_by_feed(blog):
     timezone_offset = blog.feed_timezone_offset or 0
 
     for entry in result.entries:
+        entry.link = _uniform_url(entry.link)
         exist, post = _check_entry_exist(entry, blog)
 
         if exist:
@@ -96,6 +97,16 @@ def _check_entry_exist(entry, blog):
                 else:
                     exist = True
     return exist, post
+
+
+def _uniform_url(url):
+    """补全scheme"""
+    from urlparse import urlparse
+
+    parse_result = urlparse(url)
+    if parse_result.scheme == "":
+        url = "http://%s" % url
+    return url
 
 
 def _get_time_diff(one_time, another_time):
