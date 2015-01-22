@@ -32,7 +32,8 @@ def grab_by_spider(spider_class):
         db.session.add(blog)
         db.session.commit()
 
-    logging.debug(blog.title)
+    # logging.debug(blog.title)
+    print(blog.title)
 
     # 检测博客是否在线
     blog.offline = check_offline(blog.url)
@@ -50,13 +51,13 @@ def grab_by_spider(spider_class):
             content = spider_class.get_post_(url)
             post = Post(url=url, title=title, published_at=published_at, content=content)
             blog.posts.append(post)
-            logging.debug(" new - %s" % title)
+            # logging.debug(" new - %s" % title)
+            print(" new - %s" % title)
         else:  # 更新文章
             post.title = title
             post.published_at = published_at
             post.content = spider_class.get_post_(url)
             db.session.add(post)
-            logging.debug(" update - %s" % title)
     db.session.add(blog)
     db.session.commit()
     return new_posts_count
