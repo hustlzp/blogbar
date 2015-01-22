@@ -73,6 +73,18 @@ def grab_spider():
 
 
 @manager.command
+def grab():
+    """爬取博文"""
+    from spiders import grab_by_spider, spiders
+
+    with app.app_context():
+        for blog in Blog.query:
+            grab_by_feed(blog)
+        for spider in spiders:
+            grab_by_spider(spider)
+
+
+@manager.command
 def remote_grab():
     from celery_proj.tasks import grab
 
