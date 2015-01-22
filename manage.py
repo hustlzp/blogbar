@@ -1,9 +1,10 @@
 # coding: utf-8
 import HTMLParser
+import traceback
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 from application import create_app
-from application.models import db, Blog, Post
+from application.models import db, Blog, Post, GrabLog
 from application.utils.blog import grab_by_feed
 
 
@@ -78,10 +79,27 @@ def grab():
     from spiders import grab_by_spider, spiders
 
     with app.app_context():
+        new_posts_count = 0
+
+        # 通过feed抓取blog
         for blog in Blog.query:
-            grab_by_feed(blog)
+            if blog.feed and blog.is_approved:
+                try:
+                    new_posts_count += grab_by_feed(blog)
+                except Exception, e:
+                    log = GrabLog(message=e, details=traceback.format_exc(), blog_id=blog.id)
+                    db.session.add(log)
+                    db.session.commit()
+
+        # 通过spider抓取blog
         for spider in spiders:
-            grab_by_spider(spider)
+            try:
+                new_posts_count += grab_by_spider(spider)
+            except Exception, e:
+                blog = Blog.query.filter(Blog.url == spider.url).first_or_404()
+                log = GrabLog(message=e, details=traceback.format_exc(), blog_id=blog.id)
+                db.session.add(log)
+                db.session.commit()
 
 
 @manager.command
@@ -91,11 +109,11 @@ def remote_grab():
     grab.delay()
 
 
-@manager.command
-def remote_analyse():
-    from celery_proj.tasks import analyse
-
-    analyse.delay()
+# @manager.command
+# def remote_analyse():
+# from celery_proj.tasks import analyse
+#
+#     analyse.delay()
 
 
 @manager.command
