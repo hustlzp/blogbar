@@ -39,7 +39,7 @@ def grab_by_feed(blog):
     if blog.bad_feed:
         db.session.add(blog)
         db.session.commit()
-        return
+        return 0
 
     if not blog.feed_version:
         blog.feed_version = result.version
