@@ -2,6 +2,7 @@
 import re
 import requests
 import feedparser
+import logging
 from HTMLParser import HTMLParser
 from flask import current_app
 from time import mktime
@@ -34,7 +35,7 @@ def grab_by_feed(blog):
         blog.subtitle = _process_title(result.feed.subtitle)
 
     db.session.add(blog)
-    print(blog.title)
+    logging.debug(blog.title)
 
     timezone_offset = blog.feed_timezone_offset or 0
 
@@ -51,7 +52,7 @@ def grab_by_feed(blog):
             _get_info_to_post(post, entry, timezone_offset)
             blog.posts.append(post)
             new_posts_count += 1
-            print(" new - %s" % post.title)
+            logging.debug(" new - %s" % post.title)
 
     db.session.commit()
     return new_posts_count

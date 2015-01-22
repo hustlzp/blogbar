@@ -76,7 +76,10 @@ def grab_spider():
 @manager.command
 def grab():
     """爬取博文"""
+    import logging
     from spiders import grab_by_spider, spiders
+
+    logging.basicConfig(filename='grab.log', level=logging.DEBUG)
 
     with app.app_context():
         new_posts_count = 0
@@ -113,7 +116,7 @@ def remote_grab():
 # def remote_analyse():
 # from celery_proj.tasks import analyse
 #
-#     analyse.delay()
+# analyse.delay()
 
 
 @manager.command
