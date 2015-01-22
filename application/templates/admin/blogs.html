@@ -10,7 +10,7 @@
                <th style="width: 350px;">博客</th>
                <th>作者</th>
                <th style="width: 350px;">URL / Feed</th>
-               <th>Since</th>
+               <th>备注</th>
                <th>编辑</th>
             </tr>
 
@@ -37,7 +37,11 @@
                         </a>
                      {% endif %}
                   </td>
-                  <td>{{ blog.since or "" }}</td>
+                  <td>
+                     {% if blog.feed_status == 2 %}
+                        <span class="label label-warning">超时</span>
+                     {% endif %}
+                  </td>
                   <td>
                      <a href="{{ url_for('admin.edit_blog', uid=blog.id) }}"
                         class="btn btn-default btn-sm">

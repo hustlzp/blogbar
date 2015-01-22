@@ -8,7 +8,7 @@ from flask import current_app
 from time import mktime
 from datetime import datetime
 from datetime import timedelta
-from ..models import db, Post
+from ..models import db, Post, FEED_STATUS_GOOD, FEED_STATUS_BAD, FEED_STATUS_TIMEOUT
 from .helper import Timeout
 
 
@@ -27,16 +27,16 @@ def grab_by_feed(blog):
         with Timeout(20):
             result = parse_feed(blog.feed)
     except Timeout.Timeout:
-        blog.bad_feed = True
+        blog.feed_status = FEED_STATUS_TIMEOUT
         print(' feed timeout')
     else:
         if not result.entries:
-            blog.bad_feed = True
+            blog.feed_status = FEED_STATUS_BAD
         else:
-            blog.bad_feed = False
+            blog.feed_status = FEED_STATUS_GOOD
 
     # 若feed失效，则退出
-    if blog.bad_feed:
+    if blog.feed_status != FEED_STATUS_GOOD:
         db.session.add(blog)
         db.session.commit()
         return 0

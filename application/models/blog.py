@@ -4,6 +4,10 @@ import datetime
 from lxml import html
 from ._base import db
 
+FEED_STATUS_GOOD = 0
+FEED_STATUS_BAD = 1
+FEED_STATUS_TIMEOUT = 2
+
 
 class Blog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -14,7 +18,7 @@ class Blog(db.Model):
     feed = db.Column(db.String(500))
     feed_timezone_offset = db.Column(db.Integer, default=0)
     feed_version = db.Column(db.String(20))
-    bad_feed = db.Column(db.Boolean, default=False)
+    feed_status = db.Column(db.Integer, default=FEED_STATUS_GOOD)
 
     url = db.Column(db.String(200))
     since = db.Column(db.Integer)

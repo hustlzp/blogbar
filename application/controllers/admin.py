@@ -2,7 +2,7 @@
 import json
 import datetime
 from flask import render_template, Blueprint, flash, redirect, url_for, abort, request
-from ..models import db, Blog, Post, ApprovementLog, Kind, BlogKind
+from ..models import db, Blog, Post, ApprovementLog, Kind, BlogKind, FEED_STATUS_GOOD
 from ..utils.permissions import AdminPermission
 from ..forms import EditBlogForm
 
@@ -77,7 +77,7 @@ def delete_blog(uid):
 @AdminPermission()
 def blogs():
     offline_blogs = Blog.query.filter(Blog.offline)
-    bad_feed_blogs = Blog.query.filter(Blog.bad_feed)
+    bad_feed_blogs = Blog.query.filter(Blog.feed_status != FEED_STATUS_GOOD)
     return render_template('admin/blogs.html', offline_blogs=offline_blogs,
                            bad_feed_blogs=bad_feed_blogs)
 

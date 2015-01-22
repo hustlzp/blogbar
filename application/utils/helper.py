@@ -2,6 +2,8 @@
 import signal
 
 
+
+
 def parse_int(integer, default=None):
     """提取整数，若失败则返回default值"""
     try:
