@@ -23,7 +23,8 @@ def grab_by_feed(blog):
     try:
         with Timeout(5):
             blog.offline = check_offline(blog.url)
-    except Timeout.Timeout:
+    except Exception, e:
+        print(e)
         print(' blog timeout')
 
     # 20s超时
@@ -33,6 +34,8 @@ def grab_by_feed(blog):
     except Timeout.Timeout:
         blog.bad_feed = True
         print(' feed timeout')
+    except Exception, e:
+        print(e)
     else:
         if not result.entries:
             blog.bad_feed = True
