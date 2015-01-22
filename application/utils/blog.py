@@ -9,6 +9,7 @@ from time import mktime
 from datetime import datetime
 from datetime import timedelta
 from ..models import db, Post
+from .helper import Timeout
 
 
 def grab_by_feed(blog):
@@ -18,16 +19,23 @@ def grab_by_feed(blog):
     # 检测博客是否在线
     blog.offline = check_offline(blog.url)
 
-    result = parse_feed(blog.feed)
-
-    # 检测feed是否失效，若失效，则退出
-    if not result.entries:
+    # 20s超时
+    try:
+        with Timeout(20):
+            result = parse_feed(blog.feed)
+    except Timeout.Timeout:
         blog.bad_feed = True
+    else:
+        if not result.entries:
+            blog.bad_feed = True
+        else:
+            blog.bad_feed = False
+
+    # 若feed失效，则退出
+    if blog.bad_feed:
         db.session.add(blog)
         db.session.commit()
         return
-    else:
-        blog.bad_feed = False
 
     if not blog.feed_version:
         blog.feed_version = result.version
