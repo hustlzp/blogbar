@@ -16,6 +16,9 @@ def grab_by_feed(blog):
     """通过Feed获取博客内容"""
     new_posts_count = 0
 
+    # logging.debug(blog.title)
+    print(blog.title)
+
     # 检测博客是否在线
     blog.offline = check_offline(blog.url)
 
@@ -25,6 +28,7 @@ def grab_by_feed(blog):
             result = parse_feed(blog.feed)
     except Timeout.Timeout:
         blog.bad_feed = True
+        print(' timeout')
     else:
         if not result.entries:
             blog.bad_feed = True
@@ -41,10 +45,6 @@ def grab_by_feed(blog):
         blog.feed_version = result.version
     if not blog.subtitle and 'subtitle' in result.feed:
         blog.subtitle = _process_title(result.feed.subtitle)
-
-    db.session.add(blog)
-    # logging.debug(blog.title)
-    print(blog.title)
 
     timezone_offset = blog.feed_timezone_offset or 0
 
@@ -64,6 +64,7 @@ def grab_by_feed(blog):
             # logging.debug(" new - %s" % post.title)
             print(" new - %s" % post.title)
 
+    db.session.add(blog)
     db.session.commit()
     return new_posts_count
 
