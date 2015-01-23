@@ -9,7 +9,7 @@ from time import mktime
 from datetime import datetime
 from datetime import timedelta
 from ..models import db, Post, FEED_STATUS_GOOD, FEED_STATUS_BAD, FEED_STATUS_TIMEOUT
-from .helper import Timeout
+from .helper import Timeout, remove_html
 
 
 def grab_by_feed(blog):
@@ -160,7 +160,7 @@ def _process_title(title):
     title = html_parser.unescape(title)  # 进行2次HTML反转义
     title = html_parser.unescape(title)
     title = title.replace('\r', '').replace('\n', '')  # 去除换行符
-    return remove_html_tag(title)
+    return remove_html(title)
 
 
 def _get_entry_published_at(entry, timezone_offset):
@@ -179,29 +179,6 @@ def _get_time(time_struct, timezone_offset=None):
     if timezone_offset:
         result_time -= timedelta(hours=timezone_offset)
     return result_time
-
-
-class MLStripper(HTMLParser):
-    """
-    See: http://stackoverflow.com/questions/753052/strip-html-from-strings-in-python
-    """
-
-    def __init__(self):
-        self.reset()
-        self.fed = []
-
-    def handle_data(self, d):
-        self.fed.append(d)
-
-    def get_data(self):
-        return ''.join(self.fed)
-
-
-def remove_html_tag(html_string):
-    """从字符串中去除HTML元素（但是好像会过度去除？比如HTML转义字符？）"""
-    s = MLStripper()
-    s.feed(html_string)
-    return s.get_data()
 
 
 def check_offline(url):

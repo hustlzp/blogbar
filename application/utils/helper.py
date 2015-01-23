@@ -1,7 +1,6 @@
 # coding: utf-8
 import signal
-
-
+import HTMLParser
 
 
 def parse_int(integer, default=None):
@@ -30,3 +29,26 @@ class Timeout():
 
     def raise_timeout(self, *args):
         raise Timeout.Timeout()
+
+
+class MLStripper(HTMLParser):
+    """
+    See: http://stackoverflow.com/questions/753052/strip-html-from-strings-in-python
+    """
+
+    def __init__(self):
+        self.reset()
+        self.fed = []
+
+    def handle_data(self, d):
+        self.fed.append(d)
+
+    def get_data(self):
+        return ''.join(self.fed)
+
+
+def remove_html(text):
+    """Remove HTML elements from string."""
+    s = MLStripper()
+    s.feed(text)
+    return s.get_data()

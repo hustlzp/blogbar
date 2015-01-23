@@ -127,8 +127,10 @@ class ApprovementLog(db.Model):
 
 
 def _get_pure_content(content):
-    doc = html.fromstring(content)  # parse html string
-    pure_content = doc.text_content().strip().strip('　')  # 去除首位的空格、缩进
+    from ..utils.helper import remove_html
+
+    pure_content = remove_html(content)
+    pure_content = pure_content.strip().strip('　')  # 去除首位的空格、缩进
     pure_content = pure_content.replace('　', ' ')  # 将缩进替换为空格
     pure_content = re.sub('\s+', ' ', pure_content)  # 将多个空格替换为单个空格
     return pure_content
