@@ -1,6 +1,6 @@
 # coding: utf-8
 import signal
-import HTMLParser
+from HTMLParser import HTMLParser
 
 
 def parse_int(integer, default=None):
