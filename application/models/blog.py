@@ -127,6 +127,7 @@ class ApprovementLog(db.Model):
 
 
 def _get_pure_content(content):
+    """获取用于摘要的文本"""
     from ..utils.helper import remove_html
 
     pure_content = remove_html(content)
