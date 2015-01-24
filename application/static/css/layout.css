@@ -27,6 +27,7 @@ body {
 .page-site-wiki #nav-wiki > a,
 .page-account-signin #nav-signin > a,
 .page-account-signup #nav-signup > a,
+.page-account-subscription #nav-subscription > a,
 .page-admin-approve #nav-admin > a,
 .page-admin-posts #nav-admin > a,
 .page-admin-blogs #nav-admin > a {
@@ -42,6 +43,7 @@ body {
   .page-site-wiki #nav-wiki > a,
   .page-account-signin #nav-signin > a,
   .page-account-signup #nav-signup > a,
+  .page-account-subscription #nav-subscription > a,
   .page-admin-approve #nav-admin > a,
   .page-admin-posts #nav-admin > a,
   .page-admin-blogs #nav-admin > a {
