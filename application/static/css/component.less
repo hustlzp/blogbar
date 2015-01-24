@@ -8,8 +8,10 @@
   padding: 15px 0 0 0;
   vertical-align: top;
 
-  @media (min-width: @screen-sm-min) {
-    padding-right: 25px;
+  &.odd {
+    @media (min-width: @screen-sm-min) {
+      padding-right: 25px;
+    }
   }
 
   &.no-kinds .title a {
@@ -53,6 +55,33 @@
   .kinds {
     font-size: 12px;
     color: #999;
+  }
+
+  // 订阅按钮
+  .btn-wap {
+    .btn-subscribe,
+    .btn-unsubscribe {
+      font-size: 12px;
+      text-decoration: none;
+    }
+
+    .btn-unsubscribe {
+      display: none;
+      color: #999;
+
+      &:hover{
+        color: #777;
+      }
+    }
+  }
+
+  .btn-wap.unsubscribe {
+    .btn-subscribe {
+      display: none;
+    }
+    .btn-unsubscribe {
+      display: block;
+    }
   }
 }
 

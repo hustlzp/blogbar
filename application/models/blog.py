@@ -2,6 +2,7 @@
 import re
 import datetime
 from lxml import html
+from flask import g
 from ._base import db
 
 FEED_STATUS_GOOD = 0
@@ -34,8 +35,28 @@ class Blog(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
     updated_at = db.Column(db.DateTime)
 
+    def subscribed_by_user(self):
+        if not g.user:
+            return False
+        return g.user.user_blogs.filter(UserBlog.blog_id == self.id).count() > 0
+
     def __repr__(self):
         return '<Blog %s>' % self.title
+
+
+class UserBlog(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    created_at = db.Column(db.DateTime, default=datetime.datetime.now)
+
+    blog_id = db.Column(db.Integer, db.ForeignKey('blog.id'))
+    blog = db.relationship('Blog', backref=db.backref('blog_users', lazy='dynamic',
+                                                      order_by='desc(UserBlog.created_at)',
+                                                      cascade="all, delete, delete-orphan"))
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User', backref=db.backref('user_blogs', lazy='dynamic',
+                                                      order_by='desc(UserBlog.created_at)',
+                                                      cascade="all, delete, delete-orphan"))
 
 
 class Kind(db.Model):

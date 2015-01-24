@@ -1,10 +1,10 @@
 # coding: utf-8
 import json
-from flask import render_template, Blueprint, flash, redirect, url_for, abort, request
+from flask import render_template, Blueprint, flash, redirect, url_for, abort, request, g
 from werkzeug.contrib.atom import AtomFeed
-from ..models import db, Blog, Post, ApprovementLog, Kind, BlogKind
+from ..models import db, Blog, Post, ApprovementLog, Kind, BlogKind, UserBlog
 from ..forms import AddBlogForm
-from ..utils.permissions import AdminPermission
+from ..utils.permissions import AdminPermission, UserPermission
 from ..utils.helper import parse_int
 
 bp = Blueprint('blog', __name__)
@@ -139,3 +139,34 @@ def posts(page):
         order_by(Post.published_at.desc()). \
         paginate(page, 20)
     return render_template('blog/posts.html', posts=posts)
+
+
+@bp.route('/subscribe', methods=['POST'])
+@UserPermission()
+def subscribe():
+    """订阅博客"""
+    blog_id = request.form.get('blog_id', type=int)
+    if not blog_id:
+        abort(404)
+    blog = Blog.query.get_or_404(blog_id)
+    user_blog = g.user.user_blogs.filter(UserBlog.blog_id == blog_id).first()
+    if not user_blog:
+        user_blog = UserBlog(blog_id=blog_id)
+        g.user.user_blogs.append(user_blog)
+        db.session.add(g.user)
+        db.session.commit()
+    return json.dumps({'status': 'yes'})
+
+
+@bp.route('/unsubscribe', methods=['POST'])
+@UserPermission()
+def unsubscribe():
+    """取消订阅博客"""
+    blog_id = request.form.get('blog_id', type=int)
+    if not blog_id:
+        abort(404)
+    blog = Blog.query.get_or_404(blog_id)
+    user_blog = g.user.user_blogs.filter(UserBlog.blog_id == blog_id)
+    map(db.session.delete, user_blog)
+    db.session.commit()
+    return json.dumps({'status': 'yes'})

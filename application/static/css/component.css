@@ -6,7 +6,7 @@
   vertical-align: top;
 }
 @media (min-width: 768px) {
-  .m-blog {
+  .m-blog.odd {
     padding-right: 25px;
   }
 }
@@ -44,6 +44,24 @@
 .m-blog .kinds {
   font-size: 12px;
   color: #999;
+}
+.m-blog .btn-wap .btn-subscribe,
+.m-blog .btn-wap .btn-unsubscribe {
+  font-size: 12px;
+  text-decoration: none;
+}
+.m-blog .btn-wap .btn-unsubscribe {
+  display: none;
+  color: #999;
+}
+.m-blog .btn-wap .btn-unsubscribe:hover {
+  color: #777;
+}
+.m-blog .btn-wap.unsubscribe .btn-subscribe {
+  display: none;
+}
+.m-blog .btn-wap.unsubscribe .btn-unsubscribe {
+  display: block;
 }
 .text-list {
   padding-left: 20px;

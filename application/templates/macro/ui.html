@@ -27,12 +27,18 @@
 
 {% macro render_blogs(blogs) %}
    {% for blog in blogs %}
-      {% set has_kinds = blog.blog_kinds.count() %}
+      <div class="m-blog col-sm-6 {% if loop.index % 2 == 1 %}odd{% endif %}">
+         {% if g.user %}
+            <div class="btn-wap {% if blog.subscribed_by_user() %}unsubscribe{% endif %}"
+                 data-blog-id="{{ blog.id }}">
+               <a href="javascript:void(0)" class="btn-subscribe pull-right">
+                  <span class="fa fa-plus"></span> 订阅
+               </a>
 
-      <div class="m-blog col-sm-6 {% if admin and not has_kinds %}no-kinds{% endif %}">
-         {% if admin %}
-            <a href="{{ url_for('admin.edit_blog', uid=blog.id) }}"
-               class=" pull-right">edit</a>
+               <a href="javascript:void(0)" class="btn-unsubscribe pull-right">
+                  取消订阅
+               </a>
+            </div>
          {% endif %}
 
          <div class="title">
@@ -61,4 +67,30 @@
          <div class="clearfix"></div>
       {% endif %}
    {% endfor %}
+
+   <script type="text/javascript">
+      $('.btn-wap').click(function () {
+         var blogId = parseInt($(this).data('blog-id')),
+               url = "",
+               btnWap = $(this);
+
+         if ($(this).hasClass('unsubscribe')) {
+            url = "{{ url_for('blog.unsubscribe') }}";
+         } else {
+            url = "{{ url_for('blog.subscribe') }}";
+         }
+
+         $.ajax({
+            url: url,
+            data: {
+               blog_id: blogId
+            },
+            method: 'POST',
+            dataType: 'json',
+            success: function () {
+               btnWap.toggleClass('unsubscribe');
+            }
+         });
+      });
+   </script>
 {% endmacro %}
