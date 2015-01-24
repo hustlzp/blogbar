@@ -32,6 +32,8 @@ body {
 .page-site-suggest #nav-suggest,
 .page-site-about #nav-about,
 .page-site-wiki #nav-wiki,
+.page-account-signin #nav-signin,
+.page-account-signup #nav-signup,
 .page-admin-approve #nav-admin,
 .page-admin-posts #nav-admin,
 .page-admin-blogs #nav-admin {
@@ -83,14 +85,13 @@ body {
 
   .navbar-form {
     position: relative;
-    margin: 15px 0 0 0;
+    margin: 15px 0 0 15px;
     padding: 0;
     border: none;
     width: 220px;
 
     @media (max-width: @screen-md-max) {
-      margin-top: 0;
-      margin-bottom: 15px;
+      margin: 0 0 15px 0;
       float: none !important;
       clear: both;
       padding: 0;

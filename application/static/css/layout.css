@@ -25,6 +25,8 @@ body {
 .page-site-suggest #nav-suggest > a,
 .page-site-about #nav-about > a,
 .page-site-wiki #nav-wiki > a,
+.page-account-signin #nav-signin > a,
+.page-account-signup #nav-signup > a,
 .page-admin-approve #nav-admin > a,
 .page-admin-posts #nav-admin > a,
 .page-admin-blogs #nav-admin > a {
@@ -38,6 +40,8 @@ body {
   .page-site-suggest #nav-suggest > a,
   .page-site-about #nav-about > a,
   .page-site-wiki #nav-wiki > a,
+  .page-account-signin #nav-signin > a,
+  .page-account-signup #nav-signup > a,
   .page-admin-approve #nav-admin > a,
   .page-admin-posts #nav-admin > a,
   .page-admin-blogs #nav-admin > a {
@@ -79,15 +83,14 @@ body {
 }
 .navbar .navbar-form {
   position: relative;
-  margin: 15px 0 0 0;
+  margin: 15px 0 0 15px;
   padding: 0;
   border: none;
   width: 220px;
 }
 @media (max-width: 1199px) {
   .navbar .navbar-form {
-    margin-top: 0;
-    margin-bottom: 15px;
+    margin: 0 0 15px 0;
     float: none !important;
     clear: both;
     padding: 0;

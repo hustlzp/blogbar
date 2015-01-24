@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% from 'macro/form.html' import vertical_field %}
+
+{% block page_title %}注册{% endblock %}
+{% block page_content %}
+   <div class="container">
+      <div class="row">
+         <div class="col-sm-8">
+            <h2 class="border">注册</h2>
+
+            <form id="form-login" method="post" class="form-horizontal" autocomplete="off"
+                  action="{{ url_for('account.signup') }}">
+               {{ form.csrf_token() }}
+
+               {{ vertical_field(form.name) }}
+
+               {{ vertical_field(form.email) }}
+
+               {{ vertical_field(form.password) }}
+
+               {{ vertical_field(form.repassword) }}
+
+               <div class="form-group">
+                  <div class="col-sm-6">
+                     <button type="submit" class="btn btn-sm btn-primary">提交</button>
+                  </div>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+{% endblock %}
+

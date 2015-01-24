@@ -25,11 +25,10 @@ class Config(object):
     # http://docs.sqlalchemy.org/en/rel_0_9/core/engines.html#database-urls
     SQLALCHEMY_DATABASE_URI = "mysql://user:password@host/database"
 
-    # SMTP config
-    SMTP_HOST = ""  # SMTP服务器
-    SMTP_PORT = 25
-    SMTP_USER = ""  # 用户名
-    SMTP_PASSWORD = ""  # 口令
+    # SendCloud config
+    SC_FROM = ''
+    SC_API_USER = ''
+    SC_API_KEY = ''
 
     # Redis
     REDIS = False  # 是否启用Redis
