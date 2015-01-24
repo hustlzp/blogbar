@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from 'macro/ui.html' import pagination %}
+{% from 'macro/ui.html' import pagination, render_posts %}
 
 {% block page_title %}Blogbar | 聚合个人博客{% endblock %}
 {% block page_content %}
@@ -16,35 +16,7 @@
             </h2>
 
             <div class="recommends">
-               {% for post in recommend_posts.items %}
-                  <div class="recommend">
-                     <div class="title">
-                        <a href="{{ url_for('blog.redirect_post', uid=post.id) }}" target="_blank">
-                           {{ post.title }}
-                        </a>
-                     </div>
-
-                     {% if post.pure_content %}
-                        <p class="abstract">{{ post.pure_content|truncate(30, true) }}</p>
-                     {% endif %}
-
-                     <div class="meta">
-                        <a class="blog" href="{{ url_for('blog.view', uid=post.blog.id) }}">
-                           {{ post.blog.title }}</a>
-
-                        {#                        <span class="author">by {{ post.blog.author }}</span>#}
-
-                        {% if post.published_at or post.updated_at %}
-                           <span class="time">
-                              {{ post.published_at|timesince or post.updated_at|timesince }}
-                           </span>
-                        {% endif %}
-
-                        <span class="clicks">{{ post.clicks if post.clicks else 0 }} 次点击</span>
-                        {#                        <span class="readtime">{{ post.pure_content|readtime }} 分钟阅读</span>#}
-                     </div>
-                  </div>
-               {% endfor %}
+               {{ render_posts(recommend_posts.items) }}
             </div>
 
             {{ pagination(recommend_posts) }}
