@@ -61,7 +61,7 @@
   display: none;
 }
 .m-blog .btn-wap.unsubscribe .btn-unsubscribe {
-  display: block;
+  display: inline-block;
 }
 .text-list {
   padding-left: 20px;

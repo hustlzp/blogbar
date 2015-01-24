@@ -69,18 +69,19 @@
       display: none;
       color: #999;
 
-      &:hover{
+      &:hover {
         color: #777;
       }
     }
-  }
 
-  .btn-wap.unsubscribe {
-    .btn-subscribe {
-      display: none;
-    }
-    .btn-unsubscribe {
-      display: block;
+    &.unsubscribe {
+      .btn-subscribe {
+        display: none;
+      }
+
+      .btn-unsubscribe {
+        display: inline-block;
+      }
     }
   }
 }

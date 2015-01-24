@@ -30,6 +30,35 @@
   }
 }
 
+// 订阅按钮
+.btn-wap {
+  margin-top: 12px;
+
+  .btn-subscribe,
+  .btn-unsubscribe {
+    text-decoration: none;
+  }
+
+  .btn-unsubscribe {
+    display: none;
+    color: #999;
+
+    &:hover {
+      color: #777;
+    }
+  }
+
+  &.unsubscribe {
+    .btn-subscribe {
+      display: none;
+    }
+
+    .btn-unsubscribe {
+      display: inline-block;
+    }
+  }
+}
+
 .report-error {
   a {
     font-size: 12px;
