@@ -13,18 +13,16 @@
 
             {% set admin = permissions.AdminPermission().check() %}
 
-            <div class="row">
-               <div class="kinds-selector col-xs-12 col-lg-10">
-                  <a class="kind {% if not kind_id or kind_id == 0 %}on{% endif %}"
-                     href="{{ url_for('blog.square') }}">全部</a>
+            <div class="kinds-selector">
+               <a class="kind {% if not kind_id or kind_id == 0 %}on{% endif %}"
+                  href="{{ url_for('blog.square') }}">全部</a>
 
-                  {% for kind in kinds %}
-                     <a class="kind {% if kind_id == kind.id %}on{% endif %}"
-                        href="{{ url_for('blog.square', kind=kind.id) }}">
-                        {{ kind.name }}
-                     </a>
-                  {% endfor %}
-               </div>
+               {% for kind in kinds %}
+                  <a class="kind {% if kind_id == kind.id %}on{% endif %}"
+                     href="{{ url_for('blog.square', kind=kind.id) }}">
+                     {{ kind.name }}
+                  </a>
+               {% endfor %}
             </div>
 
             <div class="blogs clearfix">
