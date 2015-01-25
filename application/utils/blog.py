@@ -22,7 +22,7 @@ def grab_by_feed(blog):
     # 检测博客是否在线
     blog.offline = check_offline(blog.url)
 
-    # 20s超时
+    # 读取feed，20s超时
     try:
         with Timeout(20):
             result = parse_feed(blog.feed)
@@ -35,18 +35,22 @@ def grab_by_feed(blog):
         else:
             blog.feed_status = FEED_STATUS_GOOD
 
-    # 若feed失效，则退出
+    # 若feed无效，则退出
     if blog.feed_status != FEED_STATUS_GOOD:
         db.session.add(blog)
         db.session.commit()
         return 0
 
+    # 更新博客信息
     if not blog.feed_version:
         blog.feed_version = result.version
     if not blog.subtitle and 'subtitle' in result.feed:
         blog.subtitle = _process_title(result.feed.subtitle)
 
     timezone_offset = blog.feed_timezone_offset or 0
+
+    # 用于计算blog最后更新时间
+    last_updated_at = datetime.datetime.min
 
     for entry in result.entries:
         entry.link = _uniform_url(entry.link)
@@ -65,6 +69,10 @@ def grab_by_feed(blog):
             # logging.debug(" new - %s" % post.title)
             print(" new - %s" % post.title)
 
+        if post.published_at > last_updated_at:
+            last_updated_at = post.published_at
+
+    blog.updated_at = last_updated_at
     db.session.add(blog)
     db.session.commit()
     return new_posts_count

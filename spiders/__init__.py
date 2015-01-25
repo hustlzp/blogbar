@@ -1,5 +1,6 @@
 # coding: utf-8
 import logging
+import datetime
 from application.models import db, Blog, Post
 from application.utils.blog import check_offline
 from .lifesinger import LifeSingerSpider
@@ -38,6 +39,9 @@ def grab_by_spider(spider_class):
     # 检测博客是否在线
     blog.offline = check_offline(blog.url)
 
+    # 用于计算blog最后更新时间
+    last_updated_at = datetime.datetime.min
+
     for p in spider_class.get_posts_():
         url = p['url']
         title = p['title']
@@ -58,6 +62,11 @@ def grab_by_spider(spider_class):
             post.published_at = published_at
             post.content = spider_class.get_post_(url)
             db.session.add(post)
+
+        if published_at > last_updated_at:
+            last_updated_at = published_at
+
+    blog.updated_at = last_updated_at
     db.session.add(blog)
     db.session.commit()
     return new_posts_count
