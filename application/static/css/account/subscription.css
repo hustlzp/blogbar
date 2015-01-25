@@ -1,0 +1,22 @@
+.blogs {
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+  margin-top: 12px;
+}
+.blogs .blog {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+}
+.blogs .blog .title {
+  color: #000;
+}
+.blogs .blog .subtitle {
+  padding-top: 4px;
+  color: #999999;
+  font-size: 12px;
+}
+.link-more {
+  font-size: 12px;
+  margin-left: 10px;
+}
