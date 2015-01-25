@@ -20,7 +20,7 @@ def square():
         blogs = blogs_query.filter(Blog.blog_kinds.any(BlogKind.kind_id == kind_id))
     else:
         blogs = blogs_query
-    blogs = blogs.paginate(page, 36)
+    blogs = blogs.order_by(Blog.updated_at.desc()).paginate(page, 36)
     latest_blogs = blogs_query.order_by(Blog.created_at.desc()).limit(15)
     return render_template('blog/square.html', blogs=blogs, kinds=kinds, latest_blogs=latest_blogs,
                            kind_id=kind_id)
