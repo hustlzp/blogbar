@@ -45,6 +45,7 @@ class Blog(db.Model):
 
 
 class UserBlog(db.Model):
+    """用户订阅博客"""
     id = db.Column(db.Integer, primary_key=True)
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
 

@@ -82,17 +82,26 @@ def register_jinja(app):
     # inject vars into template context
     @app.context_processor
     def inject_vars():
+        import datetime
         from .utils import permissions
         from .utils.permissions import AdminPermission
-        from .models import ApprovementLog
+        from .models import db, ApprovementLog, Post
 
         new_blogs_count = 0
         if AdminPermission().check():
             new_blogs_count = ApprovementLog.query.filter(ApprovementLog.status == -1).count()
 
+        new_posts_count = 0
+        if g.user:
+            last_read_at = g.user.last_read_at or datetime.datetime.now
+            blog_ids = [user_blog.blog_id for user_blog in g.user.user_blogs]
+            new_posts_count = Post.query.filter(Post.blog_id.in_(blog_ids)).filter(
+                ~Post.hide).filter(Post.created_at > last_read_at).count()
+
         return dict(
             permissions=permissions,
-            new_blogs_count=new_blogs_count
+            new_blogs_count=new_blogs_count,
+            new_posts_count=new_posts_count
         )
 
     def url_for_other_page(page):

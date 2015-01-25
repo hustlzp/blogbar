@@ -93,7 +93,12 @@
          <ul class="nav navbar-nav navbar-right">
             {% if g.user %}
                <li id="nav-subscription">
-                  <a href="{{ url_for('account.subscription') }}">我的订阅</a>
+                  <a href="{{ url_for('account.subscription') }}">
+                     我的订阅
+                     {% if new_posts_count %}
+                        <span class="badge new-posts-count">{{ new_posts_count }}</span>
+                     {% endif %}
+                  </a>
                </li>
 
                <li class="dropdown" id="nav-me">

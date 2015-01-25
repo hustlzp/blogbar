@@ -12,6 +12,7 @@ class User(db.Model):
     password = db.Column(db.String(200))
     is_admin = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
+    last_read_at = db.Column(db.DateTime, default=datetime.datetime.now)
 
     def __setattr__(self, name, value):
         # 每当设置password时，自动进行hash

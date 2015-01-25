@@ -156,6 +156,11 @@ body {
   bottom: 0;
   left: 0;
 }
+.navbar .new-posts-count {
+  background: #2a99c2;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+}
 #footer {
   position: absolute;
   font-size: 12px;
