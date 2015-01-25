@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% from "macro/ui.html" import pagination, render_posts %}
+
+{% block page_title %}我的收藏{% endblock %}
+{% block page_content %}
+   <div class="container">
+      <div class="row">
+         <div class="col-sm-8">
+            <div class="posts body-top-gap">
+               <p>TODO</p>
+               {#               {{ render_posts(posts.items) }}#}
+            </div>
+
+            {#            {{ pagination(posts) }}#}
+         </div>
+      </div>
+   </div>
+{% endblock %}

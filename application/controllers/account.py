@@ -65,3 +65,12 @@ def subscribed_blogs(page):
     blog_ids = [user_blog.blog_id for user_blog in g.user.user_blogs]
     blogs = Blog.query.filter(Blog.id.in_(blog_ids)).paginate(page, 24)
     return render_template('account/subscribed_blogs.html', blogs=blogs)
+
+
+@bp.route('/collection', defaults={'page': 1})
+@bp.route('/collection/page/<int:page>')
+@UserPermission()
+def collection(page):
+    posts = None
+    return render_template('account/collection.html', posts=posts)
+
