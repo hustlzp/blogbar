@@ -11,6 +11,8 @@ class User(db.Model):
     avatar = db.Column(db.String(200))
     password = db.Column(db.String(200))
     is_admin = db.Column(db.Boolean, default=False)
+    is_active = db.Column(db.Boolean, default=False)
+    token = db.Column(db.String(50))
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
     last_read_at = db.Column(db.DateTime, default=datetime.datetime.now)
 
