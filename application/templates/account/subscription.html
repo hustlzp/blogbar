@@ -22,7 +22,7 @@
 
          <div class="col-sm-4">
             <h2>我订阅的博客
-               <a href="#">全部</a></h2>
+               <a href="{{ url_for('account.subscribed_blogs') }}">全部</a></h2>
 
             {% for blog in blogs %}
                <div class="blog">

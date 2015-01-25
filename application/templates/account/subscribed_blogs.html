@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% from "macro/ui.html" import pagination, render_blogs %}
+
+{% block page_title %}我订阅的博客{% endblock %}
+{% block page_content %}
+   <div class="container">
+      <div class="row">
+         <div class="col-sm-8">
+            <h2>
+               共订阅 {{ blogs.total }} 个博客
+            </h2>
+
+            <div class="blogs">
+               {{ render_blogs(blogs.items) }}
+            </div>
+
+            {{ pagination(blogs) }}
+         </div>
+      </div>
+   </div>
+{% endblock %}

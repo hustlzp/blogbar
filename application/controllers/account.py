@@ -48,7 +48,16 @@ def signout():
 def subscription(page):
     """我的订阅"""
     blog_ids = [user_blog.blog_id for user_blog in g.user.user_blogs]
-    blogs = Blog.query.filter(Blog.id.in_(blog_ids))
+    blogs = Blog.query.filter(Blog.id.in_(blog_ids)).limit(10)
     posts = Post.query.filter(Post.blog_id.in_(blog_ids)).filter(~Post.hide).order_by(
         Post.created_at.desc()).paginate(page, 15)
     return render_template('account/subscription.html', blogs=blogs, posts=posts)
+
+
+@bp.route('/subscribed_blogs', defaults={'page': 1})
+@bp.route('/subscribed_blogs/page/<int:page>')
+@UserPermission()
+def subscribed_blogs(page):
+    blog_ids = [user_blog.blog_id for user_blog in g.user.user_blogs]
+    blogs = Blog.query.filter(Blog.id.in_(blog_ids)).paginate(page, 24)
+    return render_template('account/subscribed_blogs.html', blogs=blogs)
