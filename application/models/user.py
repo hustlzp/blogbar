@@ -1,7 +1,7 @@
 # coding: utf-8
 import datetime
 from ._base import db
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash, gen_salt
 
 
 class User(db.Model):
@@ -16,6 +16,16 @@ class User(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
     last_read_at = db.Column(db.DateTime, default=datetime.datetime.now)
 
+    def __init__(self, **kwargs):
+        self.update_token()
+
+        if 'email' in kwargs:
+            email = kwargs.pop('email')
+            self.email = email.lower()
+
+        for k, v in kwargs.items():
+            setattr(self, k, v)
+
     def __setattr__(self, name, value):
         # 每当设置password时，自动进行hash
         if name == 'password':
@@ -25,6 +35,9 @@ class User(db.Model):
     def check_password(self, password):
         """验证密码"""
         return check_password_hash(self.password, password)
+
+    def update_token(self):
+        self.token = gen_salt(16)
 
     def __repr__(self):
         return '<User %s>' % self.name
