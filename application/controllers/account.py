@@ -4,6 +4,7 @@ from flask import render_template, Blueprint, redirect, request, url_for, g, fla
 from ..forms import SigninForm, SignupForm
 from ..utils.account import signin_user, signout_user
 from ..utils.permissions import VisitorPermission, UserPermission
+from ..utils.mail import send_active_mail
 from ..models import db, User, Post, Blog
 
 bp = Blueprint('account', __name__)
@@ -31,8 +32,8 @@ def signup():
         user = User(**params)
         db.session.add(user)
         db.session.commit()
-        signin_user(user)
-        return redirect(url_for('site.index'))
+        send_active_mail(user)
+        return render_template('account/tip.html', message='账号激活链接已发送到你的邮箱，请查收邮件。')
     return render_template('account/signup.html', form=form)
 
 
