@@ -1,6 +1,6 @@
 # coding: utf-8
 import datetime
-from flask import render_template, Blueprint, redirect, request, url_for, g
+from flask import render_template, Blueprint, redirect, request, url_for, g, flash
 from ..forms import SigninForm, SignupForm
 from ..utils.account import signin_user, signout_user
 from ..utils.permissions import VisitorPermission, UserPermission
@@ -41,6 +41,35 @@ def signout():
     """登出"""
     signout_user()
     return redirect(request.referrer or url_for('site.index'))
+
+
+@bp.route('/active')
+@VisitorPermission()
+def active():
+    """激活账户"""
+    user_id = request.args.get('user_id', type=int)
+    token = request.args.get('token')
+
+    if not user_id or not token:
+        flash('激活失败')
+        return redirect(url_for('site.index'))
+
+    user = User.query.filter(User.id == user_id, User.token == token).first()
+    if not user:
+        flash('激活失败')
+        return redirect(url_for('site.index'))
+
+    if user.is_active:
+        return redirect(url_for('site.index'))
+
+    user.is_active = True
+    user.update_token()
+    db.session.add(user)
+    db.session.commit()
+
+    signin_user(user)
+    flash('激活成功，欢迎来到 Blogbar')
+    return redirect(url_for('site.index'))
 
 
 @bp.route('/subscription', defaults={'page': 1})
