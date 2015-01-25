@@ -3,6 +3,15 @@
 
 {% block page_title %}Blogbar | 聚合个人博客{% endblock %}
 {% block page_content %}
+   {% if not g.user %}
+      <div class="description-wrapper">
+         <div class="words">
+            <div class="title">世界太嘈杂，这里只有个人<sup>兆赫</sup></div>
+            <div class="subtitle">Blogbar，聚合个人博客</div>
+         </div>
+      </div>
+   {% endif %}
+
    <div class="container">
       <div class="row">
          <div class="col-sm-8">

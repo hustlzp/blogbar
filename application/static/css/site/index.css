@@ -1,3 +1,21 @@
+.description-wrapper {
+  background: url('/static/image/lonely.jpg') no-repeat center center;
+  background-size: cover;
+  height: 550px;
+  margin-top: -10px;
+}
+.description-wrapper .words {
+  text-align: center;
+  color: #ffffff;
+}
+.description-wrapper .words .title {
+  padding-top: 180px;
+  font-size: 50px;
+}
+.description-wrapper .words .subtitle {
+  font-size: 20px;
+  padding-top: 20px;
+}
 .feed {
   font-size: 14px;
   margin-left: 5px;
