@@ -1,14 +1,37 @@
 {% extends "layout.html" %}
+{% from "macro/ui.html" import pagination, render_posts %}
 
 {% block page_title %}我的订阅{% endblock %}
 {% block page_content %}
    <div class="container">
       <div class="row">
          <div class="col-sm-8">
+            <h2>
+               近期更新
+               <a href="">
+                  <span class="fa fa-rss-square"></span>
+               </a>
+            </h2>
+
+            <div class="blogs">
+               {{ render_posts(posts.items) }}
+            </div>
+
+            {{ pagination(posts) }}
          </div>
 
          <div class="col-sm-4">
-            <h2>我订阅的博客</h2>
+            <h2>我订阅的博客
+               <a href="#">全部</a></h2>
+
+            {% for blog in blogs %}
+               <div class="blog">
+                  <a class="title"
+                     href="{{ url_for('blog.view', uid=blog.id) }}">{{ blog.title }}</a>
+               </div>
+            {% endfor %}
+
+
          </div>
       </div>
 

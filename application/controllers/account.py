@@ -1,9 +1,9 @@
 # coding: utf-8
-from flask import render_template, Blueprint, redirect, request, url_for
+from flask import render_template, Blueprint, redirect, request, url_for, g
 from ..forms import SigninForm, SignupForm
 from ..utils.account import signin_user, signout_user
 from ..utils.permissions import VisitorPermission, UserPermission
-from ..models import db, User
+from ..models import db, User, Post, Blog
 
 bp = Blueprint('account', __name__)
 
@@ -42,8 +42,13 @@ def signout():
     return redirect(request.referrer or url_for('site.index'))
 
 
-@bp.route('/subscription')
+@bp.route('/subscription', defaults={'page': 1})
+@bp.route('/subscription/page/<int:page>')
 @UserPermission()
-def subscription():
+def subscription(page):
     """我的订阅"""
-    return render_template('account/subscription.html')
+    blog_ids = [user_blog.blog_id for user_blog in g.user.user_blogs]
+    blogs = Blog.query.filter(Blog.id.in_(blog_ids))
+    posts = Post.query.filter(Post.blog_id.in_(blog_ids)).filter(~Post.hide).order_by(
+        Post.created_at.desc()).paginate(page, 15)
+    return render_template('account/subscription.html', blogs=blogs, posts=posts)
