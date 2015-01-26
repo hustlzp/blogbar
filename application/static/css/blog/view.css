@@ -23,6 +23,7 @@
   padding-left: 0;
 }
 .btn-wap {
+  display: inline-block;
   margin-top: 12px;
 }
 .btn-wap .btn-subscribe,
