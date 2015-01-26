@@ -15,13 +15,18 @@
 }
 @media (max-width: 767px) {
   .description-wrapper .words .title {
-    font-size: 40px;
+    font-size: 38px;
   }
 }
 .description-wrapper .words .subtitle {
   text-shadow: 0 1px 1px #333;
   font-size: 20px;
   padding-top: 20px;
+}
+@media (max-width: 767px) {
+  .description-wrapper .words .subtitle {
+    font-size: 18px;
+  }
 }
 .feed {
   font-size: 14px;
