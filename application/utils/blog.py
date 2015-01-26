@@ -6,8 +6,7 @@ import logging
 from HTMLParser import HTMLParser
 from flask import current_app
 from time import mktime
-from datetime import datetime
-from datetime import timedelta
+from datetime import datetime, timedelta
 from ..models import db, Post, FEED_STATUS_GOOD, FEED_STATUS_BAD, FEED_STATUS_TIMEOUT
 from .helper import Timeout, remove_html
 
@@ -50,7 +49,7 @@ def grab_by_feed(blog):
     timezone_offset = blog.feed_timezone_offset or 0
 
     # 用于计算blog最后更新时间
-    last_updated_at = datetime.datetime.min
+    last_updated_at = datetime.min
 
     for entry in result.entries:
         entry.link = _uniform_url(entry.link)
