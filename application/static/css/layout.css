@@ -171,7 +171,6 @@ body {
 .navbar .new-posts-count {
   background: #2a99c2;
   margin-left: 2px;
-  vertical-align: text-bottom;
 }
 @media (max-width: 767px) {
   .navbar .navbar-account-nav {
