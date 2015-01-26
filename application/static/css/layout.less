@@ -50,10 +50,18 @@ body {
 }
 
 .navbar {
-  position: relative;
   border: none;
   background-color: #fff;
   margin-bottom: 10px;
+
+  // 中屏：
+  @media (max-width: @screen-md-max) and (min-width: @screen-sm-min) {
+    padding-bottom: 50px;
+  }
+
+  .navbar-collapse {
+    position: relative;
+  }
 
   .navbar-brand {
     @media (min-width: @screen-sm-min) {
@@ -91,13 +99,14 @@ body {
     border: none;
     width: 220px;
 
-    @media (max-width: @screen-md-max) {
-      margin: 0 0 15px 0;
-      float: none !important;
-      clear: both;
-      padding: 0;
+    // 中屏
+    @media (max-width: @screen-md-max) and (min-width: @screen-sm-min) {
+      margin: 0;
+      position: absolute;
+      top: 60px;
     }
 
+    // 小屏：宽度100%
     @media (max-width: @screen-xs-max) {
       width: 100%;
     }
@@ -130,10 +139,19 @@ body {
     margin-top: 15px;
     .transition(all, 0.08s);
 
+    // 小屏
     @media (max-width: @screen-xs-max) {
       margin-top: 5.5px;
       margin-bottom: 15px;
       margin-left: 0;
+    }
+
+    // 中屏
+    @media (max-width: @screen-md-max) and (min-width: @screen-sm-min) {
+      margin: 0 0 0 0;
+      position: absolute;
+      top: 60px;
+      left: 235px;
     }
   }
 

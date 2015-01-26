@@ -52,10 +52,17 @@ body {
   }
 }
 .navbar {
-  position: relative;
   border: none;
   background-color: #fff;
   margin-bottom: 10px;
+}
+@media (max-width: 1199px) and (min-width: 768px) {
+  .navbar {
+    padding-bottom: 50px;
+  }
+}
+.navbar .navbar-collapse {
+  position: relative;
 }
 @media (min-width: 768px) {
   .navbar .navbar-brand {
@@ -90,12 +97,11 @@ body {
   border: none;
   width: 220px;
 }
-@media (max-width: 1199px) {
+@media (max-width: 1199px) and (min-width: 768px) {
   .navbar .navbar-form {
-    margin: 0 0 15px 0;
-    float: none !important;
-    clear: both;
-    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 60px;
   }
 }
 @media (max-width: 767px) {
@@ -137,6 +143,14 @@ body {
     margin-top: 5.5px;
     margin-bottom: 15px;
     margin-left: 0;
+  }
+}
+@media (max-width: 1199px) and (min-width: 768px) {
+  .navbar .navbar-btn.btn-sm {
+    margin: 0 0 0 0;
+    position: absolute;
+    top: 60px;
+    left: 235px;
   }
 }
 .navbar .navbar-right {
