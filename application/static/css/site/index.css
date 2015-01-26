@@ -1,7 +1,7 @@
 .description-wrapper {
   background: url('/static/image/lonely.jpg') no-repeat center center;
   background-size: cover;
-  height: 550px;
+  height: 500px;
   margin-top: -10px;
 }
 .description-wrapper .words {
@@ -12,6 +12,11 @@
   text-shadow: 0 1px 1px #000;
   padding: 180px 20px 0 20px;
   font-size: 50px;
+}
+@media (max-width: 767px) {
+  .description-wrapper .words .title {
+    font-size: 40px;
+  }
 }
 .description-wrapper .words .subtitle {
   text-shadow: 0 1px 1px #333;

@@ -17,7 +17,7 @@ class UserRole(Role):
         return 'user_id' in session
 
     def deny(self):
-        flash('Login first.')
+        flash('请登录账号')
         return redirect(url_for('account.signin'))
 
 

@@ -56,13 +56,13 @@ body {
   background-color: #fff;
   margin-bottom: 10px;
 }
+.navbar > .container {
+  position: relative;
+}
 @media (max-width: 1199px) and (min-width: 768px) {
-  .navbar {
+  .navbar > .container {
     padding-bottom: 50px;
   }
-}
-.navbar .navbar-collapse {
-  position: relative;
 }
 @media (min-width: 768px) {
   .navbar .navbar-brand {
@@ -97,17 +97,18 @@ body {
   border: none;
   width: 220px;
 }
+@media (max-width: 767px) {
+  .navbar .navbar-form {
+    width: 100%;
+    margin-left: 0;
+  }
+}
 @media (max-width: 1199px) and (min-width: 768px) {
   .navbar .navbar-form {
     margin: 0;
     position: absolute;
     top: 60px;
-  }
-}
-@media (max-width: 767px) {
-  .navbar .navbar-form {
-    width: 100%;
-    margin-left: 0;
+    left: 15px;
   }
 }
 .navbar .navbar-form input {
@@ -150,7 +151,7 @@ body {
     margin: 0 0 0 0;
     position: absolute;
     top: 60px;
-    left: 235px;
+    left: 250px;
   }
 }
 .navbar .navbar-right {
