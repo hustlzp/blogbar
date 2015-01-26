@@ -6,6 +6,10 @@
    <div class="container">
       <div class="row">
          <div class="col-sm-8">
+            <h2>
+               订阅文章更新
+            </h2>
+
             <div class="posts body-top-gap">
                {{ render_posts(posts.items) }}
             </div>
@@ -15,7 +19,7 @@
 
          <div class="col-sm-4">
             <h2>
-               我订阅的博客
+               订阅的博客
                <a href="{{ url_for('account.subscribed_blogs') }}" class="link-more">
                   全部 »
                </a>

@@ -1,3 +1,8 @@
+.posts {
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+  margin-top: 15px;
+}
 .blogs {
   border-top: 1px solid #ddd;
   padding-top: 10px;
