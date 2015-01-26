@@ -6,9 +6,9 @@ from .helper import absolute_url_for
 
 def send_active_mail(user):
     """发送激活链接到用户邮箱"""
-    active_url = absolute_url_for('account.active', token=user.token)
+    active_url = absolute_url_for('account.active', user_id=user.id, token=user.token)
     return send_mail(user.email,
-                     '发送激活链接',
+                     'Blogbar',
                      '激活 Blogbar 账号',
                      render_template('mail/active.html', active_url=active_url))
 

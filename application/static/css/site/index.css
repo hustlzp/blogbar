@@ -9,10 +9,12 @@
   color: #ffffff;
 }
 .description-wrapper .words .title {
+  text-shadow: 0 1px 1px #000;
   padding-top: 180px;
   font-size: 50px;
 }
 .description-wrapper .words .subtitle {
+  text-shadow: 0 1px 1px #333;
   font-size: 20px;
   padding-top: 20px;
 }

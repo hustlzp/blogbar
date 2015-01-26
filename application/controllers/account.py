@@ -33,7 +33,7 @@ def signup():
         db.session.add(user)
         db.session.commit()
         if send_active_mail(user):
-            message = '账号激活链接已发送到你的邮箱，请查收邮件。'
+            message = '激活链接已发送到你的邮箱，请查收。'
         else:
             message = '激活链接发送失败。'
         return render_template('account/tip.html', message=message)
