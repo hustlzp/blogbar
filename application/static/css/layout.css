@@ -117,6 +117,7 @@ body {
   border-radius: 0;
   border: 1px solid #ddd;
   box-shadow: none;
+  -webkit-appearance: none;
 }
 .navbar .navbar-form input:focus {
   border-color: #2a99c2;
