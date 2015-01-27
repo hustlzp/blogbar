@@ -25,7 +25,7 @@ def grab_by_feed(blog):
     blog.offline = check_offline(blog.url)
 
     try:
-        result = parse_feed(blog.feed, TIMEOUT)
+        result = parse_feed(blog.feed)
     except Timeout:
         blog.feed_status = FEED_STATUS_TIMEOUT
         print(' feed timeout')
