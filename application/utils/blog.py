@@ -24,20 +24,13 @@ def grab_by_feed(blog):
     # 检测博客是否在线
     blog.offline = check_offline(blog.url)
 
-    # 读取feed，20s超时
     try:
-        # with Timeout(20):
         result = parse_feed(blog.feed, TIMEOUT)
-    # except Timeout.Timeout:
     except Timeout:
         blog.feed_status = FEED_STATUS_TIMEOUT
         print(' feed timeout')
     else:
         if not result.entries:
-            # if hasattr(result, 'bozo_exception') and isinstance(result.bozo_exception,
-            # socket.timeout):
-            # blog.feed_status = FEED_STATUS_TIMEOUT
-            # else:
             blog.feed_status = FEED_STATUS_BAD
         else:
             blog.feed_status = FEED_STATUS_GOOD
