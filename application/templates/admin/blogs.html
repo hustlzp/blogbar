@@ -4,7 +4,7 @@
 {% block page_title %}博客管理{% endblock %}
 {% block page_content %}
    <div class="container">
-      {% macro render_blogs(blogs) %}
+      {% macro render_blogs(blogs, feed=False) %}
          <table class="table table-bordered">
             <tr>
                <th style="width: 350px;">博客</th>
@@ -38,8 +38,8 @@
                      {% endif %}
                   </td>
                   <td>
-                     {% if blog.feed_status == 2 %}
-                        <span class="label label-warning">超时</span>
+                     {% if feed and blog.feed_status == 2 %}
+                        <span class="label label-warning">Feed 超时</span>
                      {% endif %}
                   </td>
                   <td>
@@ -59,6 +59,6 @@
 
       <h2>Feed 失效博客</h2>
 
-      {{ render_blogs(bad_feed_blogs) }}
+      {{ render_blogs(bad_feed_blogs, feed=True) }}
    </div>
 {% endblock %}
