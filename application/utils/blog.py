@@ -2,6 +2,7 @@
 import re
 import socket
 import requests
+from requests.exceptions import Timeout
 import feedparser
 import logging
 from HTMLParser import HTMLParser
@@ -9,7 +10,7 @@ from flask import current_app
 from time import mktime
 from datetime import datetime, timedelta
 from ..models import db, Post, FEED_STATUS_GOOD, FEED_STATUS_BAD, FEED_STATUS_TIMEOUT
-from .helper import Timeout, remove_html
+from .helper import remove_html
 
 
 def grab_by_feed(blog):
@@ -23,20 +24,22 @@ def grab_by_feed(blog):
     blog.offline = check_offline(blog.url)
 
     # 读取feed，20s超时
-    # try:
-    # with Timeout(20):
-    result = parse_feed(blog.feed, 30)
+    try:
+        # with Timeout(20):
+        result = parse_feed(blog.feed, 30)
     # except Timeout.Timeout:
-    #     blog.feed_status = FEED_STATUS_TIMEOUT
-    #     print(' feed timeout')
-    # else:
-    if not result.entries:
-        if hasattr(result, 'bozo_exception') and isinstance(result.bozo_exception, socket.timeout):
-            blog.feed_status = FEED_STATUS_TIMEOUT
-        else:
-            blog.feed_status = FEED_STATUS_BAD
+    except Timeout:
+        blog.feed_status = FEED_STATUS_TIMEOUT
+        print(' feed timeout')
     else:
-        blog.feed_status = FEED_STATUS_GOOD
+        if not result.entries:
+            # if hasattr(result, 'bozo_exception') and isinstance(result.bozo_exception,
+            # socket.timeout):
+            # blog.feed_status = FEED_STATUS_TIMEOUT
+            # else:
+            blog.feed_status = FEED_STATUS_BAD
+        else:
+            blog.feed_status = FEED_STATUS_GOOD
 
     # 若feed无效，则退出
     if blog.feed_status != FEED_STATUS_GOOD:
@@ -211,13 +214,18 @@ def check_offline(url):
 
 def parse_feed(feed, timeout=None):
     """解析Feed"""
-    if timeout:
-        socket.setdefaulttimeout(timeout)
+    # if timeout:
+    # socket.setdefaulttimeout(timeout)
 
     # 解析Feed时设置User-Agent和Referer头部，以免出现403现象
     config = current_app.config
     site_domain = config.get('SITE_DOMAIN')
-    result = feedparser.parse(feed, agent=site_domain, referrer=site_domain)
+    headers = {
+        'User-Agent': site_domain,
+        'Referer': site_domain
+    }
+    r = requests.get('feed', timeout=timeout, headers=headers)
+    result = feedparser.parse(r.text)
 
     # 天涯博客
     if 'blog.tianya.cn' in feed:
@@ -226,7 +234,7 @@ def parse_feed(feed, timeout=None):
             published = datetime.strptime(published_text, "%Y-%m-%d %H:%M:%S")
             entry.published_parsed = published.timetuple()
 
-    socket.setdefaulttimeout(None)
+    # socket.setdefaulttimeout(None)
     return result
 
 
