@@ -82,13 +82,15 @@ def active():
 def subscription(page):
     """我的订阅"""
     blog_ids = [user_blog.blog_id for user_blog in g.user.user_blogs]
+    blogs_count = Blog.query.filter(Blog.id.in_(blog_ids)).count()
     blogs = Blog.query.filter(Blog.id.in_(blog_ids)).limit(10)
     posts = Post.query.filter(Post.blog_id.in_(blog_ids)).filter(~Post.hide).order_by(
         Post.published_at.desc()).paginate(page, 15)
     g.user.last_read_at = datetime.datetime.now()
     db.session.add(g.user)
     db.session.commit()
-    return render_template('account/subscription.html', blogs=blogs, posts=posts)
+    return render_template('account/subscription.html', blogs=blogs, blogs_count=blogs_count,
+                           posts=posts)
 
 
 @bp.route('/subscribed_blogs', defaults={'page': 1})
