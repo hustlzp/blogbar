@@ -215,7 +215,7 @@ def parse_feed(feed):
         'User-Agent': site_domain,
         'Referer': site_domain
     }
-    r = requests.get('feed', timeout=TIMEOUT, verify=False, headers=headers)
+    r = requests.get(feed, timeout=TIMEOUT, verify=False, headers=headers)
     result = feedparser.parse(r.text)
 
     # 天涯博客
