@@ -1,6 +1,5 @@
 # coding: utf-8
 import re
-import socket
 import requests
 from requests.exceptions import Timeout
 import feedparser
@@ -11,6 +10,8 @@ from time import mktime
 from datetime import datetime, timedelta
 from ..models import db, Post, FEED_STATUS_GOOD, FEED_STATUS_BAD, FEED_STATUS_TIMEOUT
 from .helper import remove_html
+
+TIMEOUT = 30
 
 
 def grab_by_feed(blog):
@@ -26,7 +27,7 @@ def grab_by_feed(blog):
     # 读取feed，20s超时
     try:
         # with Timeout(20):
-        result = parse_feed(blog.feed, 30)
+        result = parse_feed(blog.feed, TIMEOUT)
     # except Timeout.Timeout:
     except Timeout:
         blog.feed_status = FEED_STATUS_TIMEOUT
@@ -198,7 +199,7 @@ def _get_time(time_struct, timezone_offset=None):
 def check_offline(url):
     """判断博客是否在线。"""
     try:
-        res = requests.get(url, verify=False)
+        res = requests.get(url, verify=False, timeout=TIMEOUT)
         if (res.status_code >= 500
             or res.status_code == 404
             or 'http://mcc.godaddy.com/park' in res.text
@@ -212,11 +213,8 @@ def check_offline(url):
         return True
 
 
-def parse_feed(feed, timeout=None):
+def parse_feed(feed):
     """解析Feed"""
-    # if timeout:
-    # socket.setdefaulttimeout(timeout)
-
     # 解析Feed时设置User-Agent和Referer头部，以免出现403现象
     config = current_app.config
     site_domain = config.get('SITE_DOMAIN')
@@ -224,7 +222,7 @@ def parse_feed(feed, timeout=None):
         'User-Agent': site_domain,
         'Referer': site_domain
     }
-    r = requests.get('feed', timeout=timeout, headers=headers)
+    r = requests.get('feed', timeout=TIMEOUT, headers=headers)
     result = feedparser.parse(r.text)
 
     # 天涯博客
@@ -233,8 +231,6 @@ def parse_feed(feed, timeout=None):
             published_text = entry.published.split('(')[0]
             published = datetime.strptime(published_text, "%Y-%m-%d %H:%M:%S")
             entry.published_parsed = published.timetuple()
-
-    # socket.setdefaulttimeout(None)
     return result
 
 
