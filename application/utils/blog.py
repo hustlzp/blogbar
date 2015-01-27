@@ -1,5 +1,6 @@
 # coding: utf-8
 import re
+import socket
 import requests
 import feedparser
 import logging
@@ -22,17 +23,20 @@ def grab_by_feed(blog):
     blog.offline = check_offline(blog.url)
 
     # 读取feed，20s超时
-    try:
-        with Timeout(20):
-            result = parse_feed(blog.feed)
-    except Timeout.Timeout:
-        blog.feed_status = FEED_STATUS_TIMEOUT
-        print(' feed timeout')
-    else:
-        if not result.entries:
-            blog.feed_status = FEED_STATUS_BAD
+    # try:
+    # with Timeout(20):
+    result = parse_feed(blog.feed, 30)
+    # except Timeout.Timeout:
+    #     blog.feed_status = FEED_STATUS_TIMEOUT
+    #     print(' feed timeout')
+    # else:
+    if not result.entries:
+        if hasattr(result, 'bozo_exception') and isinstance(result.bozo_exception, socket.timeout):
+            blog.feed_status = FEED_STATUS_TIMEOUT
         else:
-            blog.feed_status = FEED_STATUS_GOOD
+            blog.feed_status = FEED_STATUS_BAD
+    else:
+        blog.feed_status = FEED_STATUS_GOOD
 
     # 若feed无效，则退出
     if blog.feed_status != FEED_STATUS_GOOD:
@@ -205,8 +209,11 @@ def check_offline(url):
         return True
 
 
-def parse_feed(feed):
+def parse_feed(feed, timeout=None):
     """解析Feed"""
+    if timeout:
+        socket.setdefaulttimeout(timeout)
+
     # 解析Feed时设置User-Agent和Referer头部，以免出现403现象
     config = current_app.config
     site_domain = config.get('SITE_DOMAIN')
@@ -219,6 +226,7 @@ def parse_feed(feed):
             published = datetime.strptime(published_text, "%Y-%m-%d %H:%M:%S")
             entry.published_parsed = published.timetuple()
 
+    socket.setdefaulttimeout(None)
     return result
 
 
