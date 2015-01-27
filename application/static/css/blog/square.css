@@ -21,12 +21,11 @@
 }
 .latest-blogs {
   border-top: 1px solid #ddd;
-  padding-top: 10px;
-  margin-top: 12px;
+  padding-top: 12px;
 }
 .latest-blogs .latest-blog {
-  margin-bottom: 10px;
-  padding-bottom: 10px;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
   border-bottom: 1px solid #ddd;
 }
 .latest-blogs .latest-blog .title {
