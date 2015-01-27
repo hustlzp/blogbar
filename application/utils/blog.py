@@ -1,7 +1,6 @@
 # coding: utf-8
 import re
 import requests
-from requests.exceptions import Timeout, ConnectionError
 import feedparser
 import logging
 from HTMLParser import HTMLParser
@@ -9,7 +8,7 @@ from flask import current_app
 from time import mktime
 from datetime import datetime, timedelta
 from ..models import db, Post, FEED_STATUS_GOOD, FEED_STATUS_BAD, FEED_STATUS_TIMEOUT
-from .helper import remove_html
+from .helper import Timeout, remove_html
 
 TIMEOUT = 30
 
@@ -25,12 +24,11 @@ def grab_by_feed(blog):
     blog.offline = check_offline(blog.url)
 
     try:
-        result = parse_feed(blog.feed)
-    except Timeout:
+        with Timeout(TIMEOUT):
+            result = parse_feed(blog.feed)
+    except Timeout.Timeout:
         blog.feed_status = FEED_STATUS_TIMEOUT
         print(' feed timeout')
-    except ConnectionError:
-        blog.feed_status = FEED_STATUS_BAD
     else:
         if not result.entries:
             blog.feed_status = FEED_STATUS_BAD
@@ -213,12 +211,7 @@ def parse_feed(feed):
     # 解析Feed时设置User-Agent和Referer头部，以免出现403现象
     config = current_app.config
     site_domain = config.get('SITE_DOMAIN')
-    headers = {
-        'User-Agent': site_domain,
-        'Referer': site_domain
-    }
-    r = requests.get(feed, timeout=TIMEOUT, verify=False, headers=headers)
-    result = feedparser.parse(r.text)
+    result = feedparser.parse(feed, agent=site_domain, referrer=site_domain)
 
     # 天涯博客
     if 'blog.tianya.cn' in feed:
