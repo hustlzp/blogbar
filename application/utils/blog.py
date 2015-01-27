@@ -28,6 +28,7 @@ def grab_by_feed(blog):
 
     if hasattr(result, 'bozo_exception') and isinstance(result.bozo_exception, Timeout.Timeout):
         blog.feed_status = FEED_STATUS_TIMEOUT
+        print(" feed timeout")
     elif not result.entries:
         blog.feed_status = FEED_STATUS_BAD
     else:
