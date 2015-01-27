@@ -1,7 +1,7 @@
 # coding: utf-8
 import re
 import requests
-from requests.exceptions import Timeout
+from requests.exceptions import Timeout, ConnectionError
 import feedparser
 import logging
 from HTMLParser import HTMLParser
@@ -29,6 +29,8 @@ def grab_by_feed(blog):
     except Timeout:
         blog.feed_status = FEED_STATUS_TIMEOUT
         print(' feed timeout')
+    except ConnectionError:
+        blog.feed_status = FEED_STATUS_BAD
     else:
         if not result.entries:
             blog.feed_status = FEED_STATUS_BAD
