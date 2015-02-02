@@ -84,6 +84,13 @@
                   </tr>
                {% endif %}
 
+               {% if permissions.AdminPermission().check() %}
+                  <tr>
+                     <td>Feed时区</td>
+                     <td>{{ blog.feed_timezone_offset }}</td>
+                  </tr>
+               {% endif %}
+
                {% if blog.blog_kinds.count() %}
                   <tr>
                      <td>标签</td>
@@ -94,13 +101,6 @@
                            {% if not loop.last %} · {% endif %}
                         {% endfor %}
                      </td>
-                  </tr>
-               {% endif %}
-
-               {% if permissions.AdminPermission().check() %}
-                  <tr>
-                     <td>Feed时区</td>
-                     <td>{{ blog.feed_timezone_offset }}</td>
                   </tr>
                {% endif %}
             </table>
