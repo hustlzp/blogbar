@@ -96,6 +96,13 @@
                      </td>
                   </tr>
                {% endif %}
+
+               {% if permissions.AdminPermission().check() %}
+                  <tr>
+                     <td>Feed时区</td>
+                     <td>{{ blog.feed_timezone_offset }}</td>
+                  </tr>
+               {% endif %}
             </table>
 
             <p class="report-error">
