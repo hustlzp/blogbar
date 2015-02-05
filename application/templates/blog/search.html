@@ -13,14 +13,12 @@
             <div class="blogs clearfix">
                {% if not keyword %}
                   <p class="text-light">请输入博客标题</p>
+               {% elif not blogs.total %}
+                  <p class="text-light">找不到相关博客</p>
                {% else %}
-                  {% if not blogs.total %}
-                     <p class="text-light">找不到相关博客</p>
-                  {% else %}
-                     {{ render_blogs(blogs.items) }}
+                  {{ render_blogs(blogs.items) }}
 
-                     {{ pagination(blogs) }}
-                  {% endif %}
+                  {{ pagination(blogs) }}
                {% endif %}
             </div>
          </div>
