@@ -90,7 +90,7 @@ def _check_entry_exist(entry, blog):
         if post:
             published_at = _get_entry_published_at(entry, timezone_offset)
             if published_at:
-                exist = _get_time_diff(published_at, post.published_at) <= timedelta(days=1)
+                exist = _get_time_diff(published_at, post.published_at) <= timedelta(days=5)
             else:
                 exist = True
         else:
@@ -100,7 +100,7 @@ def _check_entry_exist(entry, blog):
             if post:
                 published_at = _get_entry_published_at(entry, timezone_offset)
                 if published_at:
-                    exist = _get_time_diff(published_at, post.published_at) <= timedelta(days=1)
+                    exist = _get_time_diff(published_at, post.published_at) <= timedelta(days=5)
                 else:
                     exist = True
     return exist, post
