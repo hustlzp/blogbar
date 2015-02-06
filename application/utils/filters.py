@@ -12,11 +12,10 @@ def timesince(value):
     # 故需先后退8小时
     now = datetime.datetime.now() - timedelta(hours=8)
 
-    # 此处做判断是为了保证delta为正值，以免出现不正常的情况
-    if now > value:
-        delta = now - value
-    else:
-        delta = value - now
+    if now < value:
+        return '刚刚'
+
+    delta = now - value
 
     if delta.days > 365:
         return '%d 年前' % (delta.days / 365)
