@@ -13,7 +13,7 @@ def timesince(value):
     now = datetime.datetime.now() - timedelta(hours=8)
 
     if now < value:
-        return '刚刚'
+        return '未知'
 
     delta = now - value
 
