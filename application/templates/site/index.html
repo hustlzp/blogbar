@@ -53,13 +53,16 @@
                            {{ post.blog.title }}</a>
 
                         {% if post.published_at or post.updated_at %}
-                           <span class="time">
-                           {% if post.published_at %}
-                              {{ post.published_at|timesince }}
-                           {% else %}
-                              {{ post.updated_at|timesince }}
-                           {% endif %}
-                        </span>
+                           <span class="time
+                                 {% if post.published_at_exceed or post.published_at_exceed %}
+                                    time-danger
+                                 {% endif %}">
+                              {% if post.published_at %}
+                                 {{ post.published_at|timesince }}
+                              {% else %}
+                                 {{ post.updated_at|timesince }}
+                              {% endif %}
+                           </span>
                         {% endif %}
                      </div>
                   </div>

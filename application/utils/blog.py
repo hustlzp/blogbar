@@ -135,7 +135,7 @@ def _get_info_to_post(post, entry, timezone_offset):
     if 'updated_parsed' in entry:
         post.updated_at = _get_time(entry.updated_parsed, timezone_offset)
 
-    # 若published_at不存在，则使用updated_at
+    # 若published_at不存在而updated_at存在，则使用updated_at
     if not post.published_at and post.updated_at:
         post.published_at = post.updated_at
 
@@ -144,6 +144,14 @@ def _get_info_to_post(post, entry, timezone_offset):
     timezone = config.get('TIMEZONE')
     if not post.published_at and not post.updated_at:
         post.published_at = datetime.now() - timedelta(hours=timezone)
+
+    if post.published_at and post.published_at > datetime.now():
+        post.published_at = datetime.now()
+        post.published_at_exceed = True
+
+    if post.updated_at and post.updated_at > datetime.now():
+        post.updated_at = datetime.now()
+        post.updated_at_exceed = True
 
     post.content = _get_entry_content(entry)
 
