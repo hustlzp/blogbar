@@ -101,9 +101,9 @@ class Post(db.Model):
 
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
     published_at = db.Column(db.DateTime)
-    published_at_exceed = db.Column(db.DateTime, default=False)  # Feed中的published_at是否超出当前时间
+    published_at_exceed = db.Column(db.Boolean, default=False)  # Feed中的published_at是否超出当前时间
     updated_at = db.Column(db.DateTime)
-    updated_at_exceed = db.Column(db.DateTime, default=False)
+    updated_at_exceed = db.Column(db.Boolean, default=False)
 
     blog_id = db.Column(db.Integer, db.ForeignKey('blog.id'))
     blog = db.relationship('Blog', backref=db.backref('posts', lazy='dynamic',

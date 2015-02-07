@@ -54,8 +54,8 @@
 
                         {% if post.published_at or post.updated_at %}
                            <span class="time
-                                 {% if post.published_at_exceed or post.published_at_exceed %}
-                                    time-danger
+                                 {% if post.published_at_exceed or post.updated_at_exceed %}
+                                    text-danger
                                  {% endif %}">
                               {% if post.published_at %}
                                  {{ post.published_at|timesince }}

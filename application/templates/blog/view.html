@@ -129,7 +129,12 @@
             {% for post in posts.items %}
                <div class="post">
                   {% if post.published_at %}
-                     <span class="time utc-time utc-time-date">{{ post.published_at }}</span>
+                     <span class="time utc-time utc-time-date
+                           {% if post.published_at_exceed or post.updated_at_exceed %}
+                              text-danger
+                           {% endif %}">
+                        {{ post.published_at }}
+                     </span>
                   {% endif %}
 
                   <div class="title-wap">
