@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 from ..models import db, Post, FEED_STATUS_GOOD, FEED_STATUS_BAD, FEED_STATUS_TIMEOUT
 from .helper import Timeout, remove_html
 
-TIMEOUT = 30
+TIMEOUT = 60
 
 
 def grab_by_feed(blog):
