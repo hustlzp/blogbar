@@ -57,12 +57,12 @@ def grab_by_feed(blog):
 
         if exist:
             # 更新文章
-            _get_info_to_post(post, entry, timezone_offset, True)
+            _get_info_to_post(post, entry, timezone_offset, new_post=False)
             db.session.add(post)
         else:
             # 新文章
             post = Post()
-            _get_info_to_post(post, entry, timezone_offset, False)
+            _get_info_to_post(post, entry, timezone_offset, new_post=True)
             blog.posts.append(post)
             new_posts_count += 1
             # logging.debug(" new - %s" % post.title)
