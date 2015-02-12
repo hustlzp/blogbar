@@ -33,7 +33,8 @@ def search():
     if not keyword:
         blogs = {'total': 0}
     else:
-        blogs = Blog.query.filter(Blog.title.like('%%%s%%' % keyword)).paginate(page, 15)
+        blogs = Blog.query.filter(Blog.is_approved,
+                                  Blog.title.like('%%%s%%' % keyword)).paginate(page, 15)
     return render_template('blog/search.html', blogs=blogs, keyword=keyword)
 
 
