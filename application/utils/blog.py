@@ -57,12 +57,12 @@ def grab_by_feed(blog):
 
         if exist:
             # 更新文章
-            _get_info_to_post(post, entry, timezone_offset)
+            _get_info_to_post(post, entry, timezone_offset, True)
             db.session.add(post)
         else:
-            # 新博文
+            # 新文章
             post = Post()
-            _get_info_to_post(post, entry, timezone_offset)
+            _get_info_to_post(post, entry, timezone_offset, False)
             blog.posts.append(post)
             new_posts_count += 1
             # logging.debug(" new - %s" % post.title)
@@ -125,33 +125,49 @@ def _get_time_diff(one_time, another_time):
     return timediff
 
 
-def _get_info_to_post(post, entry, timezone_offset):
+def _get_info_to_post(post, entry, timezone_offset, new_post):
     """将entry中的信息转存到post中"""
     post.title = _process_title(entry.title)
     post.url = entry.link
+    utc_now = datetime.now() - timedelta(hours=8)
 
-    if 'published_parsed' in entry:
-        post.published_at = _get_time(entry.published_parsed, timezone_offset)
-    if 'updated_parsed' in entry:
-        post.updated_at = _get_time(entry.updated_parsed, timezone_offset)
+    # 新博文时，同时更新published_at和updated_at
+    if new_post:
+        if 'published_parsed' in entry:
+            published_at = _get_time(entry.published_parsed, timezone_offset)
+            if published_at < utc_now:
+                post.published_at = published_at
+                post.published_at_exceed = False
+            else:
+                post.published_at = utc_now
+                post.published_at = True
+        if 'updated_parsed' in entry:
+            updated_at = _get_time(entry.updated_parsed, timezone_offset)
+            if updated_at < utc_now:
+                post.updated_at = updated_at
+                post.updated_at_exceed = False
+            else:
+                post.updated_at = utc_now
+                post.updated_at = True
 
-    # 若published_at不存在而updated_at存在，则使用updated_at
-    if not post.published_at and post.updated_at:
-        post.published_at = post.updated_at
-
-    # 若published_at与updated_at均不存在，则使用当前时间作为published_at
-    config = current_app.config
-    timezone = config.get('TIMEZONE')
-    if not post.published_at and not post.updated_at:
-        post.published_at = datetime.now() - timedelta(hours=timezone)
-
-    if post.published_at and post.published_at > datetime.now():
-        post.published_at = datetime.now()
-        post.published_at_exceed = True
-
-    if post.updated_at and post.updated_at > datetime.now():
-        post.updated_at = datetime.now()
-        post.updated_at_exceed = True
+        # 若published_at不存在
+        if not post.published_at:
+            if post.updated_at:
+                # 若updated_at存在，则使用updated_at作为published_at
+                post.published_at = post.updated_at
+            else:
+                # 否则使用当前时间作为published_at
+                post.published_at = utc_now
+    else:
+        # 更新博文时，仅更新updated_at
+        if 'updated_parsed' in entry:
+            updated_at = _get_time(entry.updated_parsed, timezone_offset)
+            if updated_at < utc_now:
+                post.updated_at = updated_at
+                post.updated_at_exceed = False
+            else:
+                post.updated_at = utc_now
+                post.updated_at = True
 
     post.content = _get_entry_content(entry)
 
