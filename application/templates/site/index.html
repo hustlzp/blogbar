@@ -41,7 +41,6 @@
 
             <div class="latest-posts">
                {% set admin = permissions.AdminPermission().check() %}
-
                {% for post in latest_posts %}
                   <div class="latest-post">
                      <div class="title">
@@ -56,7 +55,7 @@
 
                         {% if post.published_at or post.updated_at %}
                            <span class="time
-                                 {% if admin and (post.published_at_exceed or post.updated_at_exceed) %}
+                                 {% if admin and post.published_at_exceed %}
                                     text-danger
                                  {% endif %}">
                               {% if post.published_at %}

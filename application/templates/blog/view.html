@@ -127,12 +127,11 @@
             {% endif %}
 
             {% set admin = permissions.AdminPermission().check() %}
-
             {% for post in posts.items %}
                <div class="post">
                   {% if post.published_at %}
                      <span class="time utc-time utc-time-date
-                           {% if admin and (post.published_at_exceed or post.updated_at_exceed) %}
+                           {% if admin and post.published_at_exceed %}
                               text-danger
                            {% endif %}">
                         {{ post.published_at }}
