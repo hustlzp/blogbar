@@ -58,11 +58,7 @@
                                  {% if admin and post.published_at_exceed %}
                                     text-danger
                                  {% endif %}">
-                              {% if post.published_at %}
-                                 {{ post.published_at|timesince }}
-                              {% else %}
-                                 {{ post.updated_at|timesince }}
-                              {% endif %}
+                              {{ post.published_at|timesince }}
                            </span>
                         {% endif %}
                      </div>
