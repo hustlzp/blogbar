@@ -140,7 +140,7 @@ def _get_info_to_post(post, entry, timezone_offset, new_post):
                 post.published_at_exceed = False
             else:
                 post.published_at = utc_now
-                post.published_at = True
+                post.published_at_exceed = True
         if 'updated_parsed' in entry:
             updated_at = _get_time(entry.updated_parsed, timezone_offset)
             if updated_at < utc_now:
@@ -148,7 +148,7 @@ def _get_info_to_post(post, entry, timezone_offset, new_post):
                 post.updated_at_exceed = False
             else:
                 post.updated_at = utc_now
-                post.updated_at = True
+                post.updated_at_exceed = True
 
         # 若published_at不存在
         if not post.published_at:
@@ -167,7 +167,7 @@ def _get_info_to_post(post, entry, timezone_offset, new_post):
                 post.updated_at_exceed = False
             else:
                 post.updated_at = utc_now
-                post.updated_at = True
+                post.updated_at_exceed = True
 
     post.content = _get_entry_content(entry)
 
