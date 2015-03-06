@@ -16,10 +16,9 @@ def approve(page):
     """审核博客"""
     logs = ApprovementLog.query
     unprocessed_logs = logs.filter(ApprovementLog.status == -1).order_by(
-        ApprovementLog.updated_at.desc())
+        ApprovementLog.created_at.desc())
     processed_logs = logs.filter(ApprovementLog.status != -1).order_by(
-        ApprovementLog.status.desc(),
-        ApprovementLog.updated_at.desc()).paginate(page, 20)
+        ApprovementLog.created_at.desc()).paginate(page, 20)
     return render_template('admin/approve.html', unprocessed_logs=unprocessed_logs,
                            processed_logs=processed_logs)
 
