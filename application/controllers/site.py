@@ -32,10 +32,9 @@ def index(page):
 def approve_results(page):
     logs = ApprovementLog.query
     unprocessed_logs = logs.filter(ApprovementLog.status == -1).order_by(
-        ApprovementLog.updated_at.desc())
+        ApprovementLog.created_at.desc())
     processed_logs = logs.filter(ApprovementLog.status != -1).order_by(
-        ApprovementLog.status.desc(),
-        ApprovementLog.updated_at.desc()).paginate(page, 20)
+        ApprovementLog.created_at.desc()).paginate(page, 20)
     return render_template('site/approve_results.html', unprocessed_logs=unprocessed_logs,
                            processed_logs=processed_logs)
 
@@ -56,10 +55,12 @@ def disclaimer():
     """免责声明"""
     return render_template('site/disclaimer.html')
 
+
 @bp.route('/wiki')
 def wiki():
     """帮助"""
     return render_template('site/wiki.html')
+
 
 @bp.route('/feed/posts.xml')
 def posts_feed():
