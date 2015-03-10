@@ -2,7 +2,6 @@
 import re
 import requests
 import feedparser
-import logging
 from HTMLParser import HTMLParser
 from flask import current_app
 from time import mktime
@@ -17,7 +16,6 @@ def grab_by_feed(blog):
     """通过Feed获取博客内容"""
     new_posts_count = 0
 
-    # logging.debug(blog.title)
     print(blog.title)
 
     # 检测博客是否在线
@@ -58,18 +56,21 @@ def grab_by_feed(blog):
         if exist:
             # 更新文章
             _get_info_to_post(post, entry, timezone_offset, new_post=False)
-            db.session.add(post)
         else:
             # 新文章
             post = Post()
             _get_info_to_post(post, entry, timezone_offset, new_post=True)
-            blog.posts.append(post)
+            post.blog_id = blog.id
             new_posts_count += 1
-            # logging.debug(" new - %s" % post.title)
             print(" new - %s" % post.title)
 
         if post.published_at > last_updated_at:
             last_updated_at = post.published_at
+
+        # 及时保存post，以避免当RSS中存在2篇重复内容的post时，
+        # 导致_check_entry_exist返回False
+        db.session.add(post)
+        db.session.commit()
 
     blog.updated_at = last_updated_at
     db.session.add(blog)
