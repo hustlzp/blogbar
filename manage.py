@@ -112,6 +112,12 @@ def remote_grab():
     grab.delay()
 
 
+@manager.command
+def test_grab(id):
+    blog = Blog.query.get_or_404(id)
+    grab_by_feed(blog)
+
+
 # @manager.command
 # def remote_analyse():
 # from celery_proj.tasks import analyse
