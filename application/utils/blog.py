@@ -95,15 +95,17 @@ def _check_entry_exist(entry, blog):
             else:
                 exist = True
         else:
-            # 是否存在标题一致，且发表时间相近的文章
+            # 是否存在内容一致，且发表时间相近的文章
             entry_content = _get_entry_content(entry)
-            post = blog.posts.filter(Post.content == entry_content).first()
-            if post:
-                published_at = _get_entry_published_at(entry, timezone_offset)
-                if published_at:
-                    exist = _get_time_diff(published_at, post.published_at) <= timedelta(days=5)
-                else:
-                    exist = True
+            # 内容若为空，则返回False
+            if entry_content:
+                post = blog.posts.filter(Post.content == entry_content).first()
+                if post:
+                    published_at = _get_entry_published_at(entry, timezone_offset)
+                    if published_at:
+                        exist = _get_time_diff(published_at, post.published_at) <= timedelta(days=5)
+                    else:
+                        exist = True
     return exist, post
 
 
@@ -188,7 +190,7 @@ def _get_entry_content(entry):
             content = entry.content
     elif 'summary' in entry:
         content = entry.summary
-    return content
+    return content.strip()
 
 
 def _process_title(title):
