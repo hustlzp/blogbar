@@ -160,7 +160,8 @@ def _get_info_to_post(post, entry, timezone_offset, new_post):
                 # 否则使用当前时间作为published_at
                 post.published_at = utc_now
     else:
-        # 更新博文时，仅更新updated_at
+        # 更新博文
+        # 更新updated_at
         if 'updated_parsed' in entry:
             updated_at = _get_time(entry.updated_parsed, timezone_offset)
             if updated_at < utc_now:
@@ -169,6 +170,10 @@ def _get_info_to_post(post, entry, timezone_offset, new_post):
             else:
                 post.updated_at = utc_now
                 post.updated_at_exceed = True
+
+        # 若published_at不存在，则使用created_at作为published_at
+        if not post.published_at:
+            post.published_at = post.created_at
 
     post.content = _get_entry_content(entry)
 
