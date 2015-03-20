@@ -19,20 +19,14 @@
                {{ form.csrf_token }}
 
                {{ vertical_field(form.url) }}
-
                {{ vertical_field(form.title) }}
-
                {{ vertical_field(form.subtitle) }}
-
                {{ vertical_field(form.author) }}
-
                {{ vertical_field(form.feed) }}
-
                {{ vertical_field(form.since) }}
 
                <div class="form-group">
                   <div class="col-md-9">
-                     {#                     <div class="label-for-tags">标签：</div>#}
                      <div class="kinds">
                         {% for kind in kinds %}
                            <span data-kind-id="{{ kind.id }}"
