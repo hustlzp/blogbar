@@ -61,6 +61,12 @@
     padding-bottom: 12px;
     border-bottom: 1px solid #ddd;
 
+    &:hover {
+      .meta .btn-collect-post {
+        visibility: visible;
+      }
+    }
+
     .title {
       padding-bottom: 5px;
 
@@ -75,6 +81,38 @@
 
       .time {
         margin-left: 10px;
+      }
+
+      .btn-collect-post {
+        margin-left: 15px;
+        color: #999;
+        text-decoration: none;
+        visibility: hidden;
+
+        .for-collect {
+          display: inline-block;
+
+          &:hover {
+            color: #666;
+          }
+        }
+
+        .for-uncollect {
+          color: @main-color;
+          display: none;
+        }
+
+        &.collected {
+          visibility: visible !important;
+
+          .for-collect {
+            display: none;
+          }
+
+          .for-uncollect {
+            display: inline-block;
+          }
+        }
       }
     }
   }

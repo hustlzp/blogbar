@@ -52,6 +52,9 @@
   padding-bottom: 12px;
   border-bottom: 1px solid #ddd;
 }
+.latest-posts .latest-post:hover .meta .btn-collect-post {
+  visibility: visible;
+}
 .latest-posts .latest-post .title {
   padding-bottom: 5px;
 }
@@ -64,4 +67,29 @@
 }
 .latest-posts .latest-post .meta .time {
   margin-left: 10px;
+}
+.latest-posts .latest-post .meta .btn-collect-post {
+  margin-left: 15px;
+  color: #999;
+  text-decoration: none;
+  visibility: hidden;
+}
+.latest-posts .latest-post .meta .btn-collect-post .for-collect {
+  display: inline-block;
+}
+.latest-posts .latest-post .meta .btn-collect-post .for-collect:hover {
+  color: #666;
+}
+.latest-posts .latest-post .meta .btn-collect-post .for-uncollect {
+  color: #2a99c2;
+  display: none;
+}
+.latest-posts .latest-post .meta .btn-collect-post.collected {
+  visibility: visible !important;
+}
+.latest-posts .latest-post .meta .btn-collect-post.collected .for-collect {
+  display: none;
+}
+.latest-posts .latest-post .meta .btn-collect-post.collected .for-uncollect {
+  display: inline-block;
 }

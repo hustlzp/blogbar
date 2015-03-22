@@ -90,14 +90,14 @@
   margin-left: 5px;
 }
 .m-post .meta .time,
-.m-post .meta .clicks,
-.m-post .meta .btn-collect-post {
+.m-post .meta .clicks {
   margin-left: 15px;
 }
 .m-post .meta .btn-collect-post {
   color: #999;
   text-decoration: none;
   visibility: hidden;
+  margin-left: 20px;
 }
 .m-post .meta .btn-collect-post .for-collect {
   display: inline-block;
