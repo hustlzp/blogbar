@@ -52,8 +52,11 @@
   padding-bottom: 18px;
   border-bottom: 1px solid #ddd;
 }
+.post:hover .right-top-wap .btn-collect-post {
+  visibility: visible;
+}
 .post .title-wap {
-  padding-right: 110px;
+  padding-right: 170px;
 }
 .post .title-wap .title {
   font-size: 20px;
@@ -64,9 +67,35 @@
   margin-top: 10px;
   color: #999;
 }
-.post .time {
-  color: #999;
-  display: block;
+.post .right-top-wap {
   margin-top: 2px;
-  float: right;
+}
+.post .right-top-wap .time {
+  color: #999;
+  margin-left: 10px;
+}
+.post .right-top-wap .btn-collect-post {
+  color: #999;
+  text-decoration: none;
+  visibility: hidden;
+  margin-left: 20px;
+}
+.post .right-top-wap .btn-collect-post .for-collect {
+  display: inline-block;
+}
+.post .right-top-wap .btn-collect-post .for-collect:hover {
+  color: #666;
+}
+.post .right-top-wap .btn-collect-post .for-uncollect {
+  color: #2a99c2;
+  display: none;
+}
+.post .right-top-wap .btn-collect-post.collected {
+  visibility: visible !important;
+}
+.post .right-top-wap .btn-collect-post.collected .for-collect {
+  display: none;
+}
+.post .right-top-wap .btn-collect-post.collected .for-uncollect {
+  display: inline-block;
 }

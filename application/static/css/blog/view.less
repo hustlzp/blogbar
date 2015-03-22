@@ -1,3 +1,5 @@
+@import "../utils";
+
 .blog-header {
   position: relative;
   padding-bottom: 15px;
@@ -72,8 +74,14 @@
   padding-bottom: 18px;
   border-bottom: 1px solid #ddd;
 
+  &:hover {
+    .right-top-wap .btn-collect-post {
+      visibility: visible;
+    }
+  }
+
   .title-wap {
-    padding-right: 110px;
+    padding-right: 170px;
 
     .title {
       font-size: 20px;
@@ -87,10 +95,44 @@
     color: #999;
   }
 
-  .time {
-    color: #999;
-    display: block;
+  .right-top-wap {
     margin-top: 2px;
-    float: right;
+
+    .time {
+      color: #999;
+      margin-left: 10px;
+    }
+
+    .btn-collect-post {
+      color: #999;
+      text-decoration: none;
+      visibility: hidden;
+      margin-left: 20px;
+
+      .for-collect {
+        display: inline-block;
+
+        &:hover {
+          color: #666;
+        }
+      }
+
+      .for-uncollect {
+        color: @main-color;
+        display: none;
+      }
+
+      &.collected {
+        visibility: visible !important;
+
+        .for-collect {
+          display: none;
+        }
+
+        .for-uncollect {
+          display: inline-block;
+        }
+      }
+    }
   }
 }

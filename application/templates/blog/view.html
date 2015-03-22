@@ -129,14 +129,28 @@
             {% set admin = permissions.AdminPermission().check() %}
             {% for post in posts.items %}
                <div class="post">
-                  {% if post.published_at %}
-                     <span class="time utc-time utc-time-date
+                  <div class="right-top-wap pull-right">
+                     {% if g.user %}
+                        <a href="javascript: void(0)" data-post-id="{{ post.id }}"
+                           class="btn-collect-post {% if post.collected_by_user() %}collected{% endif %}">
+                        <span class="for-collect">
+                           <span class="fa fa-bookmark-o"></span> 收藏
+                        </span>
+                        <span class="for-uncollect">
+                           <span class="fa fa-bookmark"></span> 已收藏
+                        </span>
+                        </a>
+                     {% endif %}
+
+                     {% if post.published_at %}
+                        <span class="time utc-time utc-time-date
                            {% if admin and post.published_at_exceed %}
                               text-danger
                            {% endif %}">
                         {{ post.published_at }}
                      </span>
-                  {% endif %}
+                     {% endif %}
+                  </div>
 
                   <div class="title-wap">
                      <a href="{{ url_for('blog.redirect_post', uid=post.id) }}" class="title"
