@@ -1,17 +1,23 @@
 {% extends "layout.html" %}
 {% from "macro/ui.html" import pagination, render_posts %}
 
-{% block page_title %}我的收藏{% endblock %}
+{% block page_title %}我的订阅{% endblock %}
 {% block page_content %}
    <div class="container">
       <div class="row">
          <div class="col-sm-8">
+            <h2>
+               <span class="fa fa-bookmark"></span> 我的收藏
+            </h2>
+
             <div class="posts body-top-gap">
-               <p>TODO</p>
-               {#               {{ render_posts(posts.items) }}#}
+               {{ render_posts(posts.items, attr='post') }}
             </div>
 
-            {#            {{ pagination(posts) }}#}
+            {{ pagination(posts) }}
+         </div>
+
+         <div class="col-sm-4">
          </div>
       </div>
    </div>

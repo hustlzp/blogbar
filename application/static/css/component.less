@@ -91,6 +91,12 @@
   padding: 0 0 20px 0;
   border-bottom: 1px solid #ddd;
 
+  &:hover {
+    .meta .btn-collect-post {
+      visibility: visible;
+    }
+  }
+
   .title {
     padding-bottom: 8px;
 
@@ -106,7 +112,7 @@
 
   .meta {
     font-size: 12px;
-    color: #999999;
+    color: #999;
 
     .blog {
     }
@@ -120,8 +126,40 @@
     }
 
     .time,
-    .clicks {
+    .clicks,
+    .btn-collect-post {
       margin-left: 15px;
+    }
+
+    .btn-collect-post {
+      color: #999;
+      text-decoration: none;
+      visibility: hidden;
+
+      .for-collect {
+        display: inline-block;
+
+        &:hover{
+          color: #666;
+        }
+      }
+
+      .for-uncollect {
+        color: @main-color;
+        display: none;
+      }
+
+      &.collected {
+        visibility: visible !important;
+
+        .for-collect {
+          display: none;
+        }
+
+        .for-uncollect {
+          display: inline-block;
+        }
+      }
     }
   }
 }

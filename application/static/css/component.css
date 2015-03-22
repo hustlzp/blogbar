@@ -68,6 +68,9 @@
   padding: 0 0 20px 0;
   border-bottom: 1px solid #ddd;
 }
+.m-post:hover .meta .btn-collect-post {
+  visibility: visible;
+}
 .m-post .title {
   padding-bottom: 8px;
 }
@@ -78,7 +81,7 @@
 }
 .m-post .meta {
   font-size: 12px;
-  color: #999999;
+  color: #999;
 }
 .m-post .meta .divider {
   margin: 0 1px 0 2px;
@@ -87,8 +90,33 @@
   margin-left: 5px;
 }
 .m-post .meta .time,
-.m-post .meta .clicks {
+.m-post .meta .clicks,
+.m-post .meta .btn-collect-post {
   margin-left: 15px;
+}
+.m-post .meta .btn-collect-post {
+  color: #999;
+  text-decoration: none;
+  visibility: hidden;
+}
+.m-post .meta .btn-collect-post .for-collect {
+  display: inline-block;
+}
+.m-post .meta .btn-collect-post .for-collect:hover {
+  color: #666;
+}
+.m-post .meta .btn-collect-post .for-uncollect {
+  color: #2a99c2;
+  display: none;
+}
+.m-post .meta .btn-collect-post.collected {
+  visibility: visible !important;
+}
+.m-post .meta .btn-collect-post.collected .for-collect {
+  display: none;
+}
+.m-post .meta .btn-collect-post.collected .for-uncollect {
+  display: inline-block;
 }
 .text-list {
   padding-left: 20px;

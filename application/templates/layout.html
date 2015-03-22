@@ -115,7 +115,7 @@
                      {{ g.user.name }} <span class="fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu" role="menu">
-                     {# <li><a href="{{ url_for('account.collection') }}">我的收藏</a></li> #}
+                     <li><a href="{{ url_for('account.collection') }}">我的收藏</a></li>
                      <li><a href="{{ url_for('account.signout') }}">登出</a></li>
 
                      {% if permissions.AdminPermission().check() %}

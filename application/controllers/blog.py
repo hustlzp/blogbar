@@ -2,7 +2,7 @@
 import json
 from flask import render_template, Blueprint, flash, redirect, url_for, abort, request, g
 from werkzeug.contrib.atom import AtomFeed
-from ..models import db, Blog, Post, ApprovementLog, Kind, BlogKind, UserBlog
+from ..models import db, Blog, Post, ApprovementLog, Kind, BlogKind, UserBlog, UserCollectPost
 from ..forms import AddBlogForm
 from ..utils.permissions import AdminPermission, UserPermission
 from ..utils.helper import parse_int
@@ -171,3 +171,30 @@ def unsubscribe():
     map(db.session.delete, user_blog)
     db.session.commit()
     return json.dumps({'status': 'yes'})
+
+
+@bp.route('/post/<int:uid>/collect', methods=['POST'])
+@UserPermission()
+def collect_post(uid):
+    post = Post.query.get_or_404(uid)
+    collect = g.user.collected_posts.filter(UserCollectPost.post_id == uid).first()
+    if not collect:
+        collect = UserCollectPost(post_id=uid, user_id=g.user.id)
+        db.session.add(collect)
+        db.session.commit()
+        return json.dumps({'result': True})
+    else:
+        return json.dumps({'result': False})
+
+
+@bp.route('/post/<int:uid>/uncollect', methods=['POST'])
+@UserPermission()
+def uncollect_post(uid):
+    post = Post.query.get_or_404(uid)
+    collect = g.user.collected_posts.filter(UserCollectPost.post_id == uid)
+    if collect.count():
+        map(db.session.delete, collect)
+        db.session.commit()
+        return json.dumps({'result': True})
+    else:
+        return json.dumps({'result': False})

@@ -106,6 +106,6 @@ def subscribed_blogs(page):
 @bp.route('/collection/page/<int:page>')
 @UserPermission()
 def collection(page):
-    posts = None
+    """我的收藏"""
+    posts = g.user.collected_posts.paginate(page, 15)
     return render_template('account/collection.html', posts=posts)
-

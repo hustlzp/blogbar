@@ -122,8 +122,29 @@ class Post(db.Model):
         self.pure_content = _get_pure_content(self.content)
         self.need_analysis = True
 
+    def collected_by_user(self):
+        return g.user and g.user.collected_posts.filter(
+            UserCollectPost.post_id == self.id).count() > 0
+
+
+class UserCollectPost(db.Model):
+    """用户收藏博文"""
+    id = db.Column(db.Integer, primary_key=True)
+    created_at = db.Column(db.DateTime, default=datetime.datetime.now)
+
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+    post = db.relationship('Post', backref=db.backref('collectors', lazy='dynamic',
+                                                      order_by='desc(UserCollectPost.created_at)',
+                                                      cascade="all, delete, delete-orphan"))
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User', backref=db.backref('collected_posts', lazy='dynamic',
+                                                      order_by='desc(UserCollectPost.created_at)',
+                                                      cascade="all, delete, delete-orphan"))
+
 
 class GrabLog(db.Model):
+    """记录Feed抓取错误"""
     id = db.Column(db.Integer, primary_key=True)
     message = db.Column(db.Text)
     details = db.Column(db.Text)
@@ -136,6 +157,7 @@ class GrabLog(db.Model):
 
 
 class ApprovementLog(db.Model):
+    """博客推荐记录"""
     id = db.Column(db.Integer, primary_key=True)
     # 审核状态：1 通过，0 不通过，-1 未审核
     status = db.Column(db.Integer, default=-1)

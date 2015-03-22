@@ -96,8 +96,12 @@
 {% endmacro %}
 
 
-{% macro render_posts(posts) %}
+{% macro render_posts(posts, attr=None) %}
    {% for post in posts %}
+      {% if attr %}
+         {% set post = post[attr] %}
+      {% endif %}
+
       <div class="m-post">
          <div class="title">
             <a href="{{ url_for('blog.redirect_post', uid=post.id) }}" target="_blank">
@@ -120,7 +124,50 @@
             {% endif %}
 
             <span class="clicks">{{ post.clicks if post.clicks else 0 }} 次点击</span>
+
+            {% if g.user %}
+               <a href="javascript: void(0)" data-post-id="{{ post.id }}" class="btn-collect-post
+               {% if post.collected_by_user() %}collected{% endif %}">
+                  <span class="for-collect">
+                     <span class="fa fa-bookmark-o"></span> 收藏
+                  </span>
+                  <span class="for-uncollect">
+                     <span class="fa fa-bookmark"></span> 已收藏
+                  </span>
+               </a>
+            {% endif %}
          </div>
       </div>
    {% endfor %}
+
+   <script type="text/javascript">
+      (function () {
+         $('.m-post .btn-collect-post').click(function () {
+            var postId = $(this).data('post-id'),
+                  collected = $(this).hasClass('collected'),
+                  url = ""
+            _this = $(this);
+
+            if (collected) {
+               url = '/blog/post/' + postId + '/uncollect';
+            } else {
+               url = '/blog/post/' + postId + '/collect';
+            }
+
+            $.ajax({
+               url: url,
+               method: 'post',
+               dataType: 'json'
+            }).done(function (response) {
+               if (response.result) {
+                  if (collected) {
+                     _this.removeClass('collected');
+                  } else {
+                     _this.addClass('collected');
+                  }
+               }
+            });
+         });
+      })();
+   </script>
 {% endmacro %}
