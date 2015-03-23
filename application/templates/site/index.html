@@ -65,8 +65,8 @@
                         {% if g.user %}
                            <a href="javascript: void(0)" data-post-id="{{ post.id }}"
                               class="btn-collect-post {% if post.collected_by_user() %}collected{% endif %}">
-                              <span class="fa fa-bookmark-o for-collect"></span>
-                              <span class="fa fa-bookmark for-uncollect"></span>
+                              <span class="fa fa-bookmark-o for-collect" title="收藏"></span>
+                              <span class="fa fa-bookmark for-uncollect" title="取消收藏"></span>
                            </a>
                         {% endif %}
                      </div>
