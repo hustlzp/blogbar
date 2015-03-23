@@ -156,11 +156,11 @@
                      <a href="{{ url_for('blog.redirect_post', uid=post.id) }}" class="title"
                         target="_blank">{{ post.title }}</a>
 
-                     {% if permissions.AdminPermission().check() %}
-                        {% if post.recommend %}
-                           <span class="label label-success">推荐</span>
-                        {% endif %}
+                     {% if post.recommend %}
+                        <span class="label label-success label-recommend">推荐</span>
+                     {% endif %}
 
+                     {% if permissions.AdminPermission().check() %}
                         {% if post.hide %}
                            <span class="label label-warning">隐藏</span>
                         {% endif %}

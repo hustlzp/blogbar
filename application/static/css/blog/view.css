@@ -63,6 +63,11 @@
   font-weight: bold;
   color: #333;
 }
+.post .title-wap .label-recommend {
+  vertical-align: 4px;
+  margin-left: 5px;
+  line-height: 1;
+}
 .post .abstract {
   margin-top: 10px;
   color: #999;
