@@ -1,3 +1,8 @@
+// 禁止恶意反向代理
+if (!g.debug && document.domain != 'blogbar.cc' && document.domain != 'www.blogbar.cc') {
+    window.location.href = 'http://www.blogbar.cc';
+}
+
 // 给Ajax添加csrf token
 var csrf_token = $("meta[name='csrf-token']").attr('content');
 $.ajaxSetup({
@@ -8,18 +13,16 @@ $.ajaxSetup({
     }
 });
 
-$(function () {
-    // 显示flash message
-    setTimeout(showFlash, 200);
-    setTimeout(hideFlash, 2000);
+// 显示flash message
+setTimeout(showFlash, 200);
+setTimeout(hideFlash, 2000);
 
-    // confirm弹窗
-    $('.need-confirm').click(function () {
-        var confirmText = $(this).data('confirm');
-        if (!confirm(confirmText)) {
-            return false;
-        }
-    });
+// confirm弹窗
+$('.need-confirm').click(function () {
+    var confirmText = $(this).data('confirm');
+    if (!confirm(confirmText)) {
+        return false;
+    }
 });
 
 // 转换成UTC时间

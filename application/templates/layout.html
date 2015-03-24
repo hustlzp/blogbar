@@ -160,6 +160,12 @@
    </div>
 </div>
 
+<script type="text/javascript">
+   var g = {
+      debug: {{ "true" if config.DEBUG else "false" }}
+   }
+</script>
+
 {# 全局JS代码 #}
 {{ script('js/layout.js') }}
 
