@@ -82,7 +82,8 @@ def _check_entry_exist(entry, blog):
     """判断该entry是否存在于该博客中"""
     exist = False
     timezone_offset = blog.feed_timezone_offset or 0
-    post = blog.posts.filter(Post.url == entry.link).first()
+    # 是否存在url一致的文章（允许协议不一致）
+    post = _get_post_by_url(entry.link, blog)
     if post:
         exist = True
     else:
@@ -107,6 +108,23 @@ def _check_entry_exist(entry, blog):
                     else:
                         exist = True
     return exist, post
+
+
+def _get_post_by_url(url, blog):
+    """获取该blog中链接与url一致的post（不考虑协议）"""
+    search_urls = [url]
+    if url.startswith('http://'):
+        search_urls.append(url.replace('http://', 'https://'))
+    elif url.startswith('https://'):
+        search_urls.append(url.replace('https://', 'http://'))
+    else:
+        search_urls += ["http://%s" % url, "https://%s" % url]
+
+    for search_url in search_urls:
+        post = blog.posts.filter(Post.url == search_url).first()
+        if post:
+            return post
+    return None
 
 
 def _uniform_url(url):
