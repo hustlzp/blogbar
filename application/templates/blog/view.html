@@ -5,203 +5,208 @@
 {% block page_title %}{{ blog.title }}{% endblock %}
 {% block page_content %}
    <div class="container">
-      <div class="row">
-         <div class="col-sm-4">
-            <div class="blog-header body-top-gap">
-               <div class="title">
-                  {{ blog.title }}
+   <div class="row">
+   <div class="col-sm-4">
+      <div class="blog-header body-top-gap">
+         <div class="title">
+            {{ blog.title }}
 
-                  {% if blog.offline %}
-                     <span class="offline">offline</span>
-                  {% endif %}
+            {% if blog.offline %}
+               <span class="offline">offline</span>
+            {% endif %}
 
-                  {% if blog.is_protected %}
-                     <sup title="作者禁止转载" class="forbid">
-                        <span class="fa fa-lock"></span>
-                     </sup>
-                  {% endif %}
-               </div>
-
-               {% if blog.subtitle %}
-                  <div class="subtitle">{{ blog.subtitle }}</div>
-               {% endif %}
-
-               {% if g.user %}
-                  <div>
-                     <div class="btn-wap {% if blog.subscribed_by_user() %}unsubscribe{% endif %}"
-                          data-blog-id="{{ blog.id }}">
-                        <a href="javascript:void(0)" class="btn-subscribe">
-                           <span class="fa fa-plus"></span> 订阅
-                        </a>
-
-                        <a href="javascript:void(0)" class="btn-unsubscribe">
-                           取消订阅
-                        </a>
-                     </div>
-                  </div>
-               {% endif %}
-            </div>
-
-            <table class="table">
-               <tr>
-                  <td style="width: 65px;">URL</td>
-                  <td>
-                     <a class="url" href="{{ blog.url }}"
-                        target="_blank">{{ blog.url|friendly_url }}</a>
-                  </td>
-               </tr>
-
-               <tr>
-                  <td>博主</td>
-                  <td>{{ blog.author }}</td>
-               </tr>
-
-               {% if blog.since %}
-                  <tr>
-                     <td>Since</td>
-                     <td>
-                        {{ blog.since }}
-                     </td>
-                  </tr>
-               {% endif %}
-
-               {% if blog.feed %}
-                  {% set feed = blog.feed %}
-               {% elif blog.has_spider and not blog.is_protected %}
-                  {% set feed = url_for('blog.feed', uid=blog.id) %}
-               {% else %}
-                  {% set feed = None %}
-               {% endif %}
-
-               {% if feed %}
-                  <tr>
-                     <td>Feed</td>
-                     <td>
-                        <a href="{{ feed }}" title="feed" target="_blank" class="feed">
-                           <span class="fa fa-rss-square"></span>
-                        </a>
-                     </td>
-                  </tr>
-               {% endif %}
-
-               {% if permissions.AdminPermission().check() %}
-                  <tr>
-                     <td>Feed时区</td>
-                     <td>{{ blog.feed_timezone_offset }}</td>
-                  </tr>
-               {% endif %}
-
-               {% if blog.blog_kinds.count() %}
-                  <tr>
-                     <td>标签</td>
-                     <td>
-                        {% for blog_kind in blog.blog_kinds %}
-                           {% set kind = blog_kind.kind %}
-                           {{ kind.name }}
-                           {% if not loop.last %} · {% endif %}
-                        {% endfor %}
-                     </td>
-                  </tr>
-               {% endif %}
-            </table>
-
-            <p class="report-error">
-               <a href="{{ url_for('site.suggest') }}" target="_blank">信息有误？</a>
-            </p>
-
-            {% if permissions.AdminPermission().check() %}
-               <div class="btn-group btn-group-sm">
-                  <a href="{{ url_for('admin.edit_blog', uid=blog.id) }}"
-                     class="btn btn-default">
-                     <span class="fa fa-edit"></span> 编辑</a>
-                  {#                  <a href="{{ url_for('admin.delete_blog', uid=blog.id) }}"#}
-                  {#                     class="btn btn-default need-confirm" data-confirm="确认删除此博文（不可逆操作）？">#}
-                  {#                     <span class="fa fa-trash-o"></span> 删除</a>#}
-               </div>
+            {% if blog.is_protected %}
+               <sup title="作者禁止转载" class="forbid">
+                  <span class="fa fa-lock"></span>
+               </sup>
             {% endif %}
          </div>
 
-         <div class="col-sm-8 body-top-gap">
-            {% if posts.total == 0 %}
-               <p class="text-light">暂未收录文章。</p>
-            {% endif %}
+         {% if blog.subtitle %}
+            <div class="subtitle">{{ blog.subtitle }}</div>
+         {% endif %}
 
-            {% set admin = permissions.AdminPermission().check() %}
-            {% for post in posts.items %}
-               <div class="post">
-                  <div class="right-top-wap pull-right">
-                     {% if g.user %}
-                        <a href="javascript: void(0)" data-post-id="{{ post.id }}"
-                           class="btn-collect-post {% if post.collected_by_user() %}collected{% endif %}">
+         {% if g.user %}
+            <div>
+               <div class="btn-wap {% if blog.subscribed_by_user() %}unsubscribe{% endif %}"
+                    data-blog-id="{{ blog.id }}">
+                  <a href="javascript:void(0)" class="btn-subscribe">
+                     <span class="fa fa-plus"></span> 订阅
+                  </a>
+
+                  <a href="javascript:void(0)" class="btn-unsubscribe">
+                     取消订阅
+                  </a>
+               </div>
+            </div>
+         {% endif %}
+      </div>
+
+      <table class="table">
+         <tr>
+            <td style="width: 65px;">URL</td>
+            <td>
+               <a class="url" href="{{ blog.url }}"
+                  target="_blank">{{ blog.url|friendly_url }}</a>
+            </td>
+         </tr>
+
+         <tr>
+            <td>博主</td>
+            <td>{{ blog.author }}</td>
+         </tr>
+
+         {% if blog.since %}
+            <tr>
+               <td>Since</td>
+               <td>
+                  {{ blog.since }}
+               </td>
+            </tr>
+         {% endif %}
+
+         {% if blog.feed %}
+            {% set feed = blog.feed %}
+         {% elif blog.has_spider and not blog.is_protected %}
+            {% set feed = url_for('blog.feed', uid=blog.id) %}
+         {% else %}
+            {% set feed = None %}
+         {% endif %}
+
+         {% if feed %}
+            <tr>
+               <td>Feed</td>
+               <td>
+                  <a href="{{ feed }}" title="feed" target="_blank" class="feed">
+                     <span class="fa fa-rss-square"></span>
+                  </a>
+               </td>
+            </tr>
+         {% endif %}
+
+         {% if permissions.AdminPermission().check() %}
+            <tr>
+               <td>Feed时区</td>
+               <td>{{ blog.feed_timezone_offset }}</td>
+            </tr>
+         {% endif %}
+
+         {% if blog.blog_kinds.count() %}
+            <tr>
+               <td>标签</td>
+               <td>
+                  {% for blog_kind in blog.blog_kinds %}
+                     {% set kind = blog_kind.kind %}
+                     {{ kind.name }}
+                     {% if not loop.last %} · {% endif %}
+                  {% endfor %}
+               </td>
+            </tr>
+         {% endif %}
+      </table>
+
+      <p class="report-error">
+         <a href="{{ url_for('site.suggest') }}" target="_blank">信息有误？</a>
+      </p>
+
+      {% if permissions.AdminPermission().check() %}
+         <div class="btn-group btn-group-sm">
+            <a href="{{ url_for('admin.edit_blog', uid=blog.id) }}"
+               class="btn btn-default">
+               <span class="fa fa-edit"></span> 编辑</a>
+            {#                  <a href="{{ url_for('admin.delete_blog', uid=blog.id) }}"#}
+            {#                     class="btn btn-default need-confirm" data-confirm="确认删除此博文（不可逆操作）？">#}
+            {#                     <span class="fa fa-trash-o"></span> 删除</a>#}
+         </div>
+      {% endif %}
+   </div>
+
+   <div class="col-sm-8 body-top-gap">
+      {% if posts.total == 0 %}
+         <p class="text-light">暂未收录文章。</p>
+      {% endif %}
+
+      {% set admin = permissions.AdminPermission().check() %}
+      {% for post in posts.items %}
+         <div class="post">
+            <div class="right-top-wap pull-right">
+               {% if g.user %}
+                  <a href="javascript: void(0)" data-post-id="{{ post.id }}"
+                     class="btn-collect-post {% if post.collected_by_user() %}collected{% endif %}">
                         <span class="for-collect" title="收藏">
                            <span class="fa fa-bookmark-o"></span>
                         </span>
                         <span class="for-uncollect" title="取消收藏">
                            <span class="fa fa-bookmark"></span>
                         </span>
-                        </a>
-                     {% endif %}
+                  </a>
+               {% endif %}
 
-                     {% if post.published_at %}
-                        <span class="time utc-time utc-time-date
+               {% if post.published_at %}
+                  <span class="time utc-time utc-time-date
                            {% if admin and post.published_at_exceed %}
                               text-danger
                            {% endif %}">
                         {{ post.published_at }}
                      </span>
-                     {% endif %}
-                  </div>
+               {% endif %}
+            </div>
 
-                  <div class="title-wap">
-                     <a href="{{ url_for('blog.redirect_post', uid=post.id) }}" class="title"
-                        target="_blank">{{ post.title }}</a>
+            <div class="title-wap">
+               <a href="{{ url_for('blog.redirect_post', uid=post.id) }}" class="title"
+                  target="_blank">{{ post.title }}</a>
+
+               {% if post.recommend %}
+                  <span class="label label-success label-recommend">推荐</span>
+               {% endif %}
+
+               {% if permissions.AdminPermission().check() %}
+                  {% if post.hide %}
+                     <span class="label label-warning">隐藏</span>
+                  {% endif %}
+
+                  <div class="btn-group btn-group-xs">
+                     {% if post.hide %}
+                        <a href="{{ url_for('admin.show_post', uid=post.id) }}"
+                           class="btn btn-default">
+                           <span class="fa fa-eye"></span> 显示
+                        </a>
+                     {% else %}
+                        <a href="{{ url_for('admin.hide_post', uid=post.id) }}"
+                           class="btn btn-default">
+                           <span class="fa fa-eye-slash"></span> 隐藏
+                        </a>{% endif %}
+
+                     <a href="{{ url_for('admin.delete_post', uid=post.id) }}"
+                        class="btn btn-default need-confirm" data-confirm="确认删除此文章？">
+                        <span class="fa fa-trash-o"></span> 删除
+                     </a>
 
                      {% if post.recommend %}
-                        <span class="label label-success label-recommend">推荐</span>
-                     {% endif %}
-
-                     {% if permissions.AdminPermission().check() %}
-                        {% if post.hide %}
-                           <span class="label label-warning">隐藏</span>
-                        {% endif %}
-
-                        <div class="btn-group btn-group-xs">
-                           {% if post.hide %}
-                              <a href="{{ url_for('admin.show_post', uid=post.id) }}"
-                                 class="btn btn-sm btn-default">
-                                 <span class="fa fa-eye"></span> 显示
-                              </a>
-                           {% else %}
-                              <a href="{{ url_for('admin.hide_post', uid=post.id) }}"
-                                 class="btn btn-sm btn-default">
-                                 <span class="fa fa-eye-slash"></span> 隐藏
-                              </a>{% endif %}
-
-                           {% if post.recommend %}
-                              <a href="{{ url_for('admin.unrecommend_post', uid=post.id) }}"
-                                 class="btn btn-sm btn-default">
-                                 <span class="fa fa-thumbs-down"></span> 取消推荐
-                              </a>
-                           {% else %}
-                              <a href="{{ url_for('admin.recommend_post', uid=post.id) }}"
-                                 class="btn btn-sm btn-default">
-                                 <span class="fa fa-thumbs-up"></span> 推荐
-                              </a>
-                           {% endif %}
-                        </div>
+                        <a href="{{ url_for('admin.unrecommend_post', uid=post.id) }}"
+                           class="btn btn-default">
+                           <span class="fa fa-thumbs-down"></span> 取消推荐
+                        </a>
+                     {% else %}
+                        <a href="{{ url_for('admin.recommend_post', uid=post.id) }}"
+                           class="btn btn-default">
+                           <span class="fa fa-thumbs-up"></span> 推荐
+                        </a>
                      {% endif %}
                   </div>
+               {% endif %}
+            </div>
 
-                  {% if post.pure_content %}
-                     <div class="abstract">
-                        {{ post.pure_content|truncate(30, true) }}
-                     </div>
-                  {% endif %}
+            {% if post.pure_content %}
+               <div class="abstract">
+                  {{ post.pure_content|truncate(30, true) }}
                </div>
-            {% endfor %}
-
-            {{ pagination(posts) }}
+            {% endif %}
          </div>
-      </div>
+      {% endfor %}
+
+      {{ pagination(posts) }}
+   </div>
+   </div>
    </div>
 {% endblock %}

@@ -163,3 +163,12 @@ def remove_kind_from_blog():
     map(db.session.delete, blog_kinds)
     db.session.commit()
     return json.dumps({'status': 'yes'})
+
+
+@bp.route('/post/<int:uid>/delete')
+@AdminPermission()
+def delete_post(uid):
+    post = Post.query.get_or_404(uid)
+    db.session.delete(post)
+    db.session.commit()
+    return redirect(request.referrer or url_for('blog.view', uid=post.blog_id))
