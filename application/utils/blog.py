@@ -168,8 +168,12 @@ def _get_info_to_post(post, entry, timezone_offset, new_post):
     if 'published_parsed' in entry:
         published_at = _get_time(entry.published_parsed, timezone_offset)
         if published_at < utc_now:
-            post.published_at = published_at
-            post.published_at_exceed = False
+            # 在published_at取值正常时，仅当：
+            # 为新博文 / published_at不存在
+            # 时才更新published_at
+            if new_post or not post.published_at:
+                post.published_at = published_at
+                post.published_at_exceed = False
         else:
             # published_at溢出
             # 若为新博文，则取utc_now；否则取created_at
