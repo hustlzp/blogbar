@@ -155,6 +155,9 @@ body {
     left: 250px;
   }
 }
+.navbar .navbar-new-blogs-count {
+  margin-top: 20px;
+}
 .navbar .navbar-new-blogs-count a {
   text-decoration: none;
 }
