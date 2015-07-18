@@ -1,132 +1,132 @@
 {% macro pagination(paginator) %}
-   {% if paginator.pages > 1 %}
-      <ul class='pagination pagination-sm'>
-         {% if paginator.has_prev %}
-            <li><a href="{{ url_for_other_page(paginator.prev_num) }}">上一页</a></li>
-         {% endif %}
-
-         {% for page in paginator.iter_pages() %}
-            {% if page %}
-               {% if page != paginator.page %}
-                  <li><a href="{{ url_for_other_page(page) }}">{{ page }}</a></li>
-               {% else %}
-                  <li class="active"><span>{{ page }}</span></li>
-               {% endif %}
-            {% else %}
-               <li class="ellipsis"><span>...</span></li>
+    {% if paginator.pages > 1 %}
+        <ul class='pagination pagination-sm'>
+            {% if paginator.has_prev %}
+                <li><a href="{{ url_for_other_page(paginator.prev_num) }}">上一页</a></li>
             {% endif %}
-         {% endfor %}
 
-         {% if paginator.has_next %}
-            <li><a href="{{ url_for_other_page(paginator.next_num) }}">下一页</a></li>
-         {% endif %}
-      </ul>
-   {% endif %}
+            {% for page in paginator.iter_pages() %}
+                {% if page %}
+                    {% if page != paginator.page %}
+                        <li><a href="{{ url_for_other_page(page) }}">{{ page }}</a></li>
+                    {% else %}
+                        <li class="active"><span>{{ page }}</span></li>
+                    {% endif %}
+                {% else %}
+                    <li class="ellipsis"><span>...</span></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if paginator.has_next %}
+                <li><a href="{{ url_for_other_page(paginator.next_num) }}">下一页</a></li>
+            {% endif %}
+        </ul>
+    {% endif %}
 {% endmacro %}
 
 
 {% macro render_blogs(blogs) %}
-   {% for blog in blogs %}
-      <div class="m-blog col-sm-6 {% if loop.index % 2 == 1 %}odd{% endif %}">
-         {% if g.user %}
-            <div class="btn-wap {% if blog.subscribed_by_user() %}unsubscribe{% endif %}"
-                 data-blog-id="{{ blog.id }}">
-               <a href="javascript:void(0)" class="btn-subscribe pull-right">
-                  <span class="fa fa-plus"></span> 订阅
-               </a>
+    {% for blog in blogs %}
+        <div class="m-blog col-sm-6 {% if loop.index % 2 == 1 %}odd{% endif %}">
+            {% if g.user %}
+                <div class="btn-wap {% if blog.subscribed_by_user() %}unsubscribe{% endif %}"
+                     data-blog-id="{{ blog.id }}">
+                    <a href="javascript:void(0)" class="btn-subscribe pull-right">
+                        <span class="fa fa-plus"></span> 订阅
+                    </a>
 
-               <a href="javascript:void(0)" class="btn-unsubscribe pull-right">
-                  取消订阅
-               </a>
-            </div>
-         {% endif %}
-
-         <div class="title">
-            <a href="{{ url_for('blog.view', uid=blog.id) }}">
-               {{ blog.title }}</a>
-
-            {% if blog.offline %}
-               <span class="offline">offline</span>
+                    <a href="javascript:void(0)" class="btn-unsubscribe pull-right">
+                        取消订阅
+                    </a>
+                </div>
             {% endif %}
-         </div>
 
-         {% if blog.subtitle %}
-            <div class="subtitle">{{ blog.subtitle }}</div>
-         {% endif %}
+            <div class="title">
+                <a href="{{ url_for('blog.view', uid=blog.id) }}">
+                    {{ blog.title }}</a>
 
-         <div class="kinds">
-            {% for blog_kind in blog.blog_kinds %}
-               {% set kind = blog_kind.kind %}
-               <span>{{ kind.name }}</span>
-               {% if not loop.last %} · {% endif %}
-            {% endfor %}
-         </div>
-      </div>
+                {% if blog.offline %}
+                    <span class="offline">offline</span>
+                {% endif %}
+            </div>
 
-      {% if loop.index % 2 == 0 %}
-         <div class="clearfix"></div>
-      {% endif %}
-   {% endfor %}
+            {% if blog.subtitle %}
+                <div class="subtitle">{{ blog.subtitle }}</div>
+            {% endif %}
 
-   <script type="text/javascript">
-      $('.btn-wap').click(function () {
-         var blogId = parseInt($(this).data('blog-id')),
-               url = "",
-               btnWap = $(this);
+            <div class="kinds">
+                {% for blog_kind in blog.blog_kinds %}
+                    {% set kind = blog_kind.kind %}
+                    <span>{{ kind.name }}</span>
+                    {% if not loop.last %} · {% endif %}
+                {% endfor %}
+            </div>
+        </div>
 
-         if ($(this).hasClass('unsubscribe')) {
-            url = "{{ url_for('blog.unsubscribe') }}";
-         } else {
-            url = "{{ url_for('blog.subscribe') }}";
-         }
+        {% if loop.index % 2 == 0 %}
+            <div class="clearfix"></div>
+        {% endif %}
+    {% endfor %}
 
-         $.ajax({
-            url: url,
-            data: {
-               blog_id: blogId
-            },
-            method: 'POST',
-            dataType: 'json',
-            success: function () {
-               btnWap.toggleClass('unsubscribe');
+    <script type="text/javascript">
+        $('.btn-wap').click(function () {
+            var blogId = parseInt($(this).data('blog-id')),
+                    url = "",
+                    btnWap = $(this);
+
+            if ($(this).hasClass('unsubscribe')) {
+                url = "{{ url_for('blog.unsubscribe') }}";
+            } else {
+                url = "{{ url_for('blog.subscribe') }}";
             }
-         });
-      });
-   </script>
+
+            $.ajax({
+                url: url,
+                data: {
+                    blog_id: blogId
+                },
+                method: 'POST',
+                dataType: 'json',
+                success: function () {
+                    btnWap.toggleClass('unsubscribe');
+                }
+            });
+        });
+    </script>
 {% endmacro %}
 
 
 {% macro render_posts(posts, attr=None) %}
-   {% for post in posts %}
-      {% if attr %}
-         {% set post = post[attr] %}
-      {% endif %}
+    {% for post in posts %}
+        {% if attr %}
+            {% set post = post[attr] %}
+        {% endif %}
 
-      <div class="m-post">
-         <div class="title">
-            <a href="{{ url_for('blog.redirect_post', uid=post.id) }}" target="_blank">
-               {{ post.title }}
-            </a>
-         </div>
+        <div class="m-post">
+            <div class="title">
+                <a href="{{ url_for('blog.redirect_post', uid=post.id) }}" target="_blank">
+                    {{ post.title }}
+                </a>
+            </div>
 
-         {% if post.pure_content %}
-            <p class="abstract">{{ post.pure_content|truncate(30, true) }}</p>
-         {% endif %}
-
-         <div class="meta">
-            <a class="blog" href="{{ url_for('blog.view', uid=post.blog.id) }}">
-               {{ post.blog.title }}</a>
-
-            {% if post.published_at %}
-               <span class="time">
-                  {{ post.published_at|timesince }}
-               </span>
+            {% if post.pure_content %}
+                <p class="abstract">{{ post.pure_content|truncate(30, true) }}</p>
             {% endif %}
 
-            <span class="clicks">{{ post.clicks if post.clicks else 0 }} 次点击</span>
+            <div class="meta">
+                <a class="blog" href="{{ url_for('blog.view', uid=post.blog.id) }}">
+                    {{ post.blog.title }}</a>
 
-            {% if g.user %}
-               <a href="javascript: void(0)" data-post-id="{{ post.id }}" class="btn-collect-post
+                {% if post.published_at %}
+                    <span class="time">
+                  {{ post.published_at|timesince }}
+               </span>
+                {% endif %}
+
+                <span class="clicks">{{ post.clicks if post.clicks else 0 }} 次点击</span>
+
+                {% if g.user %}
+                    <a href="javascript: void(0)" data-post-id="{{ post.id }}" class="btn-collect-post
                {% if post.collected_by_user() %}collected{% endif %}">
                   <span class="for-collect" title="收藏">
                      <span class="fa fa-bookmark-o"></span>
@@ -134,40 +134,78 @@
                   <span class="for-uncollect" title="取消收藏">
                      <span class="fa fa-bookmark"></span>
                   </span>
-               </a>
-            {% endif %}
-         </div>
-      </div>
-   {% endfor %}
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
 
-   <script type="text/javascript">
-      (function () {
-         $('.m-post .btn-collect-post').click(function () {
-            var postId = $(this).data('post-id'),
-                  collected = $(this).hasClass('collected'),
-                  url = "",
-                  _this = $(this);
+    <script type="text/javascript">
+        (function () {
+            $('.m-post .btn-collect-post').click(function () {
+                var postId = $(this).data('post-id'),
+                        collected = $(this).hasClass('collected'),
+                        url = "",
+                        _this = $(this);
 
-            if (collected) {
-               url = '/blog/post/' + postId + '/uncollect';
-            } else {
-               url = '/blog/post/' + postId + '/collect';
-            }
+                if (collected) {
+                    url = '/blog/post/' + postId + '/uncollect';
+                } else {
+                    url = '/blog/post/' + postId + '/collect';
+                }
 
-            $.ajax({
-               url: url,
-               method: 'post',
-               dataType: 'json'
-            }).done(function (response) {
-               if (response.result) {
-                  if (collected) {
-                     _this.removeClass('collected');
-                  } else {
-                     _this.addClass('collected');
-                  }
-               }
+                $.ajax({
+                    url: url,
+                    method: 'post',
+                    dataType: 'json'
+                }).done(function (response) {
+                    if (response.result) {
+                        if (collected) {
+                            _this.removeClass('collected');
+                        } else {
+                            _this.addClass('collected');
+                        }
+                    }
+                });
             });
-         });
-      })();
-   </script>
+        })();
+    </script>
+{% endmacro %}
+
+
+{# 最新文章 #}
+{% macro render_latest_posts(posts) %}
+    {% set admin = permissions.AdminPermission().check() %}
+
+    {% for post in posts %}
+        <div class="latest-post">
+            <div class="title">
+                <a href="{{ url_for('blog.redirect_post', uid=post.id) }}" target="_blank">
+                    {{ post.title }}
+                </a>
+            </div>
+
+            <div class="meta">
+                <a href="{{ url_for('blog.view', uid=post.blog_id) }}">
+                    {{ post.blog.title }}</a>
+
+                {% if post.published_at or post.updated_at %}
+                    <span class="time
+                                 {% if admin and post.published_at_exceed %}
+                                    text-danger
+                                 {% endif %}">
+                              {{ post.published_at|timesince }}
+                           </span>
+                {% endif %}
+
+                {% if g.user %}
+                    <a href="javascript: void(0)" data-post-id="{{ post.id }}"
+                       class="btn-collect-post {% if post.collected_by_user() %}collected{% endif %}">
+                        <span class="fa fa-bookmark-o for-collect" title="收藏"></span>
+                        <span class="fa fa-bookmark for-uncollect" title="取消收藏"></span>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
 {% endmacro %}

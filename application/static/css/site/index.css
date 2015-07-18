@@ -43,6 +43,28 @@
   text-align: center;
   padding: 15px 0;
 }
+.col-sm-4 h2 {
+  position: relative;
+}
+.col-sm-4 .pager {
+  position: absolute;
+  right: 0;
+  top: -5px;
+  margin: 0;
+}
+.col-sm-4 .pager .btn {
+  padding: 5px 20px;
+  line-height: 1;
+  color: #666;
+}
+.col-sm-4 .pager .btn:hover {
+  color: #333;
+}
+.col-sm-4 .pager .btn .fa {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
 .latest-posts {
   padding-top: 12px;
   border-top: 1px solid #ddd;

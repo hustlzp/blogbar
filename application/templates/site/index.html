@@ -1,79 +1,57 @@
 {% extends "layout.html" %}
-{% from 'macro/ui.html' import pagination, render_posts %}
+{% from 'macro/ui.html' import pagination, render_posts, render_latest_posts %}
 
 {% block page_title %}Blogbar - 聚合个人博客{% endblock %}
 {% block page_content %}
-   {% if not g.user %}
-      <div class="description-wrapper">
-         <div class="words">
-            <div class="title">世界太嘈杂，这里只有个人<sup>兆赫</sup></div>
-            <div class="subtitle">Blogbar，聚合个人博客</div>
-         </div>
-      </div>
-   {% endif %}
+    {% if not g.user %}
+        <div class="description-wrapper">
+            <div class="words">
+                <div class="title">世界太嘈杂，这里只有个人<sup>兆赫</sup></div>
+                <div class="subtitle">Blogbar，聚合个人博客</div>
+            </div>
+        </div>
+    {% endif %}
 
-   <div class="container">
-      <div class="row">
-         <div class="col-sm-8">
-            <h2>
-               <span class="fa fa-anchor"></span> 编辑推荐
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                <h2>
+                    <span class="fa fa-anchor"></span> 编辑推荐
 
-               {#               <a href="{{ url_for('site.posts_feed') }}" class="feed" target="_blank"#}
-               {#                  title="RSS订阅">#}
-               {#                  <span class="fa fa-rss-square"></span>#}
-               {#               </a>#}
-            </h2>
+                    <a href="{{ url_for('site.posts_feed') }}" class="feed" target="_blank"
+                       title="RSS订阅">
+                        <span class="fa fa-rss-square"></span>
+                    </a>
+                </h2>
 
-            <div class="recommends">
-               {{ render_posts(recommend_posts.items) }}
+                <div class="recommends">
+                    {{ render_posts(recommend_posts.items) }}
+                </div>
+
+                {{ pagination(recommend_posts) }}
             </div>
 
-            {{ pagination(recommend_posts) }}
-         </div>
+            <div class="col-sm-4">
+                <h2 class="no-margin-top">
+                    <span class="fa fa-clock-o"></span> 最新文章
+                    {#               <a href="{{ url_for('blog.posts') }}" class="btn btn-primary btn-xs">#}
+                    {#                  全部博文 <span class="fa fa-angle-right"></span>#}
+                    {#               </a>#}
 
-         <div class="col-sm-4">
-            <h2 class="no-margin-top">
-               <span class="fa fa-clock-o"></span> 最新文章
-               {#               <a href="{{ url_for('blog.posts') }}" class="btn btn-primary btn-xs">#}
-               {#                  全部博文 <span class="fa fa-angle-right"></span>#}
-               {#               </a>#}
-            </h2>
+                    <div class="btn-group btn-group-xs pager">
+                        <button type="button" class="btn btn-default btn-pre" title="上一页" disabled>
+                            <span class="fa fa-angle-left"></span>
+                        </button>
+                        <button type="button" class="btn btn-default btn-next" title="下一页">
+                            <span class="fa fa-angle-right"></span>
+                        </button>
+                    </div>
+                </h2>
 
-            <div class="latest-posts">
-               {% set admin = permissions.AdminPermission().check() %}
-               {% for post in latest_posts %}
-                  <div class="latest-post">
-                     <div class="title">
-                        <a href="{{ url_for('blog.redirect_post', uid=post.id) }}" target="_blank">
-                           {{ post.title }}
-                        </a>
-                     </div>
-
-                     <div class="meta">
-                        <a href="{{ url_for('blog.view', uid=post.blog_id) }}">
-                           {{ post.blog.title }}</a>
-
-                        {% if post.published_at or post.updated_at %}
-                           <span class="time
-                                 {% if admin and post.published_at_exceed %}
-                                    text-danger
-                                 {% endif %}">
-                              {{ post.published_at|timesince }}
-                           </span>
-                        {% endif %}
-
-                        {% if g.user %}
-                           <a href="javascript: void(0)" data-post-id="{{ post.id }}"
-                              class="btn-collect-post {% if post.collected_by_user() %}collected{% endif %}">
-                              <span class="fa fa-bookmark-o for-collect" title="收藏"></span>
-                              <span class="fa fa-bookmark for-uncollect" title="取消收藏"></span>
-                           </a>
-                        {% endif %}
-                     </div>
-                  </div>
-               {% endfor %}
+                <div class="latest-posts">
+                    {{ render_latest_posts(posts) }}
+                </div>
             </div>
-         </div>
-      </div>
-   </div>
+        </div>
+    </div>
 {% endblock %}

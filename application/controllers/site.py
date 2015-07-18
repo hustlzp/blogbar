@@ -1,10 +1,12 @@
 # coding: utf-8
 import hashlib
-from flask import render_template, Blueprint, current_app, request, abort
+from flask import render_template, Blueprint, current_app, request, abort, get_template_attribute, json
 from werkzeug.contrib.atom import AtomFeed
 from ..models import db, Blog, Post, ApprovementLog
 
 bp = Blueprint('site', __name__)
+
+LATEST_POSTS_PER = 10
 
 
 @bp.route('/', defaults={'page': 1})
@@ -13,18 +15,22 @@ def index(page):
     """首页"""
     recommend_posts = Post.query.filter(Post.recommend). \
         order_by(Post.published_at.desc()).paginate(page, 15)
+    posts = Post.query.filter(~Post.hide).filter(Post.blog.has(Blog.is_approved)).order_by(
+        Post.published_at.desc()).limit(10)
+    return render_template('site/index.html', posts=posts, recommend_posts=recommend_posts)
 
-    blogs_query = Blog.query.filter(Blog.is_approved)
-    blogs_count = blogs_query.count()
-    latest_blogs = blogs_query.order_by(Blog.created_at.desc()).limit(15)
 
-    posts_query = Post.query.filter(~Post.hide). \
-        filter(Post.blog.has(Blog.is_approved))
-    posts_count = posts_query.count()
-    latest_posts = posts_query.order_by(Post.published_at.desc()).limit(10)
-    return render_template('site/index.html', latest_posts=latest_posts,
-                           latest_blogs=latest_blogs, blogs_count=blogs_count,
-                           posts_count=posts_count, recommend_posts=recommend_posts)
+@bp.route('/load_posts', methods=['POST'])
+def load_posts():
+    """加载文章"""
+    page = request.form.get('page', 1, type=int)
+    posts = Post.query.filter(~Post.hide).filter(Post.blog.has(Blog.is_approved)).order_by(
+        Post.published_at.desc()).paginate(page, LATEST_POSTS_PER).items
+    macro = get_template_attribute('macro/ui.html', 'render_latest_posts')
+    return json.dumps({
+        'result': True,
+        'html': macro(posts)
+    })
 
 
 @bp.route('/approve_results', defaults={'page': 1})

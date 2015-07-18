@@ -69,6 +69,7 @@ def register_jinja(app):
     """注册模板全局变量和全局函数"""
     from jinja2 import Markup
     from .utils import filters
+    from .utils import permissions
 
     app.jinja_env.filters['timesince'] = filters.timesince
     app.jinja_env.filters['get_keywords'] = filters.get_keywords
@@ -83,7 +84,6 @@ def register_jinja(app):
     @app.context_processor
     def inject_vars():
         import datetime
-        from .utils import permissions
         from .utils.permissions import AdminPermission
         from .models import db, ApprovementLog, Post
 
@@ -99,7 +99,6 @@ def register_jinja(app):
                 ~Post.hide).filter(Post.created_at > last_read_at).count()
 
         return dict(
-            permissions=permissions,
             new_blogs_count=new_blogs_count,
             new_posts_count=new_posts_count
         )
@@ -164,6 +163,7 @@ def register_jinja(app):
     app.jinja_env.globals['link'] = link
     app.jinja_env.globals['page_link'] = page_link
     app.jinja_env.globals['page_name'] = page_name
+    app.jinja_env.globals['permissions'] = permissions
 
 
 def register_db(app):
