@@ -83,7 +83,7 @@ def register_jinja(app):
     # inject vars into template context
     @app.context_processor
     def inject_vars():
-        import datetime
+        from datetime import datetime, timedelta
         from .utils.permissions import AdminPermission
         from .models import db, ApprovementLog, Post
 
@@ -93,10 +93,10 @@ def register_jinja(app):
 
         new_posts_count = 0
         if g.user:
-            last_read_at = g.user.last_read_at or datetime.datetime.now
+            last_read_at = (g.user.last_read_at or datetime.now()) - timedelta(hours=8)
             blog_ids = [user_blog.blog_id for user_blog in g.user.user_blogs]
             new_posts_count = Post.query.filter(Post.blog_id.in_(blog_ids)).filter(
-                ~Post.hide).filter(Post.created_at > last_read_at).count()
+                ~Post.hide).filter(Post.published_at > last_read_at).count()
 
         return dict(
             new_blogs_count=new_blogs_count,
