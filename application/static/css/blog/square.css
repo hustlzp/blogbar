@@ -27,6 +27,7 @@
   margin-bottom: 12px;
   padding-bottom: 12px;
   border-bottom: 1px solid #ddd;
+  position: relative;
 }
 .latest-blogs .latest-blog .title {
   color: #000;
@@ -35,4 +36,11 @@
   padding-top: 4px;
   color: #999999;
   font-size: 12px;
+}
+.latest-blogs .latest-blog .time {
+  font-size: 12px;
+  color: #999;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
