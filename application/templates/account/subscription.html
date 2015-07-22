@@ -3,40 +3,40 @@
 
 {% block page_title %}我的订阅{% endblock %}
 {% block page_content %}
-   <div class="container">
-      <div class="row">
-         <div class="col-sm-8">
-            <h2>
-               订阅文章更新
-            </h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                <h2>
+                    订阅文章更新
+                </h2>
 
-            <div class="posts body-top-gap">
-               {{ render_posts(posts.items) }}
+                <div class="posts">
+                    {{ render_posts(posts.items, attr='post', unread_attr='unread') }}
+                </div>
+
+                {{ pagination(posts) }}
             </div>
 
-            {{ pagination(posts) }}
-         </div>
+            <div class="col-sm-4">
+                <h2>
+                    订阅的博客
+                    <a href="{{ url_for('account.subscribed_blogs') }}" class="link-more">
+                        全部 {{ blogs_count }} »
+                    </a>
+                </h2>
 
-         <div class="col-sm-4">
-            <h2>
-               订阅的博客
-               <a href="{{ url_for('account.subscribed_blogs') }}" class="link-more">
-                  全部 {{ blogs_count }} »
-               </a>
-            </h2>
-
-            <div class="blogs">
-               {% for blog in blogs %}
-                  <div class="blog">
-                     <a class="title"
-                        href="{{ url_for('blog.view', uid=blog.id) }}">{{ blog.title }}</a>
-                     {% if blog.subtitle %}
-                        <div class="subtitle">{{ blog.subtitle }}</div>
-                     {% endif %}
-                  </div>
-               {% endfor %}
+                <div class="blogs">
+                    {% for blog in blogs %}
+                        <div class="blog">
+                            <a class="title"
+                               href="{{ url_for('blog.view', uid=blog.id) }}">{{ blog.title }}</a>
+                            {% if blog.subtitle %}
+                                <div class="subtitle">{{ blog.subtitle }}</div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
-         </div>
-      </div>
-   </div>
+        </div>
+    </div>
 {% endblock %}

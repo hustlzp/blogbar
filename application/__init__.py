@@ -85,7 +85,7 @@ def register_jinja(app):
     def inject_vars():
         from datetime import datetime, timedelta
         from .utils.permissions import AdminPermission
-        from .models import db, ApprovementLog, Post
+        from .models import db, ApprovementLog, Post, UserReadPost
 
         new_blogs_count = 0
         if AdminPermission().check():
@@ -95,8 +95,10 @@ def register_jinja(app):
         if g.user:
             last_read_at = (g.user.last_read_at or datetime.now()) - timedelta(hours=8)
             blog_ids = [user_blog.blog_id for user_blog in g.user.user_blogs]
-            new_posts_count = Post.query.filter(Post.blog_id.in_(blog_ids)).filter(
-                ~Post.hide).filter(Post.published_at > last_read_at).count()
+            new_posts_count = UserReadPost.query. \
+                filter(UserReadPost.user_id == g.user.id). \
+                filter(UserReadPost.post.has(~Post.hide)). \
+                filter(UserReadPost.created_at > last_read_at).count()
 
         return dict(
             new_blogs_count=new_blogs_count,

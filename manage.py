@@ -4,7 +4,7 @@ import traceback
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 from application import create_app
-from application.models import db, Blog, Post, GrabLog
+from application.models import db, Blog, Post, GrabLog, User, UserReadPost
 from application.utils.blog import grab_by_feed
 
 
@@ -156,6 +156,18 @@ def unescape_title():
             print(post.title)
             post.title = html_parser.unescape(post.title)
             db.session.add(post)
+        db.session.commit()
+
+
+@manager.command
+def insert_read_posts():
+    with app.app_context():
+        for user in User.query:
+            for user_blog in user.user_blogs:
+                for post in user_blog.blog.posts:
+                    user_read_post = UserReadPost(user_id=user.id, post_id=post.id, unread=False,
+                                                  created_at=post.published_at)
+                    db.session.add(user_read_post)
         db.session.commit()
 
 

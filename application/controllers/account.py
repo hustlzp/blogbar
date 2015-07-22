@@ -5,7 +5,7 @@ from ..forms import SigninForm, SignupForm
 from ..utils.account import signin_user, signout_user
 from ..utils.permissions import VisitorPermission, UserPermission
 from ..utils.mail import send_active_mail
-from ..models import db, User, Post, Blog
+from ..models import db, User, Post, Blog, UserReadPost
 
 bp = Blueprint('account', __name__)
 
@@ -84,13 +84,21 @@ def subscription(page):
     blog_ids = [user_blog.blog_id for user_blog in g.user.user_blogs]
     blogs_count = Blog.query.filter(Blog.id.in_(blog_ids)).count()
     blogs = Blog.query.filter(Blog.id.in_(blog_ids)).limit(10)
-    posts = Post.query.filter(Post.blog_id.in_(blog_ids)).filter(~Post.hide).order_by(
-        Post.published_at.desc()).paginate(page, 15)
+    posts = g.user.read_posts. \
+        filter(UserReadPost.post.has(~Post.hide)). \
+        order_by(UserReadPost.created_at.desc()). \
+        paginate(page, 15)
+    html = render_template('account/subscription.html', blogs=blogs, blogs_count=blogs_count,
+                           posts=posts)
+
+    for post in posts.items:
+        post.unread = False
+        db.session.add(post)
     g.user.last_read_at = datetime.datetime.now()
     db.session.add(g.user)
     db.session.commit()
-    return render_template('account/subscription.html', blogs=blogs, blogs_count=blogs_count,
-                           posts=posts)
+
+    return html
 
 
 @bp.route('/subscribed_blogs', defaults={'page': 1})

@@ -143,6 +143,23 @@ class UserCollectPost(db.Model):
                                                       cascade="all, delete, delete-orphan"))
 
 
+class UserReadPost(db.Model):
+    """用户阅读博文"""
+    id = db.Column(db.Integer, primary_key=True)
+    unread = db.Column(db.Boolean, default=True)
+    created_at = db.Column(db.DateTime, default=datetime.datetime.now)
+
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+    post = db.relationship('Post', backref=db.backref('readers', lazy='dynamic',
+                                                      order_by='desc(UserReadPost.created_at)',
+                                                      cascade="all, delete, delete-orphan"))
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User', backref=db.backref('read_posts', lazy='dynamic',
+                                                      order_by='desc(UserReadPost.created_at)',
+                                                      cascade="all, delete, delete-orphan"))
+
+
 class GrabLog(db.Model):
     """记录Feed抓取错误"""
     id = db.Column(db.Integer, primary_key=True)
