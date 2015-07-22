@@ -34,6 +34,7 @@
 }
 .recommends {
   border-top: 1px solid #ddd;
+  margin-bottom: 15px;
 }
 .site-info {
   border-top: 1px solid #ccc;
