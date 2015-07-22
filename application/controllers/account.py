@@ -1,6 +1,6 @@
 # coding: utf-8
 import datetime
-from flask import render_template, Blueprint, redirect, request, url_for, g, flash
+from flask import render_template, Blueprint, redirect, request, url_for, g, flash, json
 from ..forms import SigninForm, SignupForm
 from ..utils.account import signin_user, signout_user
 from ..utils.permissions import VisitorPermission, UserPermission
@@ -99,6 +99,21 @@ def subscription(page):
     db.session.commit()
 
     return html
+
+
+@bp.route('/mark_all_posts', methods=['POST'])
+@UserPermission()
+def mark_all_posts():
+    """将全部文章标记为已读"""
+    for post in UserReadPost.query. \
+            filter(UserReadPost.user_id == g.user.id). \
+            filter(UserReadPost.unread):
+        post.unread = False
+        db.session.add(post)
+    db.session.commit()
+    return json.dumps({
+        'result': True
+    })
 
 
 @bp.route('/subscribed_blogs', defaults={'page': 1})

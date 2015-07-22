@@ -8,6 +8,11 @@
             <div class="col-sm-8">
                 <h2>
                     订阅文章更新
+                    {% if new_posts_count != 0 %}
+                        <span class="btn-mark-all-posts">
+                            <span class="fa fa-check"></span>全部标记为已读
+                        </span>
+                    {% endif %}
                 </h2>
 
                 <div class="posts">
