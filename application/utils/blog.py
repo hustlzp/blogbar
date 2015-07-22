@@ -6,7 +6,7 @@ from HTMLParser import HTMLParser
 from flask import current_app
 from time import mktime
 from datetime import datetime, timedelta
-from ..models import db, Post, FEED_STATUS_GOOD, FEED_STATUS_BAD, FEED_STATUS_TIMEOUT
+from ..models import db, Post, FEED_STATUS_GOOD, FEED_STATUS_BAD, FEED_STATUS_TIMEOUT, UserReadPost
 from .helper import Timeout, remove_html
 
 TIMEOUT = 60
@@ -63,6 +63,11 @@ def grab_by_feed(blog):
             post.blog_id = blog.id
             new_posts_count += 1
             print(" new - %s" % post.title)
+
+            # 插入到用户订阅文章中
+            for blog_user in blog.blog_users:
+                user_read_post = UserReadPost(user_id=blog_user.user_id)
+                post.readers.append(user_read_post)
 
         if post.published_at > last_updated_at:
             last_updated_at = post.published_at

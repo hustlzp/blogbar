@@ -1,14 +1,13 @@
 # coding: utf-8
 import logging
 import datetime
-from application.models import db, Blog, Post
+from application.models import db, Blog, Post, UserReadPost
 from application.utils.blog import check_offline
 from .lifesinger import LifeSingerSpider
 from .wangyin import WangYinSpider
 from .livid import LividSpider
 from .fouber import FouberSpider
 from .meizhi import MeiZhiSpider
-
 
 spiders = [
     LifeSingerSpider,
@@ -57,11 +56,17 @@ def grab_by_spider(spider_class):
             blog.posts.append(post)
             # logging.debug(" new - %s" % title)
             print(" new - %s" % title)
+
+            # 插入到用户订阅文章中
+            for blog_user in blog.blog_users:
+                user_read_post = UserReadPost(user_id=blog_user.user_id)
+                post.readers.append(user_read_post)
         else:  # 更新文章
             post.title = title
             post.published_at = published_at
             post.content = spider_class.get_post_(url)
-            db.session.add(post)
+
+        db.session.add(post)
 
         if published_at > last_updated_at:
             last_updated_at = published_at
