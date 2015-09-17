@@ -21,7 +21,7 @@ Blogbar，聚合个人博客。
 
 ###扩展
 
-如果一个博客不提供Feed，但是这个博客的价值又非常高（比如[Livid](http://livid.v2ex.com/)、[王垠](http://www.yinwang.org/)、[Lifesinger](https://github.com/lifesinger/lifesinger.github.com/issues?q=label%3Ablog)等等），可继承爬取博客的爬虫基类BaseSpider（位于[spiders/base.py](https://github.com/blogbar/blogbar/blob/master/spiders/base.py)）实现，步骤如下：
+如果一个博客不提供Feed，但是这个博客的价值又非常高（比如 [Livid](http://livid.v2ex.com/)、[王垠](http://www.yinwang.org/)、[Lifesinger](https://github.com/lifesinger/lifesinger.github.com/issues?q=label%3Ablog)等等），可继承爬取博客的爬虫基类 BaseSpider（位于 [spiders/base.py](https://github.com/blogbar/blogbar/blob/master/spiders/base.py)）实现，步骤如下：
 
 ####类变量赋值
 
@@ -37,30 +37,30 @@ author = ""  # 博主
 
 ####重载方法
 
-重载如下2个方法：
+重载如下 2 个方法：
 
 * get_posts：获取博文列表
 * get_post：获取单篇博文内容
 
-具体使用方法见BaseSpider类，以及用于爬取网页内容的[lxml](http://lxml.de/)库。
+具体使用方法见BaseSpider类，以及用于爬取网页内容的 [lxml](http://lxml.de/) 库。
 
 ####调试
 
-编写过程中如需调试抓取结果，可使用 https://github.com/blogbar/blogbar/blob/master/test_spider.py 提供的测试方法：
+编写过程中如需调试抓取结果，可使用 [test_spider.py](https://github.com/blogbar/blogbar/blob/master/test_spider.py) 提供的测试方法：
 
 * $ python test_spider.py get_posts
 * $ python test_spider.py get_post
 * $ python test_spider.py all
 
-具体见[test_spider.py](https://github.com/blogbar/blogbar/blob/master/test_spider.py)。
+具体见 [test_spider.py](https://github.com/blogbar/blogbar/blob/master/test_spider.py)。
 
 ####提交
 
-测试通过后，可发起pull request。
+测试通过后，可发起 pull request。
 
 ####示例
 
-以下是爬取Livid博客的示例代码：
+以下是爬取 Livid 博客的示例代码：
 
 ```py
 # coding: utf-8
