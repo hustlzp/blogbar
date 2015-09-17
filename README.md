@@ -46,7 +46,7 @@ author = ""  # 博主
 
 ####调试
 
-编写过程中如需调试抓取结果，可使用位于`test_spider.py`提供的测试方法：
+编写过程中如需调试抓取结果，可使用 https://github.com/blogbar/blogbar/blob/master/test_spider.py 提供的测试方法：
 
 * $ python test_spider.py get_posts
 * $ python test_spider.py get_post
@@ -57,6 +57,8 @@ author = ""  # 博主
 ####提交
 
 测试通过后，可发起pull request。
+
+####示例
 
 以下是爬取Livid博客的示例代码：
 
