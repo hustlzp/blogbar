@@ -21,7 +21,7 @@ pp = MyPrettyPrinter(indent=2)
 
 class BaseSpider(object):
     url = ""  # 网址
-    posts_url = ""  # 包含博文列表的网址
+    posts_url = ""  # 包含博文列表的网址（选填，只有当博客网址与博文列表网址不同时才需填写）
     title = ""  # 博客标题
     subtitle = ""  # 博客副标题
     author = ""  # 博主
