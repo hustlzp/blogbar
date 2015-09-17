@@ -21,7 +21,7 @@ Blogbar，聚合个人博客。
 
 ###扩展
 
-如果一个博客不提供Feed，但是这个博客的价值又非常高（比如 [Livid](http://livid.v2ex.com/)、[王垠](http://www.yinwang.org/)、[Lifesinger](https://github.com/lifesinger/lifesinger.github.com/issues?q=label%3Ablog)等等），可继承爬取博客的爬虫基类 BaseSpider（位于 [spiders/base.py](https://github.com/blogbar/blogbar/blob/master/spiders/base.py)）实现，步骤如下：
+如果一个博客不提供 Feed，但是这个博客的价值又非常高（比如 [Livid](http://livid.v2ex.com/)、[王垠](http://www.yinwang.org/)、[Lifesinger](https://github.com/lifesinger/lifesinger.github.com/issues?q=label%3Ablog)等等），可继承爬取博客的爬虫基类 BaseSpider（位于 [spiders/base.py](https://github.com/blogbar/blogbar/blob/master/spiders/base.py)）实现，步骤如下：
 
 ####类变量赋值
 
@@ -42,7 +42,7 @@ author = ""  # 博主
 * get_posts：获取博文列表
 * get_post：获取单篇博文内容
 
-具体使用方法见BaseSpider类，以及用于爬取网页内容的 [lxml](http://lxml.de/) 库。
+具体使用方法见 BaseSpider 类，以及用于爬取网页内容的 [lxml](http://lxml.de/) 库。
 
 ####调试
 
