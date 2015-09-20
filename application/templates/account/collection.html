@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
-{% from "macro/ui.html" import pagination, render_posts %}
+{% from "macro/utils.html" import pagination %}
+{% from "macro/post/render_posts.html" import render_posts %}
 
 {% block page_title %}我的订阅{% endblock %}
 {% block page_content %}

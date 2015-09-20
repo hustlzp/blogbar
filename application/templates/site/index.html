@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
-{% from 'macro/ui.html' import pagination, render_posts, render_latest_posts %}
+{% from 'macro/utils.html' import pagination %}
+{% from "macro/post/render_posts.html" import render_posts %}
+{% from "macro/post/render_latest_posts.html" import render_latest_posts %}
 
 {% block page_title %}Blogbar - 聚合个人博客{% endblock %}
 {% block page_content %}

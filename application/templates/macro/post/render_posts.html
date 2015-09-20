@@ -1,0 +1,80 @@
+{% macro render_posts(posts, attr=None, unread_attr=None) %}
+    {% for post in posts %}
+        {% if unread_attr %}
+            {% set unread = post[unread_attr] %}
+        {% endif %}
+
+        {% if attr %}
+            {% set post = post[attr] %}
+        {% endif %}
+
+        <div class="m-post {% if unread_attr and unread %}unread{% endif %}">
+            <div class="title">
+                <a href="{{ url_for('blog.redirect_post', uid=post.id) }}" target="_blank">
+                    {{ post.title }}
+                </a>
+            </div>
+
+            {% if post.pure_content %}
+                <p class="abstract">{{ post.pure_content|truncate(30, true) }}</p>
+            {% endif %}
+
+            <div class="meta">
+                <a class="blog" href="{{ url_for('blog.view', uid=post.blog.id) }}">
+                    {{ post.blog.title }}</a>
+
+                {% if post.published_at %}
+                    <span class="time">
+                        {{ post.published_at|timesince }}
+                    </span>
+                {% endif %}
+
+                <span class="clicks">{{ post.clicks if post.clicks else 0 }} 次点击</span>
+
+                {% if g.user %}
+                    <a href="javascript: void(0)" data-post-id="{{ post.id }}" class="btn-collect-post
+                        {% if post.collected_by_user() %}collected{% endif %}">
+                        <span class="for-collect" title="收藏">
+                            <span class="fa fa-bookmark-o"></span>
+                        </span>
+                        <span class="for-uncollect" title="取消收藏">
+                            <span class="fa fa-bookmark"></span>
+                        </span>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+
+    <script type="text/javascript">
+        (function () {
+            // 收藏文章
+            $('.m-post .btn-collect-post').click(function () {
+                var postId = $(this).data('post-id'),
+                        collected = $(this).hasClass('collected'),
+                        url = "",
+                        _this = $(this);
+
+                if (collected) {
+                    url = '/blog/post/' + postId + '/uncollect';
+                } else {
+                    url = '/blog/post/' + postId + '/collect';
+                }
+
+                $.ajax({
+                    url: url,
+                    method: 'post',
+                    dataType: 'json'
+                }).done(function (response) {
+                    if (response.result) {
+                        if (collected) {
+                            _this.removeClass('collected');
+                        } else {
+                            _this.addClass('collected');
+                        }
+                    }
+                });
+            });
+        })();
+    </script>
+{% endmacro %}

@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
-{% from 'macro/ui.html' import pagination, render_blogs %}
+{% from 'macro/utils.html' import pagination %}
+{% from "macro/blog/render_blogs.html" import render_blogs %}
 
 {% block page_title %}博客广场{% endblock %}
 {% block page_content %}
