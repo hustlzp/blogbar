@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
-{% from "macro/form.html" import horizontal_field %}
-{% from "macro/utils.html" import pagination %}
+{% from "macros/_form.html" import _horizontal_field %}
+{% from "macros/_utils.html" import _pagination %}
 
 {% block page_title %}{{ blog.title }}{% endblock %}
 {% block page_content %}
@@ -205,7 +205,7 @@
          </div>
       {% endfor %}
 
-      {{ pagination(posts) }}
+      {{ _pagination(posts) }}
    </div>
    </div>
    </div>

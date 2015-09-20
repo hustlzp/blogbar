@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
-{% from 'macro/utils.html' import pagination %}
-{% from "macro/blog/render_blogs.html" import render_blogs %}
+{% from 'macros/_utils.html' import _pagination %}
+{% from "macros/blog/_blogs.html" import render_blogs %}
 
 {% block page_title %}博客广场{% endblock %}
 {% block page_content %}
@@ -34,7 +34,7 @@
                     {{ render_blogs(blogs.items) }}
                 </div>
 
-                {{ pagination(blogs) }}
+                {{ _pagination(blogs) }}
             </div>
 
             <div class="col-sm-4">

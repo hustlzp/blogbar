@@ -1,4 +1,4 @@
-{% macro field_errors(field) %}
+{% macro _field_errors(field) %}
    <ul class="list-form-errors text-danger list-unstyled">
       {% if field.errors[0] %}
          <li>{{ field.errors[0] }}</li>
@@ -7,7 +7,7 @@
 {% endmacro %}
 
 
-{% macro horizontal_field(field, length=8, label=True, static=False) %}
+{% macro _horizontal_field(field, length=8, label=True, static=False) %}
    <div class="form-group">
       {% if label %}
          {{ field.label(class="col-sm-2 control-label") }}
@@ -17,21 +17,21 @@
          {% if not label %}col-sm-offset-2{% endif %}
          {% if static %}form-control-static{% endif %}">
          {{ field(class="form-control", placeholder=field.description, **kwargs) }}
-         {{ field_errors(field) }}
+         {{ _field_errors(field) }}
       </div>
    </div>
 {% endmacro %}
 
 
-{% macro vertical_field(field) %}
+{% macro _vertical_field(field) %}
    <div class="vertical-form-group">
       {{ field(class="form-control",placeholder=field.description, **kwargs) }}
-      {{ field_errors(field) }}
+      {{ _field_errors(field) }}
    </div>
 {% endmacro %}
 
 
-{% macro checkbox_field(field) %}
+{% macro _checkbox_field(field) %}
    <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
          <div class="checkbox">

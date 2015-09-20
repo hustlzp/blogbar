@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from 'macro/utils.html' import pagination %}
+{% from 'macros/_utils.html' import _pagination %}
 
 {% block page_title %}管理文章{% endblock %}
 {% block page_content %}
@@ -89,6 +89,6 @@
 
       {{ render_posts(posts.items) }}
 
-      {{ pagination(posts) }}
+      {{ _pagination(posts) }}
    </div>
 {% endblock %}

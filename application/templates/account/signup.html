@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from 'macro/form.html' import vertical_field %}
+{% from 'macros/_form.html' import _vertical_field %}
 
 {% block page_title %}注册{% endblock %}
 {% block page_content %}
@@ -12,13 +12,13 @@
                   action="{{ url_for('account.signup') }}">
                {{ form.csrf_token() }}
 
-               {{ vertical_field(form.name) }}
+               {{ _vertical_field(form.name) }}
 
-               {{ vertical_field(form.email) }}
+               {{ _vertical_field(form.email) }}
 
-               {{ vertical_field(form.password) }}
+               {{ _vertical_field(form.password) }}
 
-               {{ vertical_field(form.repassword) }}
+               {{ _vertical_field(form.repassword) }}
 
                <div class="form-group">
                   <div class="col-sm-6">

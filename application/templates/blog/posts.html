@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from "macro/utils.html" import pagination %}
+{% from "macros/_utils.html" import _pagination %}
 
 {% block page_title %}全部博文{% endblock %}
 {% block page_content %}
@@ -35,7 +35,7 @@
             <hr style="margin: 10px 0;"/>
          {% endfor %}
 
-         {{ pagination(posts) }}
+         {{ _pagination(posts) }}
       </div>
    </div>
 {% endblock %}
