@@ -16,6 +16,7 @@ cssselect
 jieba
 feedparser
 permission
+six
 
 livereload
 formic==0.9beta8

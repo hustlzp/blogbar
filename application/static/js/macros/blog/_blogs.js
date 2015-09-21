@@ -4,9 +4,9 @@ $(document).on('click', '.m-blog .btn-wap', function () {
         btnWap = $(this);
 
     if ($(this).hasClass('unsubscribe')) {
-        url = "{{ url_for('blog.unsubscribe') }}";
+        url = urlFor('blog.unsubscribe');
     } else {
-        url = "{{ url_for('blog.subscribe') }}";
+        url = urlFor('blog.subscribe');
     }
 
     $.ajax({

@@ -6,9 +6,9 @@ $(document).on('click', '.m-post .btn-collect-post', function () {
         _this = $(this);
 
     if (collected) {
-        url = '/blog/post/' + postId + '/uncollect';
+        url = urlFor('blog.uncollect_post', {uid: postId});
     } else {
-        url = '/blog/post/' + postId + '/collect';
+        url = urlFor('blog.collect_post', {uid: postId});
     }
 
     $.ajax({
