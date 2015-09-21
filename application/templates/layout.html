@@ -1,181 +1,184 @@
 <!doctype html>
 <html>
 <head>
-   <title>{% block page_title %}{% endblock %}</title>
-   <meta name="renderer" content="webkit">
-   <meta name="csrf-token" content="{{ csrf_token() }}"/>
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-   {% block meta %}{% endblock %}
-   <link rel="Shortcut Icon" href="{{ static('image/favicon.png') }}">
-   <link rel="apple-touch-icon-precomposed" sizes="152x152"
-         href="{{ static('image/apple-touch-icon-precomposed-152.png') }}">
-   <link rel="apple-touch-icon-precomposed" sizes="120x120"
-         href="{{ static('image/apple-touch-icon-precomposed-120.png') }}">
-   <link rel="apple-touch-icon-precomposed" sizes="76x76"
-         href="{{ static('image/apple-touch-icon-precomposed-76.png') }}">
-   <link rel="apple-touch-icon-precomposed"
-         href="{{ static('image/apple-touch-icon-precomposed.png') }}">
-   {{ link('bower_components/bootstrap/dist/css/bootstrap.min.css') }}
-   {{ link('bower_components/font-awesome/css/font-awesome.min.css') }}
-   {{ link('css/bootstrap.theme.css') }}
-   {{ link('css/common.css') }}
-   {{ link('css/component.css') }}
-   {{ link('css/layout.css') }}
-   {{ page_link(self) }}
-   {{ script('bower_components/respond/dest/respond.min.js') }}
-   {{ script('bower_components/jquery/dist/jquery.min.js') }}
-   {{ script('bower_components/bootstrap/dist/js/bootstrap.min.js') }}
-   {{ script('bower_components/moment/moment.js') }}
+    <title>{% block page_title %}{% endblock %}</title>
+    <meta name="renderer" content="webkit">
+    <meta name="csrf-token" content="{{ csrf_token() }}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    {% block meta %}{% endblock %}
+    <link rel="Shortcut Icon" href="{{ static('image/favicon.png') }}">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152"
+          href="{{ static('image/apple-touch-icon-precomposed-152.png') }}">
+    <link rel="apple-touch-icon-precomposed" sizes="120x120"
+          href="{{ static('image/apple-touch-icon-precomposed-120.png') }}">
+    <link rel="apple-touch-icon-precomposed" sizes="76x76"
+          href="{{ static('image/apple-touch-icon-precomposed-76.png') }}">
+    <link rel="apple-touch-icon-precomposed"
+          href="{{ static('image/apple-touch-icon-precomposed.png') }}">
+    {{ link('bower_components/bootstrap/dist/css/bootstrap.min.css') }}
+    {{ link('bower_components/font-awesome/css/font-awesome.min.css') }}
+    {{ link('css/bootstrap.theme.css') }}
+    {{ link('css/common.css') }}
+    {{ link('css/macros.css') }}
+    {{ link('css/layout.css') }}
+    {{ page_link(self) }}
+    {{ script('bower_components/respond/dest/respond.min.js') }}
+    {{ script('bower_components/jquery/dist/jquery.min.js') }}
+    {{ script('bower_components/bootstrap/dist/js/bootstrap.min.js') }}
+    {{ script('bower_components/moment/moment.js') }}
 </head>
 
 <body id="page" class="{{ page_name(self) }}">
 
 {# Flash message #}
 {% with message = get_flashed_messages()[0] %}
-   {% if message %}
-      <div class="alert alert-info flash-message">{{ message }}</div>
-   {% endif %}
+    {% if message %}
+        <div class="alert alert-info flash-message">{{ message }}</div>
+    {% endif %}
 {% endwith %}
 
 <nav class="navbar navbar-default navbar-static-top">
-   <div class="container">
-      <div class="navbar-header">
-         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                 data-target="#navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-         </button>
-
-         <a class="navbar-brand" href="{{ url_for('site.index') }}">
-            Blogbar <sup>beta</sup>
-         </a>
-      </div>
-
-      {% if permissions.AdminPermission().check() and new_blogs_count %}
-         <p class="navbar-right navbar-text navbar-new-blogs-count">
-            <a href="{{ url_for('admin.approve') }}">
-               <span class="label label-info">{{ new_blogs_count }}</span>
-            </a>
-         </p>
-      {% endif %}
-
-      <div class="collapse navbar-collapse" id="navbar-collapse">
-         <ul class="nav navbar-nav">
-            <li id="nav-index">
-               <a href="{{ url_for('site.index') }}">首页</a>
-            </li>
-            <li id="nav-blog">
-               <a href="{{ url_for('blog.square') }}">博客</a>
-            </li>
-            <li id="nav-approve-results">
-               <a href="{{ url_for('site.approve_results') }}">审核结果</a>
-            </li>
-            <li id="nav-suggest">
-               <a href="{{ url_for('site.suggest') }}">建议</a>
-            </li>
-            {% if not g.user %}
-               <li id="nav-about">
-                  <a href="{{ url_for('site.about') }}">关于</a>
-               </li>
-            {% endif %}
-         </ul>
-
-         <form class="navbar-form navbar-left" role="search" method="get"
-               action="{{ url_for('blog.search') }}">
-            <input type="text" name="keyword" class="form-control input-sm"
-                   placeholder="搜索博客" value="{{ keyword if keyword else "" }}">
-            <button class="btn btn-default btn-sm" type="submit" title="搜索">
-               <span class="fa fa-search"></span>
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
             </button>
-         </form>
 
-         <a href="{{ url_for('blog.add') }}"
-            class="btn btn-primary btn-sm navbar-btn navbar-left">
-            <span class="fa fa-plus"></span> 推荐博客
-         </a>
+            <a class="navbar-brand" href="{{ url_for('site.index') }}">
+                Blogbar <sup>beta</sup>
+            </a>
+        </div>
 
-         <ul class="nav navbar-nav navbar-account-nav navbar-right">
-            {% if g.user %}
-               <li id="nav-subscription">
-                  <a href="{{ url_for('account.subscription') }}">
-                     我的订阅
-                     {% if new_posts_count %}
-                        <span class="badge new-posts-count">{{ new_posts_count }}</span>
-                     {% endif %}
-                  </a>
-               </li>
+        {% if permissions.AdminPermission().check() and new_blogs_count %}
+            <p class="navbar-right navbar-text navbar-new-blogs-count">
+                <a href="{{ url_for('admin.approve') }}">
+                    <span class="label label-info">{{ new_blogs_count }}</span>
+                </a>
+            </p>
+        {% endif %}
 
-               <li class="dropdown" id="nav-me">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                     aria-expanded="false">
-                     {{ g.user.name }} <span class="fa fa-angle-down"></span>
-                  </a>
-                  <ul class="dropdown-menu" role="menu">
-                     <li><a href="{{ url_for('account.collection') }}">我的收藏</a></li>
-                     <li><a href="{{ url_for('account.signout') }}">登出</a></li>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li id="nav-index">
+                    <a href="{{ url_for('site.index') }}">首页</a>
+                </li>
+                <li id="nav-blog">
+                    <a href="{{ url_for('blog.square') }}">博客</a>
+                </li>
+                <li id="nav-approve-results">
+                    <a href="{{ url_for('site.approve_results') }}">审核结果</a>
+                </li>
+                <li id="nav-suggest">
+                    <a href="{{ url_for('site.suggest') }}">建议</a>
+                </li>
+                {% if not g.user %}
+                    <li id="nav-about">
+                        <a href="{{ url_for('site.about') }}">关于</a>
+                    </li>
+                {% endif %}
+            </ul>
 
-                     {% if permissions.AdminPermission().check() %}
-                        <li class="divider"></li>
-                        <li><a href="{{ url_for('admin.approve') }}">博客审核</a></li>
-                        <li><a href="{{ url_for('admin.blogs') }}">博客管理</a></li>
-                        <li><a href="{{ url_for('admin.posts') }}">文章管理</a></li>
-                     {% endif %}
-                  </ul>
-               </li>
-            {% else %}
-               <li id="nav-signin">
-                  <a href="{{ url_for('account.signin') }}">登录</a>
-               </li>
-               <li id="nav-signup">
-                  <a href="{{ url_for('account.signup') }}">注册</a>
-               </li>
-            {% endif %}
-         </ul>
-      </div>
-   </div>
+            <form class="navbar-form navbar-left" role="search" method="get"
+                  action="{{ url_for('blog.search') }}">
+                <input type="text" name="keyword" class="form-control input-sm"
+                       placeholder="搜索博客" value="{{ keyword if keyword else "" }}">
+                <button class="btn btn-default btn-sm" type="submit" title="搜索">
+                    <span class="fa fa-search"></span>
+                </button>
+            </form>
 
-   <div class="border"></div>
+            <a href="{{ url_for('blog.add') }}"
+               class="btn btn-primary btn-sm navbar-btn navbar-left">
+                <span class="fa fa-plus"></span> 推荐博客
+            </a>
+
+            <ul class="nav navbar-nav navbar-account-nav navbar-right">
+                {% if g.user %}
+                    <li id="nav-subscription">
+                        <a href="{{ url_for('account.subscription') }}">
+                            我的订阅
+                            {% if new_posts_count %}
+                                <span class="badge new-posts-count">{{ new_posts_count }}</span>
+                            {% endif %}
+                        </a>
+                    </li>
+
+                    <li class="dropdown" id="nav-me">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-expanded="false">
+                            {{ g.user.name }} <span class="fa fa-angle-down"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{ url_for('account.collection') }}">我的收藏</a></li>
+                            <li><a href="{{ url_for('account.signout') }}">登出</a></li>
+
+                            {% if permissions.AdminPermission().check() %}
+                                <li class="divider"></li>
+                                <li><a href="{{ url_for('admin.approve') }}">博客审核</a></li>
+                                <li><a href="{{ url_for('admin.blogs') }}">博客管理</a></li>
+                                <li><a href="{{ url_for('admin.posts') }}">文章管理</a></li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                {% else %}
+                    <li id="nav-signin">
+                        <a href="{{ url_for('account.signin') }}">登录</a>
+                    </li>
+                    <li id="nav-signup">
+                        <a href="{{ url_for('account.signup') }}">注册</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="border"></div>
 </nav>
 
 <div id="main-wap">
-   {% block page_content %}{% endblock %}
+    {% block page_content %}{% endblock %}
 </div>
 
 <div id="footer">
-   <div class='container'>
-      <div id='copyright' class="pull-left">
-         © 2015 Blogbar by <a href="http://www.blogbar.cc/blog/1">hustlzp</a>
-      </div>
+    <div class='container'>
+        <div id='copyright' class="pull-left">
+            © 2015 Blogbar by <a href="http://www.blogbar.cc/blog/1">hustlzp</a>
+        </div>
 
-      <ul id='links' class="pull-right list-unstyled list-inline">
-         <li class="hidden-xs"><a href="{{ url_for('site.about') }}">关于</a></li>
-         <li><a href="{{ url_for('site.disclaimer') }}">免责声明</a></li>
-         <li class="hidden-xs"><a href="{{ url_for('site.wiki') }}">Wiki</a></li>
-         <li><a href="https://github.com/blogbar" target="_blank">GitHub</a></li>
-      </ul>
-   </div>
+        <ul id='links' class="pull-right list-unstyled list-inline">
+            <li class="hidden-xs"><a href="{{ url_for('site.about') }}">关于</a></li>
+            <li><a href="{{ url_for('site.disclaimer') }}">免责声明</a></li>
+            <li class="hidden-xs"><a href="{{ url_for('site.wiki') }}">Wiki</a></li>
+            <li><a href="https://github.com/blogbar" target="_blank">GitHub</a></li>
+        </ul>
+    </div>
 </div>
 
 <script type="text/javascript">
-   var g = {
-      debug: {{ "true" if config.DEBUG else "false" }}
-   }
+    var g = {
+        debug: {{ "true" if config.DEBUG else "false" }}
+    }
 </script>
 
 {# 全局JS代码 #}
 {{ script('js/layout.js') }}
+
+{# 组件JS代码 #}
+{{ script('output/macros.js') }}
 
 {# 单页JS代码 #}
 {{ page_script(self) }}
 
 {# 访问统计 #}
 <script type="text/javascript">
-   var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-   document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ff995064249cc264a55b9dbb0b62406d8' type='text/javascript'%3E%3C/script%3E"));
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ff995064249cc264a55b9dbb0b62406d8' type='text/javascript'%3E%3C/script%3E"));
 </script>
 
 </body>

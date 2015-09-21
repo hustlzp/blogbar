@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from "macros/_utils.html" import _pagination %}
+{% from "macros/_utils.html" import render_pagination %}
 {% from "macros/post/_posts.html" import render_posts %}
 
 {% block page_title %}我的订阅{% endblock %}
@@ -15,7 +15,7 @@
                {{ render_posts(posts.items, attr='post') }}
             </div>
 
-            {{ _pagination(posts) }}
+            {{ render_pagination(posts) }}
          </div>
 
          <div class="col-sm-4">

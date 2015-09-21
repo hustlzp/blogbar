@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from 'macros/_utils.html' import _pagination %}
+{% from 'macros/_utils.html' import render_pagination %}
 {% from "macros/post/_posts.html" import render_posts %}
 {% from "macros/post/_latest_posts.html" import render_latest_posts %}
 
@@ -30,15 +30,12 @@
                     {{ render_posts(recommend_posts.items) }}
                 </div>
 
-                {{ _pagination(recommend_posts) }}
+                {{ render_pagination(recommend_posts) }}
             </div>
 
             <div class="col-sm-4">
                 <h2 class="no-margin-top">
                     <span class="fa fa-clock-o"></span> 最新文章
-                    {#               <a href="{{ url_for('blog.posts') }}" class="btn btn-primary btn-xs">#}
-                    {#                  全部博文 <span class="fa fa-angle-right"></span>#}
-                    {#               </a>#}
 
                     <div class="btn-group btn-group-xs pager">
                         <button type="button" class="btn btn-default btn-pre" title="上一页" disabled>

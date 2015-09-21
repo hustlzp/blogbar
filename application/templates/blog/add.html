@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from "macros/_form.html" import _vertical_field %}
+{% from "macros/_form.html" import render_vertical_field %}
 
 {% block page_title %}推荐博客{% endblock %}
 {% block page_content %}
@@ -18,12 +18,12 @@
             <form class="form-horizontal" role="form" method="post">
                {{ form.csrf_token }}
 
-               {{ _vertical_field(form.url) }}
-               {{ _vertical_field(form.title) }}
-               {{ _vertical_field(form.subtitle) }}
-               {{ _vertical_field(form.author) }}
-               {{ _vertical_field(form.feed) }}
-               {{ _vertical_field(form.since) }}
+               {{ render_vertical_field(form.url) }}
+               {{ render_vertical_field(form.title) }}
+               {{ render_vertical_field(form.subtitle) }}
+               {{ render_vertical_field(form.author) }}
+               {{ render_vertical_field(form.feed) }}
+               {{ render_vertical_field(form.since) }}
 
                <div class="form-group">
                   <div class="col-md-9">

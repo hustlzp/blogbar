@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from 'macros/_utils.html' import _pagination %}
+{% from 'macros/_utils.html' import render_pagination %}
 
 {% block page_title %}审核结果{% endblock %}
 {% block page_content %}
@@ -67,6 +67,6 @@
 
       {{ render_logs(processed_logs.items) }}
 
-      {{ _pagination(processed_logs) }}
+      {{ render_pagination(processed_logs) }}
    </div>
 {% endblock %}
