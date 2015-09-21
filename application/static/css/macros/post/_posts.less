@@ -1,0 +1,82 @@
+@import "../../utils";
+
+.m-post {
+  padding: 20px 0 20px 0;
+  border-bottom: 1px solid #ddd;
+
+  &:hover {
+    .meta .btn-collect-post {
+      visibility: visible;
+    }
+  }
+
+  &.unread {
+    background-color: #EFFBFF;
+  }
+
+  .title {
+    padding-bottom: 8px;
+
+    a {
+      color: #333;
+      font-weight: bold;
+      font-size: 24px;
+    }
+  }
+
+  .abstract {
+  }
+
+  .meta {
+    font-size: 12px;
+    color: #999;
+
+    .blog {
+    }
+
+    .divider {
+      margin: 0 1px 0 2px;
+    }
+
+    .author {
+      margin-left: 5px;
+    }
+
+    .time,
+    .clicks {
+      margin-left: 15px;
+    }
+
+    .btn-collect-post {
+      color: #999;
+      text-decoration: none;
+      visibility: hidden;
+      margin-left: 20px;
+
+      .for-collect {
+        display: inline-block;
+
+        &:hover {
+          color: #666;
+        }
+      }
+
+      .for-uncollect {
+        color: @main-color;
+        display: none;
+      }
+
+      &.collected {
+        visibility: visible !important;
+
+        .for-collect {
+          display: none;
+        }
+
+        .for-uncollect {
+          display: inline-block;
+        }
+      }
+    }
+  }
+}

@@ -36,6 +36,48 @@
 }
 
 // Layout
-.body-top-gap{
+.body-top-gap {
   margin-top: 30px;
+}
+
+.text-list {
+  padding-left: 20px;
+  list-style-type: square;
+
+  li {
+    margin-bottom: 5px;
+  }
+}
+
+.form-group,
+.vertical-form-group {
+  margin-bottom: 10px;
+
+  input[type='text'],
+  input[type='password'] {
+    padding-left: 0;
+    padding-right: 0;
+    outline: 0;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    box-shadow: none;
+    margin-bottom: 5px;
+    color: #333;
+    .transition(border-color, 0.1s);
+
+    &:focus {
+      padding-bottom: 5px;
+      border-bottom: 2px solid @main-color;
+      box-shadow: none;
+    }
+  }
+
+  .list-form-errors {
+    font-size: 12px;
+  }
+
+  button[type='submit'] {
+    margin-top: 5px;
+  }
 }

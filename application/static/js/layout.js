@@ -3,16 +3,6 @@ if (!g.debug && document.domain != 'blogbar.cc' && document.domain != 'www.blogb
     window.location.href = 'http://www.blogbar.cc';
 }
 
-// 给Ajax添加csrf token
-var csrf_token = $("meta[name='csrf-token']").attr('content');
-$.ajaxSetup({
-    beforeSend: function (xhr, settings) {
-        if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type)) {
-            xhr.setRequestHeader("X-CSRFToken", csrf_token);
-        }
-    }
-});
-
 // 显示flash message
 setTimeout(showFlash, 200);
 setTimeout(hideFlash, 2000);

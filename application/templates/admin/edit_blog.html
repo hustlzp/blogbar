@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from "macro/form.html" import horizontal_field %}
+{% from "macros/_form.html" import render_horizontal_field %}
 
 {% block page_title %}编辑博客{% endblock %}
 {% block page_content %}
@@ -14,13 +14,13 @@
 
                <input type="hidden" name="referer" value="{{ request.referrer }}"/>
 
-               {{ horizontal_field(form.url) }}
-               {{ horizontal_field(form.title) }}
-               {{ horizontal_field(form.subtitle) }}
-               {{ horizontal_field(form.author) }}
-               {{ horizontal_field(form.feed) }}
-               {{ horizontal_field(form.feed_timezone_offset) }}
-               {{ horizontal_field(form.since) }}
+               {{ render_horizontal_field(form.url) }}
+               {{ render_horizontal_field(form.title) }}
+               {{ render_horizontal_field(form.subtitle) }}
+               {{ render_horizontal_field(form.author) }}
+               {{ render_horizontal_field(form.feed) }}
+               {{ render_horizontal_field(form.feed_timezone_offset) }}
+               {{ render_horizontal_field(form.since) }}
 
                <div class="form-group">
                   <label class="col-sm-2 control-label">标签</label>

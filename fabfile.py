@@ -13,8 +13,10 @@ def deploy():
         with shell_env(MODE='PRODUCTION'):
             run('git reset --hard HEAD')
             run('git pull')
+            run('npm install')
             with prefix('source venv/bin/activate'):
                 run('pip install -r requirements.txt')
+                run('gulp')
                 run('python manage.py db upgrade')
             run('supervisorctl restart blogbar')
 

@@ -1,4 +1,4 @@
-{% macro pagination(paginator) %}
+{% macro render_pagination(paginator) %}
     {% if paginator.pages > 1 %}
         <ul class='pagination pagination-sm'>
             {% if paginator.has_prev %}

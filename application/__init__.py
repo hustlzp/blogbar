@@ -1,12 +1,6 @@
 # coding: utf-8
 import sys
 import os
-
-# 将project目录加入sys.path
-project_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-if project_path not in sys.path:
-    sys.path.insert(0, project_path)
-
 import hashlib
 from flask import Flask, request, url_for, g, render_template, abort
 from flask_wtf.csrf import CsrfProtect
@@ -15,6 +9,13 @@ from flask_debugtoolbar import DebugToolbarExtension
 from werkzeug.wsgi import SharedDataMiddleware
 from werkzeug.contrib.fixers import ProxyFix
 from .utils.account import get_current_user
+from six import iteritems
+
+# 将project目录加入sys.path
+project_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+if project_path not in sys.path:
+    sys.path.insert(0, project_path)
+
 from config import load_config
 
 # convert python's encoding to utf8
@@ -83,7 +84,6 @@ def register_jinja(app):
     # inject vars into template context
     @app.context_processor
     def inject_vars():
-        from datetime import datetime, timedelta
         from .utils.permissions import AdminPermission
         from .models import db, ApprovementLog, Post, UserReadPost
 
@@ -156,6 +156,12 @@ def register_jinja(app):
         template_name = _get_template_name(template_reference)
         return "page-%s" % template_name.replace('.html', '').replace('/', '-').replace('_', '-')
 
+    rules = {}
+    for endpoint, _rules in iteritems(app.url_map._rules_by_endpoint):
+        if any(item in endpoint for item in ['_debug_toolbar', 'debugtoolbar', 'static']):
+            continue
+        rules[endpoint] = [{'rule': rule.rule} for rule in _rules]
+
     app.jinja_env.globals['url_for_other_page'] = url_for_other_page
     app.jinja_env.globals['static'] = static
     app.jinja_env.globals['script'] = script
@@ -164,6 +170,7 @@ def register_jinja(app):
     app.jinja_env.globals['page_link'] = page_link
     app.jinja_env.globals['page_name'] = page_name
     app.jinja_env.globals['permissions'] = permissions
+    app.jinja_env.globals['rules'] = rules
 
 
 def register_db(app):

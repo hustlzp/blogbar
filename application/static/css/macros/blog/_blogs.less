@@ -1,0 +1,86 @@
+@import "../../utils";
+
+.m-blog {
+  position: relative;
+  border-top: 1px solid #DDDDDD;
+  margin: 0 0px 15px 0;
+  padding: 15px 0 0 0;
+  vertical-align: top;
+
+  &.odd {
+    @media (min-width: @screen-sm-min) {
+      padding-right: 25px;
+    }
+  }
+
+  &.no-kinds .title a {
+    color: #ff0000;
+  }
+
+  .title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 6px;
+
+    a {
+      color: #333;
+    }
+
+    .offline {
+      margin-left: 5px;
+      font-size: 12px;
+      font-weight: normal;
+      color: #ff0000;
+    }
+  }
+
+  .subtitle {
+    font-size: 12px;
+    margin-bottom: 6px;
+  }
+
+  .author {
+    position: absolute;
+    bottom: 12px;
+    left: 15px;
+    color: #999;
+    font-size: 12px;
+
+    span {
+      color: #666;
+    }
+  }
+
+  .kinds {
+    font-size: 12px;
+    color: #999;
+  }
+
+  // 订阅按钮
+  .btn-wap {
+    .btn-subscribe,
+    .btn-unsubscribe {
+      font-size: 12px;
+      text-decoration: none;
+    }
+
+    .btn-unsubscribe {
+      display: none;
+      color: #999;
+
+      &:hover {
+        color: #777;
+      }
+    }
+
+    &.unsubscribe {
+      .btn-subscribe {
+        display: none;
+      }
+
+      .btn-unsubscribe {
+        display: inline-block;
+      }
+    }
+  }
+}

@@ -5,3 +5,5 @@ config/production.py
 config/development.py
 celerybeat*
 deploy/supervisor.conf
+node_modules/
+application/static/output/

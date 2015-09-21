@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
-{% from "macro/utils.html" import pagination %}
-{% from "macro/blog/render_blogs.html" import render_blogs %}
+{% from "macros/_utils.html" import render_pagination %}
+{% from "macros/blog/_blogs.html" import render_blogs %}
 
 {% block page_title %}我订阅的博客{% endblock %}
 {% block page_content %}
@@ -15,7 +15,7 @@
                {{ render_blogs(blogs.items) }}
             </div>
 
-            {{ pagination(blogs) }}
+            {{ render_pagination(blogs) }}
          </div>
       </div>
    </div>
