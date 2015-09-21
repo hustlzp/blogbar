@@ -6,7 +6,10 @@
   "directories": {
     "test": "tests"
   },
-  "dependencies": {},
+  "dependencies": {
+    "gulp-footer": "^1.0.5",
+    "gulp-header": "^1.7.1"
+  },
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",

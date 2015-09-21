@@ -8,6 +8,8 @@ var uglify = require('gulp-uglify');
 var watch = require('gulp-watch');
 var plumber = require('gulp-plumber');
 var gulpif = require('gulp-if');
+var header = require('gulp-header');
+var footer = require('gulp-footer');
 
 var cssRoot = './application/static/css';
 var jsRoot = './application/static/js';
@@ -28,6 +30,8 @@ gulp.task('macros-js', function () {
     return gulp
         .src(path.join(jsRoot, '**/_*.js'))
         .pipe(plumber())
+        .pipe(header('(function () {'))
+        .pipe(footer('})();'))
         .pipe(concat('macros.js'))
         .pipe(gulpif(inProduction, uglify()))
         .pipe(gulp.dest('./application/static/output/'));
