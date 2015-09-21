@@ -19,7 +19,7 @@ permission==0.3.0
 six==1.9.0
 
 livereload==2.4.0
-formic==0.9b8
+formic==0.9beta8
 gunicorn==19.3.0
 Fabric==1.10.2
 raven==5.7.2
