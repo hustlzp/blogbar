@@ -1,4 +1,4 @@
-$('.btn-wap').click(function () {
+$(document).on('click', '.m-blog .btn-wap', function () {
     var blogId = parseInt($(this).data('blog-id')),
         url = "",
         btnWap = $(this);

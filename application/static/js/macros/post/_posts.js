@@ -1,5 +1,5 @@
 // 收藏文章
-$('.m-post .btn-collect-post').click(function () {
+$(document).on('click', '.m-post .btn-collect-post', function () {
     var postId = $(this).data('post-id'),
         collected = $(this).hasClass('collected'),
         url = "",
