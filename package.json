@@ -6,13 +6,13 @@
   "directories": {
     "test": "tests"
   },
-  "dependencies": {
-    "gulp-footer": "^1.0.5",
-    "gulp-header": "^1.7.1"
-  },
+  "dependencies": {},
   "devDependencies": {
     "gulp": "^3.9.0",
+    "gulp-batch": "^1.0.5",
     "gulp-concat": "^2.6.0",
+    "gulp-footer": "^1.0.5",
+    "gulp-header": "^1.7.1",
     "gulp-if": "^1.2.5",
     "gulp-less": "^3.0.3",
     "gulp-minify-css": "^1.2.1",

@@ -26,7 +26,7 @@ def load_posts():
     page = request.form.get('page', 1, type=int)
     posts = Post.query.filter(~Post.hide).filter(Post.blog.has(Blog.is_approved)).order_by(
         Post.published_at.desc()).paginate(page, LATEST_POSTS_PER).items
-    macro = get_template_attribute('macros/post/_latest_posts.html', 'render_latest_posts')
+    macro = get_template_attribute('post/latest_posts/_latest_posts.html', 'render_latest_posts')
     return json.dumps({
         'result': True,
         'html': macro(posts)

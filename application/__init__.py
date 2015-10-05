@@ -1,6 +1,7 @@
 # coding: utf-8
 import sys
 import os
+import jinja2
 import hashlib
 from flask import Flask, request, url_for, g, render_template, abort
 from flask_wtf.csrf import CsrfProtect
@@ -77,6 +78,12 @@ def register_jinja(app):
     app.jinja_env.filters['readtime'] = filters.readtime
     app.jinja_env.filters['friendly_url'] = filters.friendly_url
     app.jinja_env.filters['clean_url'] = filters.clean_url
+
+    my_loader = jinja2.ChoiceLoader([
+        app.jinja_loader,
+        jinja2.FileSystemLoader([os.path.join(app.config.get('PROJECT_PATH'), 'application/macros')]),
+    ])
+    app.jinja_loader = my_loader
 
     if not hasattr(app, '_static_hash'):
         app._static_hash = {}

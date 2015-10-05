@@ -1,50 +1,46 @@
 var gulp = require('gulp');
-var tap = require('gulp-tap');
 var path = require('path');
 var less = require('gulp-less');
 var concat = require('gulp-concat');
-var minifyCss = require('gulp-minify-css');
-var uglify = require('gulp-uglify');
 var watch = require('gulp-watch');
+var batch = require('gulp-batch');
 var plumber = require('gulp-plumber');
-var gulpif = require('gulp-if');
 var header = require('gulp-header');
 var footer = require('gulp-footer');
 
-var cssRoot = './application/static/css';
-var jsRoot = './application/static/js';
+var root = './application';
 
 gulp.task('macros-css', function () {
     return gulp
-        .src(path.join(cssRoot, '**/_*.less'))
+        .src(path.join(root, 'macros/**/_*.less'))
         .pipe(plumber())
         .pipe(less({
-            paths: [cssRoot]
+            paths: [path.join(root, 'static/css')]
         }))
         .pipe(concat('macros.css'))
-        .pipe(gulpif(inProduction, minifyCss({compatibility: 'ie8'})))
-        .pipe(gulp.dest('./application/static/output/'));
+        .pipe(gulp.dest(path.join(root, 'static/output/')));
 });
 
 gulp.task('macros-js', function () {
     return gulp
-        .src(path.join(jsRoot, '**/_*.js'))
+        .src(path.join(root, 'macros/**/_*.js'))
         .pipe(plumber())
         .pipe(header('(function () {'))
         .pipe(footer('})();'))
         .pipe(concat('macros.js'))
-        .pipe(gulpif(inProduction, uglify()))
-        .pipe(gulp.dest('./application/static/output/'));
+        .pipe(gulp.dest(path.join(root, 'static/output/')));
 });
 
-gulp.task('default', ['macros-css', 'macros-js'], function () {
+gulp.task('build', ['macros-css', 'macros-js'], function () {
 });
 
-gulp.task('watch', function () {
-    gulp.watch(path.join(jsRoot, '**/_*.js'), ['macros-js']);
-    gulp.watch(path.join(cssRoot, '**/_*.less'), ['macros-css']);
+gulp.task('watch', ['build'], function () {
+    watch(path.join(root, 'macros/**/_*.js'), batch(function (events, done) {
+        gulp.start('macros-js', done);
+    }));
+    watch(path.join(root, 'macros/**/_*.less'), batch(function (events, done) {
+        gulp.start('macros-css', done);
+    }));
 });
 
-function inProduction() {
-    return process.env.MODE === 'PRODUCTION';
-}
+gulp.task('default', ['build']);
