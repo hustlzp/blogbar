@@ -3,90 +3,92 @@
 
 {% block page_title %}管理博客推荐{% endblock %}
 {% block page_content %}
-   <div class="container">
-      <h2>待审核博客</h2>
+    <div class="container">
+        <h2>待审核博客</h2>
 
-      {% macro render_logs(logs) %}
-         <table class="table table-bordered">
-            <tr>
-               <th style="width: 320px;">博客</th>
-               <th>作者</th>
-               <th style="width: 320px;">URL / Feed</th>
-               <th>Since</th>
-               <th>推荐时间</th>
-               <th>当前状态</th>
-               <th>编辑</th>
-               <th>审核</th>
-            </tr>
-            {% for log in logs %}
-               {% set blog = log.blog %}
+        {% macro render_logs(logs) %}
+            <table class="table table-bordered">
+                <tr>
+                    <th style="width: 320px;">博客</th>
+                    <th>作者</th>
+                    <th style="width: 320px;">URL / Feed</th>
+                    <th>Since</th>
+                    <th>推荐时间</th>
+                    <th>IP</th>
+                    <th>当前状态</th>
+                    <th>编辑</th>
+                    <th>审核</th>
+                </tr>
+                {% for log in logs %}
+                    {% set blog = log.blog %}
 
-               <tr>
-                  <td>
-                     <strong>{{ blog.title }}</strong>
-                     {% if blog.subtitle %}
-                        <br/>
-                        <small class="text-light">{{ blog.subtitle }}</small>
-                     {% endif %}
-                  </td>
-                  <td>{{ blog.author }}</td>
-                  <td>
-                     <a href="{{ blog.url }}" target="_blank">{{ blog.url }}</a>
+                    <tr>
+                        <td>
+                            <strong>{{ blog.title }}</strong>
+                            {% if blog.subtitle %}
+                                <br/>
+                                <small class="text-light">{{ blog.subtitle }}</small>
+                            {% endif %}
+                        </td>
+                        <td>{{ blog.author }}</td>
+                        <td>
+                            <a href="{{ blog.url }}" target="_blank">{{ blog.url }}</a>
 
-                     {% if blog.feed %}
-                        &nbsp;/&nbsp;
-                        <a href="{{ blog.feed }}" target="_blank">
-                           <span class="fa fa-rss-square "></span>
-                        </a>
-                     {% endif %}
-                  </td>
-                  <td>{{ blog.since or "" }}</td>
-                  <td>{{ log.created_at }}</td>
-                  <td>
-                     {% if log.status == -1 %}
-                        <span class="label label-info">待审核</span>
-                     {% elif log.status == 0 %}
-                        <span class="label label-danger">不通过</span>
-                        <br/>
-                        {{ log.message }}
-                     {% elif log.status == 1 %}
-                        <span class="label label-success">通过</span>
-                        <br/>
-                        {{ log.message }}
-                     {% else %}
-                        <span class="label label-warning">非法值</span>
-                     {% endif %}
-                  </td>
-                  <td>
-                     <a href="{{ url_for('admin.edit_blog', uid=blog.id) }}"
-                        class="btn btn-default btn-sm">
-                        <span class="fa fa-edit"></span>
-                     </a>
-                  </td>
-                  <td>
-                     <form method="post" action="{{ url_for('admin.approve_blog', uid=blog.id) }}">
-                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                            {% if blog.feed %}
+                                &nbsp;/&nbsp;
+                                <a href="{{ blog.feed }}" target="_blank">
+                                    <span class="fa fa-rss-square "></span>
+                                </a>
+                            {% endif %}
+                        </td>
+                        <td>{{ blog.since or "" }}</td>
+                        <td>{{ log.created_at }}</td>
+                        <td>{{ log.ip }}</td>
+                        <td>
+                            {% if log.status == -1 %}
+                                <span class="label label-info">待审核</span>
+                            {% elif log.status == 0 %}
+                                <span class="label label-danger">不通过</span>
+                                <br/>
+                                {{ log.message }}
+                            {% elif log.status == 1 %}
+                                <span class="label label-success">通过</span>
+                                <br/>
+                                {{ log.message }}
+                            {% else %}
+                                <span class="label label-warning">非法值</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ url_for('admin.edit_blog', uid=blog.id) }}"
+                               class="btn btn-default btn-sm">
+                                <span class="fa fa-edit"></span>
+                            </a>
+                        </td>
+                        <td>
+                            <form method="post" action="{{ url_for('admin.approve_blog', uid=blog.id) }}">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 
-                        <div class="input-group input-group-sm" style="width: 300px;">
-                           <input type="text" name="message" class="form-control">
+                                <div class="input-group input-group-sm" style="width: 300px;">
+                                    <input type="text" name="message" class="form-control">
                         <span class="input-group-btn">
                            <input class="btn btn-default" type="submit" name="yes" value="通过">
                            <input class="btn btn-default" type="submit" name="no" value="不通过">
                         </span>
-                        </div>
-                     </form>
-                  </td>
-               </tr>
-            {% endfor %}
-         </table>
-      {% endmacro %}
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endmacro %}
 
-      {{ render_logs(unprocessed_logs) }}
+        {{ render_logs(unprocessed_logs) }}
 
-      <h2>已审核博客</h2>
+        <h2>已审核博客</h2>
 
-      {{ render_logs(processed_logs.items) }}
+        {{ render_logs(processed_logs.items) }}
 
-      {{ render_pagination(processed_logs) }}
-   </div>
+        {{ render_pagination(processed_logs) }}
+    </div>
 {% endblock %}
