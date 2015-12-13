@@ -4,9 +4,8 @@ import traceback
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 from application import create_app
-from application.models import db, Blog, Post, GrabLog, User, UserReadPost
+from application.models import db, Blog, Post, GrabLog, User, UserReadPost, ApprovementLog
 from application.utils.blog import grab_by_feed
-
 
 # Used by app debug & livereload
 PORT = 5000
@@ -123,7 +122,6 @@ def test_grab(id):
 # from celery_proj.tasks import analyse
 #
 # analyse.delay()
-
 
 @manager.command
 def process_posts():

@@ -184,9 +184,9 @@ class ApprovementLog(db.Model):
     message = db.Column(db.Text)
 
     blog_id = db.Column(db.Integer, db.ForeignKey('blog.id'))
-    blog = db.relationship('Blog', backref=db.backref('approvement_logs', lazy='dynamic',
-                                                      order_by='desc(ApprovementLog.created_at)',
-                                                      cascade="all, delete, delete-orphan"))
+    blog = db.relationship('Blog', cascade="all, delete, delete-orphan",
+                           backref=db.backref('approvement_log', uselist=False,
+                                              cascade="all, delete, delete-orphan"))
 
 
 def _get_pure_content(content):
