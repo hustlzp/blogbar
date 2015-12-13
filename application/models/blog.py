@@ -184,7 +184,7 @@ class ApprovementLog(db.Model):
     message = db.Column(db.Text)
 
     blog_id = db.Column(db.Integer, db.ForeignKey('blog.id'))
-    blog = db.relationship('Blog', cascade="all, delete, delete-orphan",
+    blog = db.relationship('Blog', cascade="all, delete, delete-orphan", single_parent=True,
                            backref=db.backref('approvement_log', uselist=False,
                                               cascade="all, delete, delete-orphan"))
 
