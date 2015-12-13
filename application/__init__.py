@@ -3,6 +3,7 @@ import sys
 import os
 import jinja2
 import hashlib
+import logging
 from flask import Flask, request, url_for, g, render_template, abort
 from flask_wtf.csrf import CsrfProtect
 from flask.ext.uploads import configure_uploads
@@ -45,9 +46,13 @@ def create_app():
             '/uploads': os.path.join(app.config.get('PROJECT_PATH'), 'uploads')
         })
     else:
-        from .utils.sentry import sentry
+        app.logger.addHandler(logging.StreamHandler())
+        app.logger.setLevel(logging.ERROR)
 
-        sentry.init_app(app, dsn=app.config.get('SENTRY_DSN'))
+        if app.config.get('SENTRY_DSN'):
+            from .utils.sentry import sentry
+
+            sentry.init_app(app, dsn=app.config.get('SENTRY_DSN'))
 
     # 注册组件
     register_db(app)
