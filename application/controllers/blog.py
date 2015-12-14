@@ -52,7 +52,7 @@ def view(uid, page):
     return render_template('blog/view.html', blog=blog, posts=posts, posts_count=posts_count)
 
 
-@bp.route('/add', methods=['GET', 'POST'])
+@bp.route('/recommend', methods=['GET', 'POST'])
 def add():
     """推荐博客"""
     kinds = Kind.query.order_by(Kind.show_order.asc())
