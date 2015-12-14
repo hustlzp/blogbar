@@ -10,6 +10,17 @@ var footer = require('gulp-footer');
 
 var root = './application';
 
+gulp.task('public-css', function () {
+    return gulp
+        .src([path.join(root, 'static/**/*.less'),
+            '!' + path.join(root, 'static/bower_components/**/*.less')])
+        .pipe(plumber())
+        .pipe(less({
+            paths: [path.join(root, 'static/css')]
+        }))
+        .pipe(gulp.dest(path.join(root, 'static')));
+});
+
 gulp.task('macros-css', function () {
     return gulp
         .src(path.join(root, 'macros/**/_*.less'))
@@ -31,7 +42,7 @@ gulp.task('macros-js', function () {
         .pipe(gulp.dest(path.join(root, 'static/output/')));
 });
 
-gulp.task('build', ['macros-css', 'macros-js'], function () {
+gulp.task('build', ['macros-css', 'macros-js', 'public-css'], function () {
 });
 
 gulp.task('watch', ['build'], function () {

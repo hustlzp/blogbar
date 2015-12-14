@@ -26,3 +26,50 @@
 .body-top-gap {
   margin-top: 30px;
 }
+.text-list {
+  padding-left: 20px;
+  list-style-type: square;
+}
+.text-list li {
+  margin-bottom: 5px;
+}
+.form-group,
+.vertical-form-group {
+  margin-bottom: 10px;
+}
+.form-group input[type='text'],
+.vertical-form-group input[type='text'],
+.form-group input[type='password'],
+.vertical-form-group input[type='password'] {
+  padding-left: 0;
+  padding-right: 0;
+  outline: 0;
+  border-radius: 0;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  box-shadow: none;
+  margin-bottom: 5px;
+  color: #333;
+  transition: border-color linear 0.1s;
+  -moz-transition: border-color linear 0.1s;
+  /* Firefox 4 */
+  -webkit-transition: border-color linear 0.1s;
+  /* Safari 和 Chrome */
+  -o-transition: border-color linear 0.1s;
+}
+.form-group input[type='text']:focus,
+.vertical-form-group input[type='text']:focus,
+.form-group input[type='password']:focus,
+.vertical-form-group input[type='password']:focus {
+  padding-bottom: 5px;
+  border-bottom: 2px solid #2a99c2;
+  box-shadow: none;
+}
+.form-group .list-form-errors,
+.vertical-form-group .list-form-errors {
+  font-size: 12px;
+}
+.form-group button[type='submit'],
+.vertical-form-group button[type='submit'] {
+  margin-top: 5px;
+}
