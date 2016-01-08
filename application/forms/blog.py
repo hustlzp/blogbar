@@ -19,6 +19,8 @@ def check_url(form, field):
         url = "http://%s" % url
     elif result.scheme not in ['http', 'https']:
         raise ValueError('URL格式错误。')
+    if '.' not in url:
+        raise ValueError('URL格式错误。')
     field.data = url
 
 
