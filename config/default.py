@@ -24,6 +24,7 @@ class Config(object):
     # https://pythonhosted.org/Flask-SQLAlchemy/config.html#connection-uri-format
     # http://docs.sqlalchemy.org/en/rel_0_9/core/engines.html#database-urls
     SQLALCHEMY_DATABASE_URI = "mysql://user:password@host/database"
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # SendCloud config
     SC_FROM = ''
