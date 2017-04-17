@@ -11,7 +11,7 @@ http://www.blogbar.cc
 
 Blogbar，聚合个人博客。
 
-##技术栈
+## 技术栈
 
 * Powered by [Flask](http://flask.pocoo.org/).
 * Based on [Flask-Boost](https://github.com/hustlzp/Flask-Boost).
@@ -19,7 +19,7 @@ Blogbar，聚合个人博客。
 * Use [feerparser](http://pythonhosted.org/feedparser/) to parse RSS and Atom.
 * Use [requests](http://docs.python-requests.org/en/latest/) and [lxml](http://lxml.de/) to grab structured data from HTML page.
 
-##开发环境搭建
+## 开发环境搭建
 
 ```
 git clone https://github.com/blogbar/blogbar.git
@@ -38,11 +38,11 @@ bower install
 python manage.py run
 ```
 
-##扩展
+## 扩展
 
 如果一个博客不提供 Feed，但是这个博客的价值又非常高（比如 [Livid](http://livid.v2ex.com/)、[王垠](http://www.yinwang.org/)、[Lifesinger](https://github.com/lifesinger/lifesinger.github.com/issues?q=label%3Ablog)等等），可继承爬取博客的爬虫基类 BaseSpider（位于 [spiders/base.py](https://github.com/blogbar/blogbar/blob/master/spiders/base.py)）实现，步骤如下：
 
-####类变量赋值
+#### 类变量赋值
 
 在子类中对如下类变量重新赋值：
 
@@ -54,7 +54,7 @@ subtitle = ""  # 博客副标题（选填）
 author = ""  # 博主
 ```
 
-####重载方法
+#### 重载方法
 
 重载如下 2 个方法：
 
@@ -63,7 +63,7 @@ author = ""  # 博主
 
 具体使用方法见 BaseSpider 类，以及用于爬取网页内容的 [lxml](http://lxml.de/) 库。
 
-####调试
+#### 调试
 
 编写过程中如需调试抓取结果，可使用 [test_spider.py](https://github.com/blogbar/blogbar/blob/master/test_spider.py) 提供的测试方法：
 
@@ -73,11 +73,11 @@ author = ""  # 博主
 
 具体见 [test_spider.py](https://github.com/blogbar/blogbar/blob/master/test_spider.py)。
 
-####提交
+#### 提交
 
 测试通过后，可发起 pull request。
 
-####示例
+#### 示例
 
 以下是爬取 Livid 博客的示例代码：
 
